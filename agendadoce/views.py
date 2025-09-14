@@ -29,7 +29,7 @@ def pedido_list(request):
     }
     return render(request, 'pedido/listar_pedido.html',context)
 
-def pedido_creat(request):
+def pedido_create(request):
     if request.method == 'POST':
         form = PedidoForm(request.POST,request.FILES)
         if form.is_valid():
