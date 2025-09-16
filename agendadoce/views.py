@@ -3,21 +3,21 @@ from django.contrib.auth.models import User
 from django.db.models import Count
 from datetime import date
 from django.contrib import messages
-from .models import Vendedor, Cliente, Pedido
-from .forms import VendedorForm, ClienteForm, PedidoForm
+from .models import Entregador, Cliente, Pedido
+from .forms import EntregadorForm, ClienteForm, PedidoForm
 
 def index(request):
     total_pedidos = Pedido.objects.count()
     total_usuarios = User.objects.count()
     total_clientes = Cliente.objects.count()
-    total_vendedores = Vendedor.objects.count()
+    total_entregadores = Entregador.objects.count()
     
     context = {
         'hoje': date.today(),
         'total_pedidos': total_pedidos,
         'total_usuarios': total_usuarios,
         'total_clientes': total_clientes,
-        'total_vendedores': total_vendedores,
+        'total_entregadores': total_entregadores,
     }
     
     return render(request, 'index.html', context)
@@ -29,13 +29,26 @@ def pedido_list(request):
     }
     return render(request, 'pedido/listar_pedido.html',context)
 
+def atribuir_entregador_automatico():
+    # Conta quantos pedidos cada entregador tem em andamento
+    entregador = (
+        Entregador.objects.annotate(num_pedidos=Count("pedidos"))
+        .order_by("num_pedidos")  # pega o que tem menos entregas
+        .first()
+    )
+    if entregador:
+        entregador.num_entregas += 1   # soma +1
+        entregador.save()
+        
+    return entregador
+
 def pedido_create(request):
     if request.method == 'POST':
-        form = PedidoForm(request.POST,request.FILES)
+        form = PedidoForm(request.POST, request.FILES)
         if form.is_valid():
-            form.save()
-            form = PedidoForm()
-            pedido = form.save()
+            pedido = form.save(commit=False)  # não salva ainda
+            pedido.entregador = atribuir_entregador_automatico()  # atribui automaticamente
+            pedido.save()
             messages.success(request, f'Pedido "{pedido.nome_pedido}" feito com sucesso!')
             return redirect('pedido_list')
     else:
@@ -73,52 +86,52 @@ def pedido_detail(request, id):
     return render(request, 'pedido/pedido_detail.html', context)
     
 
-def vendedor_list(request):
-    vendedores = Vendedor.objects.all()
+def entregador_list(request):
+    entregadores = Entregador.objects.all()
     context = {
-        'vendedores': vendedores,
+        'entregadores': entregadores,
     }
-    return render(request, 'vendedor/listar_vendedor.html', context)
+    return render(request, 'entregaor/listar_entregador.html', context)
 
-def vendedor_create(request):
+def entregador_create(request):
     if request.method == 'POST':
-        form = VendedorForm(request.POST)
+        form = EntregadorForm(request.POST)
         if form.is_valid():
-            vendedor = form.save()
-            messages.success(request, f'Vendedor "{vendedor.nome_vendedor}" criado com sucesso!')
-            return redirect('vendedor_list')
+            entregador = form.save()
+            messages.success(request, f'Entregador "{entregador.nome_vendedor}" criado com sucesso!')
+            return redirect('entregador_list')
     else:
-        form = VendedorForm()
+        form = EntregadorForm()
     
-    return render(request, 'vendedor/form_vendedor.html', {'form': form})
+    return render(request, 'entregador/form_entregador.html', {'form': form})
 
-def vendedor_update(request, id):
-    vendedor = get_object_or_404(Vendedor, id=id)
+def entregador_update(request, id):
+    entregador = get_object_or_404(Entregador, id=id)
     
     if request.method == 'POST':
-        form = VendedorForm(request.POST, instance=vendedor)
+        form = EntregadorForm(request.POST, instance=entregador)
         if form.is_valid():
-            vendedor = form.save()
-            messages.success(request, f'Vendedor "{vendedor.nome_vendedor}" atualizado com sucesso!')
-            return redirect('vendedor_detail', id=vendedor.id)
+            entregador = form.save()
+            messages.success(request, f'Entregador "{entregador.nome_vendedor}" atualizado com sucesso!')
+            return redirect('entregador_detail', id=entregador.id)
     else:
-        form = VendedorForm(instance=vendedor)
+        form = EntregadorForm(instance=entregador)
     
-    return render(request, 'vendedor/form_vendedor.html', {'form':form})
+    return render(request, 'entregador/form_entregador.html', {'form':form})
 
-def vendedor_delete(request, id):
-    vendedor = get_object_or_404(Vendedor, id=id)
-    nome = vendedor.nome_vendedor
-    vendedor.delete()
-    messages.success(request, f'Vendedor "{nome}" excluído com sucesso!')
-    return redirect('vendedor_list')
+def entregador_delete(request, id):
+    entregador = get_object_or_404(Entregador, id=id)
+    nome = entregador.nome_entregador
+    entregador.delete()
+    messages.success(request, f'Entregador "{nome}" excluído com sucesso!')
+    return redirect('entregador_list')
 
-def vendedor_detail(request, id):
-    vendedor = get_object_or_404(Vendedor, id=id)
+def entregador_detail(request, id):
+    entregador = get_object_or_404(Entregador, id=id)
     context= {
-        'vendedor': vendedor
+        'entregador': entregador
     }
-    return render(request, 'vendedor/detail_vendedor.html', context)
+    return render(request, 'entregador/detail_entregador.html', context)
 
 
 def cliente_list(request):

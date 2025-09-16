@@ -1,11 +1,11 @@
 from django.contrib import admin
 from django.utils.html import format_html
-from .models import Vendedor, Cliente, Pedido
+from .models import Entregador, Cliente, Pedido
 
-@admin.register(Vendedor)
-class VendedorAdmin(admin.ModelAdmin):
-    list_display = ('nome_vendedor', 'cpf', 'email', 'telefone', 'data_contratacao')
-    fields = ('nome_vendedor', 'cpf', 'email', 'telefone', 'data_contratacao')
+@admin.register(Entregador)
+class EntregadorAdmin(admin.ModelAdmin):
+    list_display = ('nome_entregador', 'cpf', 'telefone', 'num_entregas', 'data_contratacao', 'disponibilidade')
+    fields = ('nome_entregador', 'cpf', 'telefone', 'num_entregas','data_contratacao', 'disponibilidade')
 
 @admin.register(Cliente)
 class ClienteAdmin(admin.ModelAdmin):
@@ -14,8 +14,8 @@ class ClienteAdmin(admin.ModelAdmin):
 
 @admin.register(Pedido)
 class PedidoAdmin(admin.ModelAdmin):
-    list_display = ('nome_pedido', 'cliente', 'foto_thumbnail', 'data_entrega', 'status', 'valor')
-    fields = ('nome_pedido', 'cliente', 'foto', 'tipo_massa', 'recheio', 'formato', 'tamanho', 'andares', 'observacoes', 'data_entrega', 'endereco_pedido', 'tipo_pagamento', 'status', 'valor')
+    list_display = ('nome_pedido', 'cliente', 'entregador', 'foto_thumbnail', 'data_entrega', 'status', 'valor')
+    fields = ('nome_pedido', 'cliente', 'entregador', 'foto', 'tipo_massa', 'recheio', 'formato', 'tamanho', 'observacoes', 'data_entrega', 'endereco_pedido', 'tipo_pagamento', 'status', 'valor')
     
     def foto_thumbnail(self, obj):
         if obj.foto:

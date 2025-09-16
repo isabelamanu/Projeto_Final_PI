@@ -34,11 +34,11 @@ urlpatterns = [
     path('cliente/editar/<int:id>/', agendadoce_views.cliente_update, name='cliente_update'),
     path('cliente/remover/<int:id>/', agendadoce_views.cliente_delete, name='cliente_delete'),
     path('cliente/<int:id>/', agendadoce_views.cliente_detail, name='cliente_detail'),
-    path('vendedor/', agendadoce_views.vendedor_list, name='vendedor_list'),
-    path('vendedor/cadastrar', agendadoce_views.vendedor_create, name='vendedor_create'),
-    path('vendedor/editar/<int:id>/', agendadoce_views.vendedor_update, name='vendedor_update'),
-    path('vendedor/remover/<int:id>/', agendadoce_views.vendedor_delete, name='vendedor_delete'),
-    path('vendedor/<int:id>/', agendadoce_views.vendedor_detail, name='vendedor_detail'),
+    path('entregador/', agendadoce_views.entregador_list, name='entregador_list'),
+    path('entregador/cadastrar', agendadoce_views.entregador_create, name='entregador_create'),
+    path('entregador/editar/<int:id>/', agendadoce_views.entregador_update, name='entregador_update'),
+    path('entregador/remover/<int:id>/', agendadoce_views.entregador_delete, name='entregador_delete'),
+    path('entregador/<int:id>/', agendadoce_views.entregador_detail, name='entregador_detail'),
 ]
     
 
