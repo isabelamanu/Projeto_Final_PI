@@ -1,0 +1,91 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}AgendaDoce{% endblock %}</title>
+    
+    <link rel="stylesheet" href="{% static 'styles.css' %}">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="container">
+            <div class="nav-wrapper">
+                <div class="logo">
+                    <div class="logo-icon">🎂</div>
+                    <h1 class="logo-text">AgendaDoce</h1>
+                </div>
+                
+                <nav class="nav">
+                    <a href="#inicio" class="nav-link">Início</a>
+                    <a href="#encomendas" class="nav-link">Encomendas</a>
+                    <a href="#sobre" class="nav-link">Sobre</a>
+                    <a href="#contato" class="nav-link">Contato</a>
+                </nav>
+                
+                <button class="btn-primary">Fazer Pedido</button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Conteúdo dinâmico -->
+    <main>
+        {% block content %}
+        {% endblock %}
+    </main>
+
+    <!-- Footer -->
+    <footer id="contato" class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-brand">
+                    <div class="logo">
+                        <div class="logo-icon">🎂</div>
+                        <h4 class="logo-text">AgendaDoce</h4>
+                    </div>
+                    <p class="footer-description">
+                        Criamos bolos únicos e especiais para tornar seus momentos ainda mais doces e memoráveis.
+                    </p>
+                    <div class="social-links">
+                        <a href="#" class="social-link">📷</a>
+                    </div>
+                </div>
+                
+                <div class="footer-contact">
+                    <h5 class="footer-title">Contato</h5>
+                    <div class="contact-info">
+                        <div class="contact-item">
+                            <span class="contact-icon">📞</span>
+                            <span class="contact-text">(11) 99999-9999</span>
+                        </div>
+                        <div class="contact-item">
+                            <span class="contact-icon">✉️</span>
+                            <span class="contact-text">contato@agendadoce.com</span>
+                        </div>
+                        <div class="contact-item">
+                            <span class="contact-icon">📍</span>
+                            <span class="contact-text">São Paulo, SP</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="footer-hours">
+                    <h5 class="footer-title">Horário</h5>
+                    <div class="hours-info">
+                        <p>Segunda à Sexta: 8h às 18h</p>
+                        <p>Sábados: 8h às 14h</p>
+                        <p>Domingos: Fechado</p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="footer-bottom">
+                <p>&copy; 2024 AgendaDoce. Todos os direitos reservados.</p>
+            </div>
+        </div>
+    </footer>
+</body>
+</html>

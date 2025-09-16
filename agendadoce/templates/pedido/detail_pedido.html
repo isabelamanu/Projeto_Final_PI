@@ -1,5 +1,134 @@
 {% extends 'base.html' %}
 
-{% block center %}
+{% block content %}
+
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Detalhes da Encomenda #ENC001 - AgendaDoce</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!-- Page Header -->
+    <section class="page-header">
+        <div class="container">
+            <div class="page-header-content">
+                <div style="display: flex; align-items: center; gap: 1rem; margin-bottom: 1rem;">
+                    <button class="btn-secondary" onclick="history.back()">← Voltar</button>
+                    <div class="status-badge status-producao">Em Produção</div>
+                </div>
+                <h2 class="page-title">Encomenda <span class="highlight">#ENC001</span></h2>
+                <p class="page-description">
+                    Acompanhe todos os detalhes da sua encomenda de Bolo de Chocolate Premium. Veja informações completas, status atual e histórico do pedido.
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Detalhes da Encomenda -->
+    <section class="encomendas">
+        <div class="container">
+            <!-- Informações Principais -->
+            <div class="encomenda-card" style="margin-bottom: 2rem;">
+                <div class="encomenda-header">
+                    <div class="encomenda-id">#ENC001</div>
+                    <div class="status-badge status-producao">Em Produção</div>
+                </div>
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; padding: 1.5rem;">
+                    <div class="encomenda-image">
+                        <img src="https://images.pexels.com/photos/140831/pexels-photo-140831.jpeg" alt="Bolo de Chocolate Premium">
+                    </div>
+                    <div class="encomenda-content" style="padding: 0;">
+                        <h3 class="encomenda-title">Bolo de Chocolate Premium</h3>
+                        <div class="encomenda-details">
+                            <div class="detail-item">
+                                <span class="detail-label">Data da Encomenda:</span>
+                                <span class="detail-value">15/01/2024</span>
+                            </div>
+                            <div class="detail-item">
+                                <span class="detail-label">Data de Entrega:</span>
+                                <span class="detail-value">20/01/2024</span>
+                            </div>
+                            <div class="detail-item">
+                                <span class="detail-label">Horário de Entrega:</span>
+                                <span class="detail-value">14:00 - 16:00</span>
+                            </div>
+                            <div class="detail-item">
+                                <span class="detail-label">Peso:</span>
+                                <span class="detail-value">2kg</span>
+                            </div>
+                            <div class="detail-item">
+                                <span class="detail-label">Sabor:</span>
+                                <span class="detail-value">Chocolate Premium</span>
+                            </div>
+                            <div class="detail-item">
+                                <span class="detail-label">Recheio:</span>
+                                <span class="detail-value">Brigadeiro Gourmet</span>
+                            </div>
+                            <div class="detail-item">
+                                <span class="detail-label">Cobertura:</span>
+                                <span class="detail-value">Ganache de Chocolate</span>
+                            </div>
+                        </div>
+                        <div class="encomenda-footer">
+                            <div class="price">R$ 180,00</div>
+                            <button class="btn-primary">Entrar em Contato</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Informações Adicionais -->
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; margin-bottom: 2rem;">
+                <!-- Observações -->
+                <div class="encomenda-card">
+                    <div style="padding: 1.5rem;">
+                        <h4 style="font-size: 1.25rem; font-weight: 600; color: #1f2937; margin-bottom: 1rem;">
+                            📝 Observações Especiais
+                        </h4>
+                        <p style="color: #6b7280; line-height: 1.6;">
+                            Cobertura de ganache, decoração infantil tema super-heróis. Incluir vela de aniversário número 8. Entregar preferencialmente no período da tarde.
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Dados do Cliente -->
+                <div class="encomenda-card">
+                    <div style="padding: 1.5rem;">
+                        <h4 style="font-size: 1.25rem; font-weight: 600; color: #1f2937; margin-bottom: 1rem;">
+                            👤 Dados do Cliente
+                        </h4>
+                        <div class="encomenda-details">
+                            <div class="detail-item">
+                                <span class="detail-label">Nome:</span>
+                                <span class="detail-value">Maria Silva</span>
+                            </div>
+                            <div class="detail-item">
+                                <span class="detail-label">Telefone:</span>
+                                <span class="detail-value">(11) 99999-8888</span>
+                            </div>
+                            <div class="detail-item">
+                                <span class="detail-label">Email:</span>
+                                <span class="detail-value">maria@email.com</span>
+                            </div>
+                            <div class="detail-item">
+                                <span class="detail-label">Endereço:</span>
+                                <span class="detail-value">Rua das Flores, 123<br>Vila Madalena - São Paulo/SP</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Ações -->
+            <div style="display: flex; gap: 1rem; justify-content: center; margin-top: 2rem; flex-wrap: wrap;">
+                <button class="btn-secondary btn-large">Cancelar Pedido</button>
+                <button class="btn-secondary btn-large">Alterar Dados</button>
+            </div>
+        </div>
+    </section>
 
 {% endblock %}

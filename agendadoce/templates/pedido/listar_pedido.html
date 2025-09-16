@@ -1,5 +1,294 @@
 {% extends 'base.html' %}
 
-{% block center %}
+{% block content %}
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Minhas Encomendas - AgendaDoce</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!-- Page Header -->
+    <section class="page-header">
+        <div class="container">
+            <div class="page-header-content">
+                <h2 class="page-title">Minhas <span class="highlight">Encomendas</span></h2>
+                <p class="page-description">
+                    Acompanhe todas as suas encomendas de bolos especiais. Veja o status, detalhes e histórico dos seus pedidos.
+                </p>
+                <div class="filter-tabs">
+                    <button class="filter-tab active">Todas</button>
+                    <button class="filter-tab">Em Produção</button>
+                    <button class="filter-tab">Prontas</button>
+                    <button class="filter-tab">Entregues</button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Encomendas Section -->
+    <section class="encomendas">
+        <div class="container">
+            <div class="encomendas-stats">
+                <div class="stat-card">
+                    <div class="stat-icon">📦</div>
+                    <div class="stat-content">
+                        <p class="stat-number">8</p>
+                        <p class="stat-label">Total de Encomendas</p>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon">⏳</div>
+                    <div class="stat-content">
+                        <p class="stat-number">3</p>
+                        <p class="stat-label">Em Produção</p>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon">✅</div>
+                    <div class="stat-content">
+                        <p class="stat-number">5</p>
+                        <p class="stat-label">Concluídas</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="encomendas-grid">
+                <!-- Encomenda 1 -->
+                <div class="encomenda-card">
+                    <div class="encomenda-header">
+                        <div class="encomenda-id">#ENC001</div>
+                        <div class="status-badge status-producao">Em Produção</div>
+                    </div>
+                    <div class="encomenda-image">
+                        <img src="https://images.pexels.com/photos/140831/pexels-photo-140831.jpeg" alt="Bolo de Chocolate Premium">
+                    </div>
+                    <div class="encomenda-content">
+                        <h3 class="encomenda-title">Bolo de Chocolate Premium</h3>
+                        <div class="encomenda-details">
+                            <div class="detail-item">
+                                <span class="detail-label">Data da Encomenda:</span>
+                                <span class="detail-value">15/01/2024</span>
+                            </div>
+                            <div class="detail-item">
+                                <span class="detail-label">Data de Entrega:</span>
+                                <span class="detail-value">20/01/2024</span>
+                            </div>
+                            <div class="detail-item">
+                                <span class="detail-label">Peso:</span>
+                                <span class="detail-value">2kg</span>
+                            </div>
+                            <div class="detail-item">
+                                <span class="detail-label">Observações:</span>
+                                <span class="detail-value">Cobertura de ganache, decoração infantil tema super-heróis</span>
+                            </div>
+                        </div>
+                        <div class="encomenda-footer">
+                            <div class="price">R$ 180,00</div>
+                            <button class="btn-secondary">Ver Detalhes</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Encomenda 2 -->
+                <div class="encomenda-card">
+                    <div class="encomenda-header">
+                        <div class="encomenda-id">#ENC002</div>
+                        <div class="status-badge status-pronto">Pronto para Retirada</div>
+                    </div>
+                    <div class="encomenda-image">
+                        <img src="https://images.pexels.com/photos/1702373/pexels-photo-1702373.jpeg" alt="Bolo Red Velvet">
+                    </div>
+                    <div class="encomenda-content">
+                        <h3 class="encomenda-title">Bolo Red Velvet</h3>
+                        <div class="encomenda-details">
+                            <div class="detail-item">
+                                <span class="detail-label">Data da Encomenda:</span>
+                                <span class="detail-value">10/01/2024</span>
+                            </div>
+                            <div class="detail-item">
+                                <span class="detail-label">Data de Entrega:</span>
+                                <span class="detail-value">18/01/2024</span>
+                            </div>
+                            <div class="detail-item">
+                                <span class="detail-label">Peso:</span>
+                                <span class="detail-value">1,5kg</span>
+                            </div>
+                            <div class="detail-item">
+                                <span class="detail-label">Observações:</span>
+                                <span class="detail-value">Cream cheese, decoração romântica com rosas</span>
+                            </div>
+                        </div>
+                        <div class="encomenda-footer">
+                            <div class="price">R$ 150,00</div>
+                            <button class="btn-primary">Confirmar Retirada</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Encomenda 3 -->
+                <div class="encomenda-card">
+                    <div class="encomenda-header">
+                        <div class="encomenda-id">#ENC003</div>
+                        <div class="status-badge status-entregue">Entregue</div>
+                    </div>
+                    <div class="encomenda-image">
+                        <img src="https://images.pexels.com/photos/827513/pexels-photo-827513.jpeg" alt="Bolo de Morango">
+                    </div>
+                    <div class="encomenda-content">
+                        <h3 class="encomenda-title">Bolo de Morango</h3>
+                        <div class="encomenda-details">
+                            <div class="detail-item">
+                                <span class="detail-label">Data da Encomenda:</span>
+                                <span class="detail-value">05/01/2024</span>
+                            </div>
+                            <div class="detail-item">
+                                <span class="detail-label">Data de Entrega:</span>
+                                <span class="detail-value">12/01/2024</span>
+                            </div>
+                            <div class="detail-item">
+                                <span class="detail-label">Peso:</span>
+                                <span class="detail-value">3kg</span>
+                            </div>
+                            <div class="detail-item">
+                                <span class="detail-label">Observações:</span>
+                                <span class="detail-value">Chantilly, morangos frescos, 2 andares</span>
+                            </div>
+                        </div>
+                        <div class="encomenda-footer">
+                            <div class="price">R$ 220,00</div>
+                            <button class="btn-card">Avaliar</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Encomenda 4 -->
+                <div class="encomenda-card">
+                    <div class="encomenda-header">
+                        <div class="encomenda-id">#ENC004</div>
+                        <div class="status-badge status-producao">Em Produção</div>
+                    </div>
+                    <div class="encomenda-image">
+                        <img src="https://images.pexels.com/photos/1721932/pexels-photo-1721932.jpeg" alt="Bolo de Limão">
+                    </div>
+                    <div class="encomenda-content">
+                        <h3 class="encomenda-title">Bolo de Limão Siciliano</h3>
+                        <div class="encomenda-details">
+                            <div class="detail-item">
+                                <span class="detail-label">Data da Encomenda:</span>
+                                <span class="detail-value">18/01/2024</span>
+                            </div>
+                            <div class="detail-item">
+                                <span class="detail-label">Data de Entrega:</span>
+                                <span class="detail-value">25/01/2024</span>
+                            </div>
+                            <div class="detail-item">
+                                <span class="detail-label">Peso:</span>
+                                <span class="detail-value">1kg</span>
+                            </div>
+                            <div class="detail-item">
+                                <span class="detail-label">Observações:</span>
+                                <span class="detail-value">Cobertura de limão, decoração minimalista</span>
+                            </div>
+                        </div>
+                        <div class="encomenda-footer">
+                            <div class="price">R$ 120,00</div>
+                            <button class="btn-secondary">Ver Detalhes</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Encomenda 5 -->
+                <div class="encomenda-card">
+                    <div class="encomenda-header">
+                        <div class="encomenda-id">#ENC005</div>
+                        <div class="status-badge status-producao">Em Produção</div>
+                    </div>
+                    <div class="encomenda-image">
+                        <img src="https://images.pexels.com/photos/2144112/pexels-photo-2144112.jpeg" alt="Bolo de Brigadeiro">
+                    </div>
+                    <div class="encomenda-content">
+                        <h3 class="encomenda-title">Bolo de Brigadeiro Gourmet</h3>
+                        <div class="encomenda-details">
+                            <div class="detail-item">
+                                <span class="detail-label">Data da Encomenda:</span>
+                                <span class="detail-value">19/01/2024</span>
+                            </div>
+                            <div class="detail-item">
+                                <span class="detail-label">Data de Entrega:</span>
+                                <span class="detail-value">26/01/2024</span>
+                            </div>
+                            <div class="detail-item">
+                                <span class="detail-label">Peso:</span>
+                                <span class="detail-value">2,5kg</span>
+                            </div>
+                            <div class="detail-item">
+                                <span class="detail-label">Observações:</span>
+                                <span class="detail-value">Brigadeiros artesanais, granulado belga</span>
+                            </div>
+                        </div>
+                        <div class="encomenda-footer">
+                            <div class="price">R$ 200,00</div>
+                            <button class="btn-secondary">Ver Detalhes</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Encomenda 6 -->
+                <div class="encomenda-card">
+                    <div class="encomenda-header">
+                        <div class="encomenda-id">#ENC006</div>
+                        <div class="status-badge status-entregue">Entregue</div>
+                    </div>
+                    <div class="encomenda-image">
+                        <img src="https://images.pexels.com/photos/1776118/pexels-photo-1776118.jpeg" alt="Bolo de Cenoura">
+                    </div>
+                    <div class="encomenda-content">
+                        <h3 class="encomenda-title">Bolo de Cenoura com Chocolate</h3>
+                        <div class="encomenda-details">
+                            <div class="detail-item">
+                                <span class="detail-label">Data da Encomenda:</span>
+                                <span class="detail-value">08/01/2024</span>
+                            </div>
+                            <div class="detail-item">
+                                <span class="detail-label">Data de Entrega:</span>
+                                <span class="detail-value">15/01/2024</span>
+                            </div>
+                            <div class="detail-item">
+                                <span class="detail-label">Peso:</span>
+                                <span class="detail-value">1,8kg</span>
+                            </div>
+                            <div class="detail-item">
+                                <span class="detail-label">Observações:</span>
+                                <span class="detail-value">Cobertura de brigadeiro, sem lactose</span>
+                            </div>
+                        </div>
+                        <div class="encomenda-footer">
+                            <div class="price">R$ 140,00</div>
+                            <button class="btn-card">Avaliar</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="cta">
+        <div class="container">
+            <div class="cta-content">
+                <h3 class="cta-title">
+                    Quer Fazer uma Nova Encomenda?
+                </h3>
+                <p class="cta-description">
+                    Entre em contato conosco e faça seu próximo pedido personalizado. Garantimos qualidade, sabor e um atendimento excepcional.
+                </p>
+                <button class="btn-cta">Nova Encomenda</button>
+            </div>
+        </div>
+    </section>
 
 {% endblock %}
