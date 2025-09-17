@@ -23,7 +23,7 @@
                     <!-- Tabs para alternar entre Login e Cadastro -->
                     <div class="auth-tabs">
                         <button class="auth-tab active" data-tab="login">Login</button>
-                        <button class="auth-tab" data-tab="register">Cadastro</button>
+                        <button class="auth-tab" data-tab="register" href="{% url 'cliente_create' %}">Cadastro</button>
                     </div>
                    
                     <!-- Formulário de Login -->
@@ -111,7 +111,7 @@
                                 </label>
                             </div>
                            
-                            <button type="submit" class="btn-primary btn-large btn-full">Criar Conta</button>
+                            <a type="submit" class="btn-primary btn-large btn-full" href="{% url 'index' %}">Criar Conta</a>
                            
                             <div class="divider">
                                 <span>ou</span>

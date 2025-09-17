@@ -10,7 +10,7 @@ class Entregador(models.Model):
     disponibilidade = models.BooleanField(default=True)
 
     def __str__(self):
-        return self.nome_entregador + " - " + self.disponibilidade
+        return self.nome_entregador + " - " + str(self.disponibilidade)
 
 class Cliente(models.Model):
     nome_cliente = models.CharField(max_length=150)
@@ -64,7 +64,7 @@ class Pedido(models.Model):
     tipo_massa = models.CharField(max_length=20, choices=TIPO_MASSA_CHOICES)
     recheio = models.CharField(max_length=20, choices=RECHEIO_CHOICES)
     formato = models.CharField(max_length=50)
-    tamanho = models.CharField(max_length=20, choices=RECHEIO_CHOICES)
+    tamanho = models.CharField(max_length=20, choices=TAMANHO_CHOICES)
     foto = models.ImageField(upload_to='fotos_pedidos/', blank=True, null=True)
     observacoes = models.TextField(blank=True, null=True)
     data_entrega = models.DateTimeField()
