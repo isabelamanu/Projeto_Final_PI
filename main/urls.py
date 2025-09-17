@@ -23,6 +23,7 @@ from agendadoce import views as agendadoce_views
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+    path('login/', agendadoce_views.login, name='login'),
     path('', agendadoce_views.index, name='index'),
     path('pedido/', agendadoce_views.pedido_list, name='pedido_list'),
     path('pedido/cadastrar', agendadoce_views.pedido_create, name='pedido_create'),

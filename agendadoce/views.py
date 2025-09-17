@@ -22,6 +22,9 @@ def index(request):
     
     return render(request, 'index.html', context)
 
+def login(request):
+    return render(request, '../templates/login.html')
+
 def pedido_list(request):
     pedidos = Pedido.objects.all()
     context ={
@@ -32,14 +35,15 @@ def pedido_list(request):
 def atribuir_entregador_automatico():
     # Conta quantos pedidos cada entregador tem em andamento
     entregador = (
-        Entregador.objects.annotate(num_pedidos=Count("pedidos"))
+        Entregador.objects.filter(disponibilidade=True)
+        .annotate(num_pedidos=Count("pedidos"))
         .order_by("num_pedidos")  # pega o que tem menos entregas
         .first()
     )
     if entregador:
         entregador.num_entregas += 1   # soma +1
         entregador.save()
-        
+
     return entregador
 
 def pedido_create(request):
@@ -48,6 +52,9 @@ def pedido_create(request):
         if form.is_valid():
             pedido = form.save(commit=False)  # não salva ainda
             pedido.entregador = atribuir_entregador_automatico()  # atribui automaticamente
+            if not pedido.entregador:
+                messages.error(request, 'Nenhum entregador disponível no momento.')
+                return redirect('pedido_list')
             pedido.save()
             messages.success(request, f'Pedido "{pedido.nome_pedido}" feito com sucesso!')
             return redirect('pedido_list')

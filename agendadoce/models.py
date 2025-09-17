@@ -48,7 +48,6 @@ class Pedido(models.Model):
     STATUS_CHOICES = [
         ("aguardando", "Aguardando Confirmação"),
         ("producao", "Em Produção"),
-        ("entrega", "Saiu para Entrega"),
         ("entregue", "Entregue"),
         ("cancelado", "Cancelado"),
     ]
