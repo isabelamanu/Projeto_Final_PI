@@ -90,7 +90,7 @@ def pedido_detail(request, id):
     context= {
         'pedido': pedido
     }
-    return render(request, 'pedido/pedido_detail.html', context)
+    return render(request, 'pedido/detail_pedido.html', context)
     
 
 def entregador_list(request):

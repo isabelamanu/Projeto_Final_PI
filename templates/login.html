@@ -23,7 +23,7 @@
                     <!-- Tabs para alternar entre Login e Cadastro -->
                     <div class="auth-tabs">
                         <button class="auth-tab active" data-tab="login">Login</button>
-                        <button class="auth-tab" data-tab="register">Cadastro</button>
+                        <button class="auth-tab" data-tab="register" href="{% url 'cliente_create' %}">Cadastro</button>
                     </div>
                    
                     <!-- Formulário de Login -->
@@ -60,69 +60,6 @@
                         </form>
                     </div>
                    
-                    <!-- Formulário de Cadastro -->
-                    <div id="register-form" class="auth-form">
-                        <form class="form">
-                            <div class="form-row">
-                                <div class="form-group">
-                                    <label for="register-name" class="form-label">Nome</label>
-                                    <input type="text" id="register-name" class="form-input" placeholder="Seu nome" required>
-                                </div>
-                                <div class="form-group">
-                                    <label for="register-lastname" class="form-label">Sobrenome</label>
-                                    <input type="text" id="register-lastname" class="form-input" placeholder="Seu sobrenome" required>
-                                </div>
-                            </div>
-                           
-                            <div class="form-group">
-                                <label for="register-email" class="form-label">E-mail</label>
-                                <input type="email" id="register-email" class="form-input" placeholder="seu@email.com" required>
-                            </div>
-                           
-                            <div class="form-group">
-                                <label for="register-phone" class="form-label">Telefone</label>
-                                <input type="tel" id="register-phone" class="form-input" placeholder="(11) 99999-9999" required>
-                            </div>
-                           
-                            <div class="form-row">
-                                <div class="form-group">
-                                    <label for="register-password" class="form-label">Senha</label>
-                                    <input type="password" id="register-password" class="form-input" placeholder="••••••••" required>
-                                </div>
-                                <div class="form-group">
-                                    <label for="register-confirm" class="form-label">Confirmar Senha</label>
-                                    <input type="password" id="register-confirm" class="form-input" placeholder="••••••••" required>
-                                </div>
-                            </div>
-                           
-                            <div class="form-group">
-                                <label class="checkbox-container">
-                                    <input type="checkbox" id="terms" required>
-                                    <span class="checkbox-label">
-                                        Concordo com os <a href="#" class="link">Termos de Uso</a> e <a href="#" class="link">Política de Privacidade</a>
-                                    </span>
-                                </label>
-                            </div>
-                           
-                            <div class="form-group">
-                                <label class="checkbox-container">
-                                    <input type="checkbox" id="newsletter">
-                                    <span class="checkbox-label">Quero receber ofertas especiais e novidades por e-mail</span>
-                                </label>
-                            </div>
-                           
-                            <button type="submit" class="btn-primary btn-large btn-full">Criar Conta</button>
-                           
-                            <div class="divider">
-                                <span>ou</span>
-                            </div>
-                           
-                            <button type="button" class="btn-secondary btn-large btn-full">
-                                <span class="btn-icon">📱</span>
-                                Cadastrar com Google
-                            </button>
-                        </form>
-                    </div>
                 </div>
             </div>
         </div>
@@ -346,44 +283,4 @@
     }
 }
 </style>
-
-<script>
-// JavaScript para alternar entre login e cadastro
-document.addEventListener('DOMContentLoaded', function() {
-    const loginTab = document.querySelector('[data-tab="login"]');
-    const registerTab = document.querySelector('[data-tab="register"]');
-    const loginForm = document.getElementById('login-form');
-    const registerForm = document.getElementById('register-form');
-   
-    loginTab.addEventListener('click', function() {
-        loginTab.classList.add('active');
-        registerTab.classList.remove('active');
-        loginForm.classList.add('active');
-        registerForm.classList.remove('active');
-    });
-   
-    registerTab.addEventListener('click', function() {
-        registerTab.classList.add('active');
-        loginTab.classList.remove('active');
-        registerForm.classList.add('active');
-        loginForm.classList.remove('active');
-    });
-   
-    // Formatação do telefone
-    const phoneInput = document.getElementById('register-phone');
-    if (phoneInput) {
-        phoneInput.addEventListener('input', function(e) {
-            let value = e.target.value.replace(/\D/g, '');
-            if (value.length <= 11) {
-                value = value.replace(/(\d{2})(\d{5})(\d{4})/, '($1) $2-$3');
-                if (value.length === 14) {
-                    e.target.value = value;
-                } else if (value.length < 14) {
-                    e.target.value = value.replace(/(\d{2})(\d{4})(\d{4})/, '($1) $2-$3');
-                }
-            }
-        });
-    }
-});
-</script>
 {% endblock %}

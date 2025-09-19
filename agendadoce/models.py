@@ -10,7 +10,7 @@ class Entregador(models.Model):
     disponibilidade = models.BooleanField(default=True)
 
     def __str__(self):
-        return self.nome_entregador + " - " + self.disponibilidade
+        return self.nome_entregador + " - " + str(self.disponibilidade)
 
 class Cliente(models.Model):
     nome_cliente = models.CharField(max_length=150)
@@ -20,42 +20,42 @@ class Cliente(models.Model):
     endereco = models.CharField(max_length=250)
 
     def __str__(self):
-        return self.nome_cliente + " - " + self.telefone
+        return self.nome_cliente
 
 class Pedido(models.Model):
     TIPO_MASSA_CHOICES = [
-        ("chocolate", "Chocolate"),
-        ("amantegada", "Amanteigada"),
-        ("formigueiro", "Formigueiro"),
+        ("Chocolate", "Chocolate"),
+        ("Amanteigada", "Amanteigada"),
+        ("Formigueiro", "Formigueiro"),
     ]
 
     RECHEIO_CHOICES = [
-        ("brigadeiro", "Brigadeiro"),
-        ("ninho", "Ninho"),
-        ("prestígio", "Prestígio"),
-        ("paçoca", "Paçoca"),
-        ("frutas vermelhas", "Frutas Vermelhas"),
+        ("Brigadeiro", "Brigadeiro"),
+        ("Ninho", "Ninho"),
+        ("Prestígio", "Prestígio"),
+        ("Paçoca", "Paçoca"),
+        ("Frutas Vermelhas", "Frutas Vermelhas"),
     ]
 
     TAMANHO_CHOICES = [
-        ("mini", "Mini (8 pessoas)"),
-        ("pp", "PP (15 pessoas)"),
-        ("p", "P (25 pessoas)"),
-        ("m", "M (45 pessoas)"),
-        ("g", "G (85 pessoas)"),
+        ("Mini", "Mini (8 pessoas)"),
+        ("PP", "PP (15 pessoas)"),
+        ("P", "P (25 pessoas)"),
+        ("M", "M (45 pessoas)"),
+        ("G", "G (85 pessoas)"),
     ]
 
     STATUS_CHOICES = [
-        ("aguardando", "Aguardando Confirmação"),
-        ("producao", "Em Produção"),
-        ("entregue", "Entregue"),
-        ("cancelado", "Cancelado"),
+        ("Aguardando Confirmação", "Aguardando Confirmação"),
+        ("Em producao", "Em Produção"),
+        ("Entregue", "Entregue"),
+        ("Cancelado", "Cancelado"),
     ]
 
     PAGAMENTO_CHOICES = [
-        ("dinheiro", "Dinheiro"),
-        ("pix", "Pix"),
-        ("cartao", "Cartão"),
+        ("Dinheiro", "Dinheiro"),
+        ("Pix", "Pix"),
+        ("Cartao", "Cartão"),
     ]
 
     cliente = models.ForeignKey(Cliente, on_delete=models.CASCADE, related_name="pedidos")
@@ -64,14 +64,14 @@ class Pedido(models.Model):
     tipo_massa = models.CharField(max_length=20, choices=TIPO_MASSA_CHOICES)
     recheio = models.CharField(max_length=20, choices=RECHEIO_CHOICES)
     formato = models.CharField(max_length=50)
-    tamanho = models.CharField(max_length=20, choices=RECHEIO_CHOICES)
+    tamanho = models.CharField(max_length=20, choices=TAMANHO_CHOICES)
     foto = models.ImageField(upload_to='fotos_pedidos/', blank=True, null=True)
     observacoes = models.TextField(blank=True, null=True)
     data_entrega = models.DateTimeField()
     endereco_pedido = models.TextField(blank=True, null=True)
     tipo_pagamento = models.CharField(max_length=20, choices=PAGAMENTO_CHOICES)
-    status = models.CharField(max_length=20, choices=STATUS_CHOICES, default="aguardando")
-    valor = models.DecimalField(max_digits=8, decimal_places=2)
+    status = models.CharField(max_length=30, choices=STATUS_CHOICES, default="aguardando")
+    valor = models.DecimalField(max_digits=8, decimal_places=2, default=0)
 
     def __str__(self):
         return f"Pedido #{self.id} - {self.nome_pedido} ({self.cliente})"

@@ -20,13 +20,13 @@
                 </div>
                 
                 <nav class="nav">
-                    <a href="#inicio" class="nav-link">Início</a>
-                    <a href="#encomendas" class="nav-link">Encomendas</a>
+                    <a href="{% url 'index' %}" class="nav-link">Início</a>
+                    <a href="{% url 'pedido_list' %}" class="nav-link">Encomendas</a>
                     <a href="#sobre" class="nav-link">Sobre</a>
                     <a href="#contato" class="nav-link">Contato</a>
                 </nav>
                 
-                <button class="btn-primary">Fazer Pedido</button>
+                <a class="btn-primary" href="{% url 'pedido_create' %}">Fazer Pedido</a>
             </div>
         </div>
     </header>

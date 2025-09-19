@@ -18,8 +18,8 @@
                     feitos com muito carinho e ingredientes selecionados para sua festa especial.
                 </p>
                 <div class="hero-buttons">
-                    <button class="btn-primary btn-large">Ver Catálogo</button>
-                    <button class="btn-secondary btn-large">Fale Conosco</button>
+                    <a class="btn-primary btn-large" href="{% url 'login' %}">Fazer Login</a>
+                    <a class="btn-secondary btn-large" href="{% url 'cliente_create' %}">Fazer Cadastro</a>
                 </div>
             </div>
             
@@ -74,7 +74,7 @@
                 Entre em contato conosco e faça seu pedido personalizado. 
                 Garantimos qualidade, sabor e um atendimento excepcional.
             </p>
-            <button class="btn-cta">Fazer Pedido Agora</button>
+            <a class="btn-cta" href="{% url 'pedido_create' %}">Fazer Pedido Agora</a>
         </div>
     </div>
 </section>

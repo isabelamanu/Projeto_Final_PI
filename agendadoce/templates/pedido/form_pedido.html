@@ -31,21 +31,14 @@
                     <div class="form-row">
                         <div class="form-group">
                             <label for="id_nome_pedido" class="form-label">Nome do Pedido *</label>
-                            <input type="text"
-                                   name="nome_pedido"
-                                   id="id_nome_pedido"
-                                   class="form-control"
-                                   placeholder="Ex: Aniversário da Maria"
-                                   required>
+                            {{ form.nome_pedido }}
                             <small class="form-help">Digite um nome para identificar este pedido</small>
+                            
                         </div>
                        
                         <div class="form-group">
                             <label for="id_cliente" class="form-label">Cliente *</label>
-                            <select name="cliente" id="id_cliente" class="form-control" required>
-                                <option value="">Selecione o cliente</option>
-                                <!-- Opções serão preenchidas pelo Django -->
-                            </select>
+                            {{ form.cliente }}
                         </div>
                     </div>
                 </div>
@@ -60,49 +53,26 @@
                     <div class="form-row">
                         <div class="form-group">
                             <label for="id_tipo_massa" class="form-label">Tipo de Massa *</label>
-                            <select name="tipo_massa" id="id_tipo_massa" class="form-select" required>
-                                <option value="">Escolha o tipo de massa</option>
-                                <option value="chocolate">Chocolate</option>
-                                <option value="amantegada">Amanteigada</option>
-                                <option value="formigueiro">Formigueiro</option>
-                            </select>
+                            {{ form.tipo_massa }}
                         </div>
                        
                         <div class="form-group">
                             <label for="id_recheio" class="form-label">Recheio *</label>
-                            <select name="recheio" id="id_recheio" class="form-select" required>
-                                <option value="">Escolha o recheio</option>
-                                <option value="brigadeiro">Brigadeiro</option>
-                                <option value="ninho">Ninho</option>
-                                <option value="prestígio">Prestígio</option>
-                                <option value="paçoca">Paçoca</option>
-                                <option value="frutas vermelhas">Frutas Vermelhas</option>
-                            </select>
+                            {{ form.recheio }}
                         </div>
                     </div>
                    
                     <div class="form-row">
                         <div class="form-group">
                             <label for="id_formato" class="form-label">Formato *</label>
-                            <input type="text"
-                                   name="formato"
-                                   id="id_formato"
-                                   class="form-control"
-                                   placeholder="Ex: Redondo, Quadrado, Coração"
-                                   required>
+                            {{ form.formato }}
                             <small class="form-help">Descreva o formato desejado para o bolo</small>
+                            
                         </div>
                        
                         <div class="form-group">
                             <label for="id_tamanho" class="form-label">Tamanho *</label>
-                            <select name="tamanho" id="id_tamanho" class="form-select" required>
-                                <option value="">Escolha o tamanho</option>
-                                <option value="mini">Mini (8 pessoas)</option>
-                                <option value="pp">PP (15 pessoas)</option>
-                                <option value="p">P (25 pessoas)</option>
-                                <option value="m">M (45 pessoas)</option>
-                                <option value="g">G (85 pessoas)</option>
-                            </select>
+                            {{ form.tamanho }}
                         </div>
                     </div>
                 </div>
@@ -116,31 +86,19 @@
                    
                     <div class="form-row">
                         <div class="form-group full-width">
-                            <label for="id_foto" class="form-label">Foto de Referência</label>
-                            <div class="file-upload-area">
-                                <input type="file"
-                                       name="foto"
-                                       id="id_foto"
-                                       class="form-control file-input"
-                                       accept="image/*">
-                                <div class="file-upload-text">
-                                    <span class="upload-icon">📷</span>
-                                    <p>Clique para enviar uma foto de referência</p>
-                                    <small>Formatos aceitos: JPG, PNG, GIF (máx. 5MB)</small>
-                                </div>
-                            </div>
+                            <label for="id_foto" class="form-label">Foto de Referência 📷</label>
+                            <p>Clique para enviar uma foto de referência</p>
+                            {{ form.foto }}
+                            <small>Formatos aceitos: JPG, PNG, GIF (máx. 5MB)</small>
                         </div>
                     </div>
                    
                     <div class="form-row">
                         <div class="form-group full-width">
                             <label for="id_observacoes" class="form-label">Observações Especiais</label>
-                            <textarea name="observacoes"
-                                      id="id_observacoes"
-                                      class="form-control textarea"
-                                      rows="4"
-                                      placeholder="Descreva detalhes especiais, cores, decorações, alergias ou outras informações importantes..."></textarea>
+                            {{ form.observacoes }}
                             <small class="form-help">Inclua qualquer detalhe que possa ajudar na confecção do seu bolo</small>
+                            <!-- placeholder="Descreva detalhes especiais, cores, decorações, alergias ou outras informações importantes..."></textarea> -->
                         </div>
                     </div>
                 </div>
@@ -155,34 +113,21 @@
                     <div class="form-row">
                         <div class="form-group">
                             <label for="id_data_entrega" class="form-label">Data e Hora da Entrega *</label>
-                            <input type="datetime-local"
-                                   name="data_entrega"
-                                   id="id_data_entrega"
-                                   class="form-control"
-                                   required>
+                            {{ form.data_entrega }}
                             <small class="form-help">Selecione quando você precisa receber o bolo</small>
                         </div>
                        
                         <div class="form-group">
                             <label for="id_tipo_pagamento" class="form-label">Forma de Pagamento *</label>
-                            <select name="tipo_pagamento" id="id_tipo_pagamento" class="form-select" required>
-                                <option value="">Escolha a forma de pagamento</option>
-                                <option value="dinheiro">Dinheiro</option>
-                                <option value="pix">PIX</option>
-                                <option value="cartao">Cartão</option>
-                            </select>
+                            {{ form.tipo_pagamento }}
                         </div>
                     </div>
                    
                     <div class="form-row">
                         <div class="form-group full-width">
                             <label for="id_endereco_pedido" class="form-label">Endereço de Entrega *</label>
-                            <textarea name="endereco_pedido"
-                                      id="id_endereco_pedido"
-                                      class="form-control textarea"
-                                      rows="3"
-                                      placeholder="Digite o endereço completo para entrega..."
-                                      required></textarea>
+                            {{ form.endereco_pedido }}
+                            <!-- placeholder="Digite o endereço completo para entrega..." -->
                             <small class="form-help">Inclua rua, número, complemento, bairro, cidade e CEP</small>
                         </div>
                     </div>
@@ -211,10 +156,10 @@
 
                 <!-- Botões de Ação -->
                 <div class="form-actions">
-                    <button type="button" class="btn-secondary btn-large">
+                    <a href= "{% url 'pedido_list' %}" type="button" class="btn-secondary btn-large">
                         <span class="btn-icon">↩️</span>
                         Voltar
-                    </button>
+                    </a>
                     <button type="submit" class="btn-primary btn-large">
                         <span class="btn-icon">✅</span>
                         Enviar Pedido
