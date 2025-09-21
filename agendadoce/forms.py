@@ -43,7 +43,7 @@ class PedidoForm(ModelForm):
             'tamanho': forms.Select(attrs={'class': 'form-select' }),
             'foto': forms.FileInput(attrs={'class': 'form-control'}),
             'observacoes': forms.TextInput(attrs={'class': 'form-control', 'rows': 3 }),
-            'data_entrega': forms.DateTimeInput(attrs={'class': 'form-control' }),
+            'data_entrega': forms.DateTimeInput(attrs={'class': 'form-control', 'type': 'datetime-local' }, format='%Y-%m-%dT%H:%M'),
             'endereco_pedido': forms.TextInput(attrs={'class': 'form-control', 'rows': 2 }),
             'tipo_pagamento': forms.Select(attrs={'class': 'form-select' }),
         }

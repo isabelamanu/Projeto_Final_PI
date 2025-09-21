@@ -28,37 +28,31 @@
                    
                     <!-- Formulário de Cadastro -->
                     <div id="register-form" class="auth-form">
-                        <form class="form">
-                            <div class="form-row">
-                                <div class="form-group">
-                                    <label for="register-name" class="form-label">Nome</label>
-
-                                    <input type="text" id="register-name" class="form-input" placeholder="Seu nome" required>
-                                </div>
+                        <form class="form" method="post">
+                            {% csrf_token %}
+                            <div class="form-group">
+                                <label for="register-name" class="form-label">Nome</label>
+                                {{ form.nome_cliente }}
                             </div>
 
                             <div class="form-group">
-                                <label for="register-phone" class="form-label">CPF</label>
-                                
-                                <input type="tel" id="register-phone" class="form-input" placeholder="000.000.000-00" required>
+                                <label for="register-cpf" class="form-label">CPF</label>
+                                {{ form.cpf }}
                             </div>
                            
                             <div class="form-group">
                                 <label for="register-email" class="form-label">E-mail</label>
-
-                                <input type="email" id="register-email" class="form-input" placeholder="seu@email.com" required>
+                                {{ form.email }}
                             </div>
                            
                             <div class="form-group">
                                 <label for="register-phone" class="form-label">Telefone</label>
-
-                                <input type="tel" id="register-phone" class="form-input" placeholder="(11) 99999-9999" required>
+                                {{ form.telefone }}
                             </div>
 
                             <div class="form-group">
-                                <label for="register-phone" class="form-label">Endereco</label>
-                                
-                                <input type="tel" id="register-phone" class="form-input" placeholder="Rua, Número da casa, Bairro..." required>
+                                <label for="register-endereco" class="form-label">Endereco</label>
+                                {{ form.endereco }}
                             </div>
                            
                             <div class="form-row">
@@ -106,6 +100,7 @@
     </div>
 </section>
 
+
 <style>
 /* Estilos adicionais para os formulários de autenticação */
 .auth-container {
@@ -144,10 +139,6 @@
     box-shadow: 0 2px 4px rgba(236, 72, 153, 0.2);
 }
 
-.auth-form {
-    display: none;
-}
-
 .auth-form.active {
     display: block;
 }
@@ -174,6 +165,7 @@
     font-weight: 500;
     color: #374151;
     font-size: 0.875rem;
+    
 }
 
 .form-input {
