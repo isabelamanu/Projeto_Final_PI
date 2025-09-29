@@ -172,7 +172,7 @@ def cliente_update(request, id):
     else:
         form = ClienteForm(instance=cliente)
     
-    return render(request, 'vendedor/form_vendedor.html', {'form':form})
+    return render(request, 'cliente/form_cliente.html', {'form':form})
 
 def cliente_delete(request, id):
     cliente = get_object_or_404(Cliente, id=id)

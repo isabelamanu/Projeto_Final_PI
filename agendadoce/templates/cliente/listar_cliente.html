@@ -50,13 +50,6 @@
                     </div>
                 </div>
                 <div class="stat-card">
-                    <div class="stat-icon">📅</div>
-                    <div class="stat-content">
-                        <p class="stat-number">15</p>
-                        <p class="stat-label">Novos este Mês</p>
-                    </div>
-                </div>
-                <div class="stat-card">
                     <div class="stat-icon">🎂</div>
                     <div class="stat-content">
                         <p class="stat-number">4.8</p>
@@ -68,50 +61,55 @@
             <!-- Grid de Clientes -->
             <div class="encomendas-grid">
                 <!-- Cliente 1 -->
-                <div class="encomenda-card">
-                    <div class="encomenda-header">
-                        <div class="encomenda-id">#CLI001</div>
-                        <div class="status-badge status-pronto">Ativo</div>
+                {% for cliente in clientes %}
+                    <div class="encomenda-card">
+                        <div class="encomenda-header">
+                            <div class="encomenda-id">#CLI00{{ cliente.id }}</div>
+                            <div class="status-badge status-pronto">Ativo</div>
+                        </div>
+                        <div class="encomenda-content">
+                            <div style="display: flex; align-items: center; gap: 1rem; margin-bottom: 1rem;">
+                                <div style="width: 60px; height: 60px; background: #fce7f3; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 1.5rem; font-weight: 600; color: #ec4899;">
+                                    MS
+                                </div>
+                                <div>
+                                    <h3 class="encomenda-title" style="margin-bottom: 0.25rem;">{{ cliente.nome_cliente }}</h3>
+                                </div>
+                            </div>
+                            <div class="encomenda-details">
+                                <div class="detail-item">
+                                    <span class="detail-label">CPF:</span>
+                                    <span class="detail-value">{{ cliente.cpf }}</span>
+                                </div>
+                                <div class="detail-item">
+                                    <span class="detail-label">Email:</span>
+                                    <span class="detail-value">{{ cliente.email }}</span>
+                                </div>
+                                <div class="detail-item">
+                                    <span class="detail-label">Telefone:</span>
+                                    <span class="detail-value">{{ cliente.telefone }}</span>
+                                </div>
+                                <div class="detail-item">
+                                    <span class="detail-label">Endereço:</span>
+                                    <span class="detail-value">{{ cliente.endereco }}</span>
+                                </div>
+                                <div class="detail-item">
+                                    <span class="detail-label">Pedidos:</span>
+                                    <span class="detail-value">8 encomendas</span>
+                                </div>
+                                <div class="detail-item">
+                                    <span class="detail-label">Total Gasto:</span>
+                                    <span class="detail-value">R$ 1.440,00</span>
+                                </div>
+                            </div>
+                            <div style="display: flex; gap: 0.5rem; margin-top: 1.5rem; flex-wrap: wrap;">
+                                <a href="{% url 'cliente_detail' id=cliente.id %}" class="btn-card" style="flex: 1; min-width: 80px;">Ver Detalhes</a>
+                                <a href="{% url 'cliente_update' id=cliente.id %}" class="btn-secondary" style="padding: 0.5rem 1rem; font-size: 0.875rem;">Editar</a>
+                                <a href="{% url 'cliente_delete' id=cliente.id %}" style="background: #ef4444; color: white; border: none; padding: 0.5rem 1rem; border-radius: 0.5rem; font-size: 0.875rem; cursor: pointer;">Excluir</a>
+                            </div>
+                        </div>
                     </div>
-                    <div class="encomenda-content">
-                        <div style="display: flex; align-items: center; gap: 1rem; margin-bottom: 1rem;">
-                            <div style="width: 60px; height: 60px; background: #fce7f3; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 1.5rem; font-weight: 600; color: #ec4899;">
-                                MS
-                            </div>
-                            <div>
-                                <h3 class="encomenda-title" style="margin-bottom: 0.25rem;">Maria Silva</h3>
-                                <p style="color: #6b7280; font-size: 0.875rem;">Cliente desde Jan/2023</p>
-                            </div>
-                        </div>
-                        <div class="encomenda-details">
-                            <div class="detail-item">
-                                <span class="detail-label">Email:</span>
-                                <span class="detail-value">maria@email.com</span>
-                            </div>
-                            <div class="detail-item">
-                                <span class="detail-label">Telefone:</span>
-                                <span class="detail-value">(11) 99999-8888</span>
-                            </div>
-                            <div class="detail-item">
-                                <span class="detail-label">Pedidos:</span>
-                                <span class="detail-value">8 encomendas</span>
-                            </div>
-                            <div class="detail-item">
-                                <span class="detail-label">Último Pedido:</span>
-                                <span class="detail-value">15/01/2024</span>
-                            </div>
-                            <div class="detail-item">
-                                <span class="detail-label">Total Gasto:</span>
-                                <span class="detail-value">R$ 1.440,00</span>
-                            </div>
-                        </div>
-                        <div style="display: flex; gap: 0.5rem; margin-top: 1.5rem; flex-wrap: wrap;">
-                            <button class="btn-card" style="flex: 1; min-width: 80px;">Ver Detalhes</button>
-                            <button class="btn-secondary" style="padding: 0.5rem 1rem; font-size: 0.875rem;">Editar</button>
-                            <button style="background: #ef4444; color: white; border: none; padding: 0.5rem 1rem; border-radius: 0.5rem; font-size: 0.875rem; cursor: pointer;">Excluir</button>
-                        </div>
-                    </div>
-                </div>
+                {% endfor %}
 
                 <!-- Cliente 2 -->
                 <div class="encomenda-card">
@@ -158,190 +156,7 @@
                         </div>
                     </div>
                 </div>
-
-                <!-- Cliente 3 -->
-                <div class="encomenda-card">
-                    <div class="encomenda-header">
-                        <div class="encomenda-id">#CLI003</div>
-                        <div class="status-badge status-pronto">Ativo</div>
-                    </div>
-                    <div class="encomenda-content">
-                        <div style="display: flex; align-items: center; gap: 1rem; margin-bottom: 1rem;">
-                            <div style="width: 60px; height: 60px; background: #fce7f3; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 1.5rem; font-weight: 600; color: #ec4899;">
-                                AC
-                            </div>
-                            <div>
-                                <h3 class="encomenda-title" style="margin-bottom: 0.25rem;">Ana Costa</h3>
-                                <p style="color: #6b7280; font-size: 0.875rem;">Cliente desde Set/2023</p>
-                            </div>
-                        </div>
-                        <div class="encomenda-details">
-                            <div class="detail-item">
-                                <span class="detail-label">Email:</span>
-                                <span class="detail-value">ana@email.com</span>
-                            </div>
-                            <div class="detail-item">
-                                <span class="detail-label">Telefone:</span>
-                                <span class="detail-value">(11) 97777-6666</span>
-                            </div>
-                            <div class="detail-item">
-                                <span class="detail-label">Pedidos:</span>
-                                <span class="detail-value">3 encomendas</span>
-                            </div>
-                            <div class="detail-item">
-                                <span class="detail-label">Último Pedido:</span>
-                                <span class="detail-value">08/01/2024</span>
-                            </div>
-                            <div class="detail-item">
-                                <span class="detail-label">Total Gasto:</span>
-                                <span class="detail-value">R$ 540,00</span>
-                            </div>
-                        </div>
-                        <div style="display: flex; gap: 0.5rem; margin-top: 1.5rem; flex-wrap: wrap;">
-                            <button class="btn-card" style="flex: 1; min-width: 80px;">Ver Detalhes</button>
-                            <button class="btn-secondary" style="padding: 0.5rem 1rem; font-size: 0.875rem;">Editar</button>
-                            <button style="background: #ef4444; color: white; border: none; padding: 0.5rem 1rem; border-radius: 0.5rem; font-size: 0.875rem; cursor: pointer;">Excluir</button>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Cliente 4 -->
-                <div class="encomenda-card">
-                    <div class="encomenda-header">
-                        <div class="encomenda-id">#CLI004</div>
-                        <div class="status-badge status-producao">Inativo</div>
-                    </div>
-                    <div class="encomenda-content">
-                        <div style="display: flex; align-items: center; gap: 1rem; margin-bottom: 1rem;">
-                            <div style="width: 60px; height: 60px; background: #fce7f3; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 1.5rem; font-weight: 600; color: #ec4899;">
-                                PL
-                            </div>
-                            <div>
-                                <h3 class="encomenda-title" style="margin-bottom: 0.25rem;">Pedro Lima</h3>
-                                <p style="color: #6b7280; font-size: 0.875rem;">Cliente desde Jun/2023</p>
-                            </div>
-                        </div>
-                        <div class="encomenda-details">
-                            <div class="detail-item">
-                                <span class="detail-label">Email:</span>
-                                <span class="detail-value">pedro@email.com</span>
-                            </div>
-                            <div class="detail-item">
-                                <span class="detail-label">Telefone:</span>
-                                <span class="detail-value">(11) 96666-5555</span>
-                            </div>
-                            <div class="detail-item">
-                                <span class="detail-label">Pedidos:</span>
-                                <span class="detail-value">2 encomendas</span>
-                            </div>
-                            <div class="detail-item">
-                                <span class="detail-label">Último Pedido:</span>
-                                <span class="detail-value">20/11/2023</span>
-                            </div>
-                            <div class="detail-item">
-                                <span class="detail-label">Total Gasto:</span>
-                                <span class="detail-value">R$ 320,00</span>
-                            </div>
-                        </div>
-                        <div style="display: flex; gap: 0.5rem; margin-top: 1.5rem; flex-wrap: wrap;">
-                            <button class="btn-card" style="flex: 1; min-width: 80px;">Ver Detalhes</button>
-                            <button class="btn-secondary" style="padding: 0.5rem 1rem; font-size: 0.875rem;">Editar</button>
-                            <button style="background: #ef4444; color: white; border: none; padding: 0.5rem 1rem; border-radius: 0.5rem; font-size: 0.875rem; cursor: pointer;">Excluir</button>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Cliente 5 -->
-                <div class="encomenda-card">
-                    <div class="encomenda-header">
-                        <div class="encomenda-id">#CLI005</div>
-                        <div class="status-badge status-entregue">VIP</div>
-                    </div>
-                    <div class="encomenda-content">
-                        <div style="display: flex; align-items: center; gap: 1rem; margin-bottom: 1rem;">
-                            <div style="width: 60px; height: 60px; background: #fce7f3; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 1.5rem; font-weight: 600; color: #ec4899;">
-                                CF
-                            </div>
-                            <div>
-                                <h3 class="encomenda-title" style="margin-bottom: 0.25rem;">Carla Ferreira</h3>
-                                <p style="color: #6b7280; font-size: 0.875rem;">Cliente desde Fev/2022</p>
-                            </div>
-                        </div>
-                        <div class="encomenda-details">
-                            <div class="detail-item">
-                                <span class="detail-label">Email:</span>
-                                <span class="detail-value">carla@email.com</span>
-                            </div>
-                            <div class="detail-item">
-                                <span class="detail-label">Telefone:</span>
-                                <span class="detail-value">(11) 95555-4444</span>
-                            </div>
-                            <div class="detail-item">
-                                <span class="detail-label">Pedidos:</span>
-                                <span class="detail-value">22 encomendas</span>
-                            </div>
-                            <div class="detail-item">
-                                <span class="detail-label">Último Pedido:</span>
-                                <span class="detail-value">12/01/2024</span>
-                            </div>
-                            <div class="detail-item">
-                                <span class="detail-label">Total Gasto:</span>
-                                <span class="detail-value">R$ 4.180,00</span>
-                            </div>
-                        </div>
-                        <div style="display: flex; gap: 0.5rem; margin-top: 1.5rem; flex-wrap: wrap;">
-                            <button class="btn-card" style="flex: 1; min-width: 80px;">Ver Detalhes</button>
-                            <button class="btn-secondary" style="padding: 0.5rem 1rem; font-size: 0.875rem;">Editar</button>
-                            <button style="background: #ef4444; color: white; border: none; padding: 0.5rem 1rem; border-radius: 0.5rem; font-size: 0.875rem; cursor: pointer;">Excluir</button>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Cliente 6 -->
-                <div class="encomenda-card">
-                    <div class="encomenda-header">
-                        <div class="encomenda-id">#CLI006</div>
-                        <div class="status-badge status-pronto">Ativo</div>
-                    </div>
-                    <div class="encomenda-content">
-                        <div style="display: flex; align-items: center; gap: 1rem; margin-bottom: 1rem;">
-                            <div style="width: 60px; height: 60px; background: #fce7f3; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 1.5rem; font-weight: 600; color: #ec4899;">
-                                RA
-                            </div>
-                            <div>
-                                <h3 class="encomenda-title" style="margin-bottom: 0.25rem;">Roberto Alves</h3>
-                                <p style="color: #6b7280; font-size: 0.875rem;">Cliente desde Out/2023</p>
-                            </div>
-                        </div>
-                        <div class="encomenda-details">
-                            <div class="detail-item">
-                                <span class="detail-label">Email:</span>
-                                <span class="detail-value">roberto@email.com</span>
-                            </div>
-                            <div class="detail-item">
-                                <span class="detail-label">Telefone:</span>
-                                <span class="detail-value">(11) 94444-3333</span>
-                            </div>
-                            <div class="detail-item">
-                                <span class="detail-label">Pedidos:</span>
-                                <span class="detail-value">5 encomendas</span>
-                            </div>
-                            <div class="detail-item">
-                                <span class="detail-label">Último Pedido:</span>
-                                <span class="detail-value">05/01/2024</span>
-                            </div>
-                            <div class="detail-item">
-                                <span class="detail-label">Total Gasto:</span>
-                                <span class="detail-value">R$ 900,00</span>
-                            </div>
-                        </div>
-                        <div style="display: flex; gap: 0.5rem; margin-top: 1.5rem; flex-wrap: wrap;">
-                            <button class="btn-card" style="flex: 1; min-width: 80px;">Ver Detalhes</button>
-                            <button class="btn-secondary" style="padding: 0.5rem 1rem; font-size: 0.875rem;">Editar</button>
-                            <button style="background: #ef4444; color: white; border: none; padding: 0.5rem 1rem; border-radius: 0.5rem; font-size: 0.875rem; cursor: pointer;">Excluir</button>
-                        </div>
-                    </div>
-                </div>
+                
             </div>
         </div>
     </section>
