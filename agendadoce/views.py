@@ -1,29 +1,25 @@
 from django.shortcuts import render,get_object_or_404,redirect
-from django.contrib.auth.models import User
+from django.contrib.auth import get_user_model
+User = get_user_model()
 from django.db.models import Count
 from datetime import date
 from django.contrib import messages
-from .models import Entregador, Cliente, Pedido
-from .forms import EntregadorForm, ClienteForm, PedidoForm
+from .models import Entregador, Pedido
+from .forms import EntregadorForm, PedidoForm
 
 def index(request):
     total_pedidos = Pedido.objects.count()
     total_usuarios = User.objects.count()
-    total_clientes = Cliente.objects.count()
     total_entregadores = Entregador.objects.count()
     
     context = {
         'hoje': date.today(),
         'total_pedidos': total_pedidos,
         'total_usuarios': total_usuarios,
-        'total_clientes': total_clientes,
         'total_entregadores': total_entregadores,
     }
     
     return render(request, 'index.html', context)
-
-def login(request):
-    return render(request, '../templates/login.html')
 
 def pedido_list(request):
     pedidos = Pedido.objects.all()
@@ -51,10 +47,19 @@ def pedido_create(request):
         form = PedidoForm(request.POST, request.FILES)
         if form.is_valid():
             pedido = form.save(commit=False)  # não salva ainda
+
+            # atribui o usuário logado
+            if request.user.is_authenticated:
+                pedido.cliente = request.user
+            else:
+                messages.error(request, 'É necessário estar logado para fazer um pedido.')
+                return redirect('login')  # ou qualquer rota de login
+            
             pedido.entregador = atribuir_entregador_automatico()  # atribui automaticamente
             if not pedido.entregador:
                 messages.error(request, 'Nenhum entregador disponível no momento.')
                 return redirect('pedido_list')
+
             pedido.save()
             messages.success(request, f'Pedido "{pedido.nome_pedido}" feito com sucesso!')
             return redirect('pedido_list')
@@ -98,7 +103,7 @@ def entregador_list(request):
     context = {
         'entregadores': entregadores,
     }
-    return render(request, 'entregaor/listar_entregador.html', context)
+    return render(request, 'entregador/listar_entregador.html', context)
 
 def entregador_create(request):
     if request.method == 'POST':
@@ -140,50 +145,3 @@ def entregador_detail(request, id):
     }
     return render(request, 'entregador/detail_entregador.html', context)
 
-
-def cliente_list(request):
-    clientes = Cliente.objects.all()
-    context = {
-        'clientes': clientes,
-    }
-    return render(request, 'cliente/listar_cliente.html', context)
-
-def cliente_create(request):
-    if request.method == 'POST':
-        form = ClienteForm(request.POST)
-        if form.is_valid():
-            cliente = form.save()
-            messages.success(request, f'Cliente "{cliente.nome_cliente}" criado com sucesso!')
-            return redirect('cliente_list')
-    else:
-        form = ClienteForm()
-    
-    return render(request, 'cliente/form_cliente.html', {'form': form})
-
-def cliente_update(request, id):
-    cliente = get_object_or_404(Cliente, id=id)
-    
-    if request.method == 'POST':
-        form = ClienteForm(request.POST, instance=cliente)
-        if form.is_valid():
-            cliente = form.save()
-            messages.success(request, f'Cliente "{cliente.nome_cliente}" atualizado com sucesso!')
-            return redirect('cliente_detail', id=cliente.id)
-    else:
-        form = ClienteForm(instance=cliente)
-    
-    return render(request, 'cliente/form_cliente.html', {'form':form})
-
-def cliente_delete(request, id):
-    cliente = get_object_or_404(Cliente, id=id)
-    nome = cliente.nome_cliente
-    cliente.delete()
-    messages.success(request, f'Cliente "{nome}" excluído com sucesso!')
-    return redirect('cliente_list')
-
-def cliente_detail(request, id):
-    cliente = get_object_or_404(Cliente, id=id)
-    context= {
-        'cliente': cliente
-    }
-    return render(request, 'cliente/detail_cliente.html', context)

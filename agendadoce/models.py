@@ -1,4 +1,5 @@
 from django.db import models
+from django.conf import settings
 
 class Entregador(models.Model):
     nome_entregador = models.CharField(max_length=150)
@@ -58,8 +59,8 @@ class Pedido(models.Model):
         ("Cartao", "Cartão"),
     ]
 
-    cliente = models.ForeignKey(Cliente, on_delete=models.CASCADE, related_name="pedidos")
-    entregador = models.ForeignKey(Entregador, on_delete=models.CASCADE, related_name="pedidos")
+    cliente = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name="pedidos")
+    entregador = models.ForeignKey(Entregador, on_delete=models.CASCADE, related_name="pedidos", null=True, blank=True)
     nome_pedido = models.CharField(max_length=100)
     tipo_massa = models.CharField(max_length=20, choices=TIPO_MASSA_CHOICES)
     recheio = models.CharField(max_length=20, choices=RECHEIO_CHOICES)

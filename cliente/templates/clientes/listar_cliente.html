@@ -103,7 +103,7 @@
                                 </div>
                             </div>
                             <div style="display: flex; gap: 0.5rem; margin-top: 1.5rem; flex-wrap: wrap;">
-                                <a href="{% url 'cliente_detail' id=cliente.id %}" class="btn-card" style="flex: 1; min-width: 80px;">Ver Detalhes</a>
+                                <a href="{% url 'perfil' id=cliente.id %}" class="btn-card" style="flex: 1; min-width: 80px;">Ver Detalhes</a>
                                 <a href="{% url 'cliente_update' id=cliente.id %}" class="btn-secondary" style="padding: 0.5rem 1rem; font-size: 0.875rem;">Editar</a>
                                 <a href="{% url 'cliente_delete' id=cliente.id %}" style="background: #ef4444; color: white; border: none; padding: 0.5rem 1rem; border-radius: 0.5rem; font-size: 0.875rem; cursor: pointer;">Excluir</a>
                             </div>

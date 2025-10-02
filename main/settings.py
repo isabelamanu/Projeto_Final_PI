@@ -39,6 +39,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'agendadoce',
+    'cliente',
 ]
 
 MIDDLEWARE = [
@@ -127,3 +128,9 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 # Media files (Uploads)
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+
+AUTH_USER_MODEL = 'cliente.UsuarioAdaptado'
+
+LOGIN_URL = 'login'
+LOGIN_REDIRECT_URL = 'pedido_list'
+LOGOUT_REDIRECT_URL = 'login'
