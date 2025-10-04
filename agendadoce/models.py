@@ -3,7 +3,7 @@ from django.conf import settings
 
 class Entregador(models.Model):
     nome_entregador = models.CharField(max_length=150)
-    cpf = models.CharField()
+    cpf = models.CharField(max_length=11, unique=True, verbose_name="CPF")
     telefone = models.CharField(max_length=20)
     data_contratacao = models.DateField()
     num_entregas = models.PositiveIntegerField(default=0)
@@ -15,7 +15,7 @@ class Entregador(models.Model):
 
 class Cliente(models.Model):
     nome_cliente = models.CharField(max_length=150)
-    cpf = models.CharField()
+    cpf = models.CharField(max_length=11, unique=True, verbose_name="CPF")
     email = models.EmailField()
     telefone = models.CharField(max_length=150)
     endereco = models.CharField(max_length=250)
