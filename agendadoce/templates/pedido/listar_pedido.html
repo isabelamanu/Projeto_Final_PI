@@ -27,12 +27,18 @@
                 </div>
             </div>
         </div>
+        
     </section>
+
 
     <!-- Encomendas Section -->
     <section class="encomendas">
+        <div class="filter-tabs" style="justify-content: right; padding-right: 100px;" >
+            <a class="btn-primary">Fazer meu pedido</a>
+        </div>
+        
         <div class="container">
-            <div class="encomendas-stats">
+            <div class="encomendas-stats" style="padding-top: 20px;">
                 <div class="stat-card">
                     <div class="stat-icon">📦</div>
                     <div class="stat-content">
@@ -64,8 +70,11 @@
                             <div class="encomenda-id">#ENC00{{ pedido.id }}</div>
                             <div class="status-badge status-producao">{{ pedido.status }}</div>
                         </div>
+                        
                         <div class="encomenda-image">
+                            {% if pedido.foto %}
                             <img src="{{ pedido.foto.url }}" alt="{{ pedido.nome_pedido }}">
+                            {% endif %}
                         </div>
                         <div class="encomenda-content">
                             <h3 class="encomenda-title">{{ pedido.nome_pedido }}</h3>
