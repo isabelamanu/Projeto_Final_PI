@@ -91,11 +91,11 @@ def cliente_update(request, id):
     else:
         form = UsuarioAdaptadoCreationForm(instance=cliente)
     
-    return render(request, 'cliente/form_cliente.html', {'form':form})
+    return render(request, 'clientes/create_cliente.html', {'form':form})
 
 def cliente_delete(request, id):
     cliente = get_object_or_404(UsuarioAdaptado, id=id)
-    nome = cliente.nome_cliente
+    nome = UsuarioAdaptado.username
     cliente.delete()
     messages.success(request, f'Cliente "{nome}" excluído com sucesso!')
     return redirect('cliente_list')
