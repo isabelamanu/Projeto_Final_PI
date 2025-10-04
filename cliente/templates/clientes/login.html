@@ -40,6 +40,36 @@
                         <form method="post" class="form">
                             {% csrf_token %}
 
+                            <div class="mb-3">
+                                <label for="{{ form.username.id_for_label }}" class="form-label">
+                                    <i class="bi bi-person"></i> Usuário
+                                </label>
+                                {{ form.username }}
+                                {% if form.username.errors %}
+                                    <div class="text-danger small mt-1">
+                                        {{ form.username.errors }}
+                                    </div>
+                                {% endif %}
+                            </div>
+
+                            <div class="mb-3">
+                                <label for="{{ form.password.id_for_label }}" class="form-label">
+                                    <i class="bi bi-lock"></i> Senha
+                                </label>
+                                {{ form.password }}
+                                {% if form.password.errors %}
+                                    <div class="text-danger small mt-1">
+                                        {{ form.password.errors }}
+                                    </div>
+                                {% endif %}
+                            </div>
+
+                            {% if form.non_field_errors %}
+                                <div class="alert alert-danger">
+                                    {{ form.non_field_errors }}
+                                </div>
+                            {% endif %}
+
                             <div class="form-group">
                                 <label for="login-email" class="form-label">Usuário</label>
                                 {{ form.username }}
@@ -66,24 +96,7 @@
                                 </div>
                             {% endif %}
                         
-                            <div class="form-options">
-                                <label class="checkbox-container">
-                                    <input type="checkbox" id="remember">
-                                    <span class="checkbox-label">Lembrar de mim</span>
-                                </label>
-                                <a href="#" class="forgot-password">Esqueci minha senha</a>
-                            </div>
-                        
                             <button type="submit" class="btn-primary btn-large btn-full">Entrar</button>
-                        
-                            <div class="divider">
-                                <span>ou</span>
-                            </div>
-                        
-                            <button type="button" class="btn-secondary btn-large btn-full">
-                                <span class="btn-icon">📱</span>
-                                Continuar com Google
-                            </button>
 
                             <div class="text-center">
                                 <p class="mb-0">Não tem uma conta? 
@@ -101,6 +114,78 @@
 </section>
 
 <style>
+:root {
+    --light-green: #E8F5E9;
+}
+
+.login-container {
+    background: white;
+    border-radius: 15px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+    overflow: hidden;
+    max-width: 900px;
+    width: 100%;
+    margin: 20px;
+}
+
+.login-left {
+    background: var(--primary-green);
+    color: white;
+    padding: 60px 40px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+}
+
+.login-left i {
+    font-size: 5rem;
+    margin-bottom: 20px;
+}
+
+.login-left h2 {
+    font-weight: bold;
+    margin-bottom: 15px;
+}
+
+.login-right {
+    padding: 60px 40px;
+}
+
+.form-control:focus {
+    border-color: var(--primary-green);
+    box-shadow: 0 0 0 0.2rem rgba(76, 175, 80, 0.25);
+}
+
+.btn-login {
+    background-color: var(--primary-green);
+    border: none;
+    padding: 12px;
+    font-weight: bold;
+    transition: all 0.3s;
+}
+
+.btn-login:hover {
+    background-color: #45a049;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+}
+
+.link-cadastro {
+    color: var(--primary-green);
+    text-decoration: none;
+    font-weight: 500;
+}
+
+.link-cadastro:hover {
+    text-decoration: underline;
+}
+
+.form-label {
+    font-weight: 500;
+    color: var(--dark-gray);
+}
 /* Estilos adicionais para os formulários de autenticação */
 .auth-container {
     background: white;
