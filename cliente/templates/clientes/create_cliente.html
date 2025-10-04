@@ -1,6 +1,6 @@
 {% extends "base.html" %}
 
-{% block title %}Login | AgendaDoce{% endblock %}
+{% block title %}Cadastro | AgendaDoce{% endblock %}
 
 {% block content %}
 <!-- Login/Cadastro Section -->
@@ -14,7 +14,7 @@
                     ou Cadastre-se
                 </h2>
                 <p class="hero-description">
-                    Acesse sua conta para gerenciar seus pedidos e fazer novas encomendas dos nossos deliciosos bolos personalizados.
+                    Preencha os dados para criar sua conta e fazer novas encomendas dos nossos deliciosos bolos personalizados.
                 </p>
             </div>
            
@@ -25,11 +25,23 @@
                         <button class="auth-tab" data-tab="login" href="{% url 'login' %}">Login</button>
                         <button class="auth-tab active" data-tab="register">Cadastro</button>
                     </div>
+
+                    {% if messages %}
+                        {% for message in messages %}
+                            <div class="alert alert-{{ message.tags }} alert-dismissible fade show" role="alert">
+                                {{ message }}
+                                <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+                            </div>
+                        {% endfor %}
+                    {% endif %}
+
+                    <form class="form" method="post">
+                        {% csrf_token %}
                    
-                    <!-- Formulário de Cadastro -->
-                    <div id="register-form" class="auth-form">
-                        <form class="form" method="post">
-                            {% csrf_token %}
+                        <!-- Formulário de Cadastro -->
+                        <div id="register-form" class="auth-form">
+                            
+
                             <div class="form-group">
                                 <label for="register-name" class="form-label">Nome</label>
                                 {{ form.nome_cliente }}
@@ -39,12 +51,12 @@
                                 <label for="register-cpf" class="form-label">CPF</label>
                                 {{ form.cpf }}
                             </div>
-                           
+                        
                             <div class="form-group">
                                 <label for="register-email" class="form-label">E-mail</label>
                                 {{ form.email }}
                             </div>
-                           
+                        
                             <div class="form-group">
                                 <label for="register-phone" class="form-label">Telefone</label>
                                 {{ form.telefone }}
@@ -54,7 +66,7 @@
                                 <label for="register-endereco" class="form-label">Endereco</label>
                                 {{ form.endereco }}
                             </div>
-                           
+                        
                             <div class="form-row">
                                 <div class="form-group">
                                     <label for="register-password" class="form-label">Senha</label>
@@ -65,7 +77,7 @@
                                     <input type="password" id="register-confirm" class="form-input" placeholder="••••••••" required>
                                 </div>
                             </div>
-                           
+                        
                             <div class="form-group">
                                 <label class="checkbox-container">
                                     <input type="checkbox" id="terms" required>
@@ -74,26 +86,17 @@
                                     </span>
                                 </label>
                             </div>
-                           
+                        
                             <div class="form-group">
                                 <label class="checkbox-container">
                                     <input type="checkbox" id="newsletter">
                                     <span class="checkbox-label">Quero receber ofertas especiais e novidades por e-mail</span>
                                 </label>
                             </div>
-                           
+                        
                             <button type="submit" class="btn-primary btn-large btn-full">Criar Conta</button>
-                           
-                            <div class="divider">
-                                <span>ou</span>
-                            </div>
-                           
-                            <button type="button" class="btn-secondary btn-large btn-full">
-                                <span class="btn-icon">📱</span>
-                                Cadastrar com Google
-                            </button>
-                        </form>
-                    </div>
+                        </div>
+                    </form>    
                 </div>
             </div>
         </div>

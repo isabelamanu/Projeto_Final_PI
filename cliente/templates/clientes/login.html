@@ -25,20 +25,47 @@
                         <button class="auth-tab active" data-tab="login">Login</button>
                         <button class="auth-tab" data-tab="register" href="{% url 'cliente_create' %}">Cadastro</button>
                     </div>
+
+                    {% if messages %}
+                        {% for message in messages %}
+                            <div class="alert alert-{{ message.tags }} alert-dismissible fade show" role="alert">
+                                {{ message }}
+                                <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+                            </div>
+                        {% endfor %}
+                    {% endif %}
                    
                     <!-- Formulário de Login -->
                     <div id="login-form" class="auth-form active">
-                        <form class="form">
+                        <form method="post" class="form">
+                            {% csrf_token %}
+
                             <div class="form-group">
-                                <label for="login-email" class="form-label">E-mail</label>
-                                <input type="email" id="login-email" class="form-input" placeholder="seu@email.com" required>
+                                <label for="login-email" class="form-label">Usuário</label>
+                                {{ form.username }}
+                                {% if form.username.errors %}
+                                    <div class="text-danger small mt-1">
+                                        {{ form.username.errors }}
+                                    </div>
+                                {% endif %}
                             </div>
-                           
+                        
                             <div class="form-group">
                                 <label for="login-password" class="form-label">Senha</label>
-                                <input type="password" id="login-password" class="form-input" placeholder="••••••••" required>
+                                {{ form.password }}
+                                {% if form.password.errors %}
+                                    <div class="text-danger small mt-1">
+                                        {{ form.password.errors }}
+                                    </div>
+                                {% endif %}
                             </div>
-                           
+
+                            {% if form.non_field_errors %}
+                                <div class="alert alert-danger">
+                                    {{ form.non_field_errors }}
+                                </div>
+                            {% endif %}
+                        
                             <div class="form-options">
                                 <label class="checkbox-container">
                                     <input type="checkbox" id="remember">
@@ -46,17 +73,25 @@
                                 </label>
                                 <a href="#" class="forgot-password">Esqueci minha senha</a>
                             </div>
-                           
+                        
                             <button type="submit" class="btn-primary btn-large btn-full">Entrar</button>
-                           
+                        
                             <div class="divider">
                                 <span>ou</span>
                             </div>
-                           
+                        
                             <button type="button" class="btn-secondary btn-large btn-full">
                                 <span class="btn-icon">📱</span>
                                 Continuar com Google
                             </button>
+
+                            <div class="text-center">
+                                <p class="mb-0">Não tem uma conta? 
+                                    <a href="{% url 'cliente_create' %}" class="link-cadastro">
+                                        Cadastre-se aqui
+                                    </a>
+                                </p>
+                            </div>
                         </form>
                     </div>
                 </div>
