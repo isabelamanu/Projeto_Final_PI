@@ -27,29 +27,29 @@ def cliente_create(request):
 
 
 def login_view(request):
-#    if request.user.is_authenticated:
-#       return redirect('pedido_list')
-#    
-#    if request.method == 'POST':
-#        form = LoginForm(request, data=request.POST)
-#        if form.is_valid():
-#            username = form.cleaned_data.get('username')
-#            password = form.cleaned_data.get('password')
-#            user = authenticate(username=username, password=password)
-#            
-#            if user is not None:
-#                login(request, user)
-#                messages.success(request, f'Bem-vindo, {user.username}!')
-#                
-#                # Redireciona para a página solicitada
-#                next_page = request.GET.get('next', 'login')
-#                return redirect(next_page)
-#        else:
-#            messages.error(request, 'Usuário ou senha inválidos.')
-#    else:
-#        form = LoginForm()
-#    
-    return render(request, 'clientes/login.html')
+    if request.user.is_authenticated:
+       return redirect('pedido_list')
+   
+    if request.method == 'POST':
+        form = LoginForm(request, data=request.POST)
+        if form.is_valid():
+            username = form.cleaned_data.get('username')
+            password = form.cleaned_data.get('password')
+            user = authenticate(username=username, password=password)
+            
+            if user is not None:
+                login(request, user)
+                messages.success(request, f'Bem-vindo, {user.username}!')
+                
+                # Redireciona para a página solicitada
+                next_page = request.GET.get('next', 'pedido_list')
+                return redirect(next_page)
+        else:
+            messages.error(request, 'Usuário ou senha inválidos.')
+    else:
+        form = LoginForm()
+    
+    return render(request, 'clientes/login.html', {"form": form})
 
 
 def logout_view(request):
@@ -70,6 +70,7 @@ def perfil_view(request):
     
     return render(request, 'clientes/detail_cliente.html', {'form': form})
 
+@login_required
 def cliente_list(request):
     clientes = UsuarioAdaptado.objects.all()
     context = {
@@ -77,6 +78,7 @@ def cliente_list(request):
     }
     return render(request, 'clientes/listar_cliente.html', context)
 
+@login_required
 def cliente_update(request, id):
     cliente = get_object_or_404(UsuarioAdaptado, id=id)
     

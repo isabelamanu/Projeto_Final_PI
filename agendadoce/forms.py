@@ -33,10 +33,9 @@ class PedidoForm(ModelForm):
 
     class Meta:
         model = Pedido
-        fields = ['nome_pedido', 'cliente', 'tipo_massa', 'recheio', 'formato', 'tamanho', 'foto', 'observacoes', 'data_entrega', 'endereco_pedido', 'tipo_pagamento']
+        fields = ['nome_pedido', 'tipo_massa', 'recheio', 'formato', 'tamanho', 'foto', 'observacoes', 'data_entrega', 'endereco_pedido', 'tipo_pagamento']
         widgets = {
             'nome_pedido': forms.TextInput(attrs={'class': 'form-control'}),
-            'cliente': forms.Select(attrs={'class': 'form-control' }),
             'tipo_massa': forms.Select(attrs={'class': 'form-select' }),
             'recheio': forms.Select(attrs={'class': 'form-select' }),
             'formato': forms.TextInput(attrs={'class': 'form-control' }),

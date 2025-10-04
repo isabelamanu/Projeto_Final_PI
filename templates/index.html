@@ -18,7 +18,11 @@
                     feitos com muito carinho e ingredientes selecionados para sua festa especial.
                 </p>
                 <div class="hero-buttons">
+                    {% if request.user.is_authenticated %}
+                    <a class="btn-primary btn-large" href="{% url 'pedido_list' %}">Encomendas</a>
+                    {% else %}
                     <a class="btn-primary btn-large" href="{% url 'login' %}">Fazer Login</a>
+                    {% endif %}
                     <a class="btn-secondary btn-large" href="{% url 'cliente_create' %}">Fazer Cadastro</a>
                 </div>
             </div>

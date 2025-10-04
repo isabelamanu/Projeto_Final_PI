@@ -1,15 +1,16 @@
 from django.shortcuts import render,get_object_or_404,redirect
 from django.contrib.auth import get_user_model
-User = get_user_model()
+user = get_user_model()
 from django.db.models import Count
 from datetime import date
 from django.contrib import messages
+from django.contrib.auth.decorators import login_required
 from .models import Entregador, Pedido
 from .forms import EntregadorForm, PedidoForm
 
 def index(request):
     total_pedidos = Pedido.objects.count()
-    total_usuarios = User.objects.count()
+    total_usuarios = user.objects.count()
     total_entregadores = Entregador.objects.count()
     
     context = {
@@ -21,6 +22,7 @@ def index(request):
     
     return render(request, 'index.html', context)
 
+@login_required
 def pedido_list(request):
     pedidos = Pedido.objects.all()
     context ={
@@ -42,6 +44,7 @@ def atribuir_entregador_automatico():
 
     return entregador
 
+@login_required
 def pedido_create(request):
     if request.method == 'POST':
         form = PedidoForm(request.POST, request.FILES)
@@ -68,6 +71,7 @@ def pedido_create(request):
 
     return render(request, 'pedido/form_pedido.html', {'form': form})
 
+@login_required
 def pedido_update(request,id):
     pedido = get_object_or_404(Pedido,id=id)
    
@@ -90,6 +94,7 @@ def pedido_delete(request, id):
     messages.success(request, f'Pedido "{nome}" excluído com sucesso!')
     return redirect('pedido_list')
 
+@login_required
 def pedido_detail(request, id):
     pedido = get_object_or_404(Pedido, id=id)
     context= {
@@ -97,7 +102,7 @@ def pedido_detail(request, id):
     }
     return render(request, 'pedido/detail_pedido.html', context)
     
-
+@login_required
 def entregador_list(request):
     entregadores = Entregador.objects.all()
     context = {
@@ -105,6 +110,7 @@ def entregador_list(request):
     }
     return render(request, 'entregador/listar_entregador.html', context)
 
+@login_required
 def entregador_create(request):
     if request.method == 'POST':
         form = EntregadorForm(request.POST)
@@ -117,6 +123,7 @@ def entregador_create(request):
     
     return render(request, 'entregador/form_entregador.html', {'form': form})
 
+@login_required
 def entregador_update(request, id):
     entregador = get_object_or_404(Entregador, id=id)
     
@@ -138,10 +145,10 @@ def entregador_delete(request, id):
     messages.success(request, f'Entregador "{nome}" excluído com sucesso!')
     return redirect('entregador_list')
 
+@login_required
 def entregador_detail(request, id):
     entregador = get_object_or_404(Entregador, id=id)
     context= {
         'entregador': entregador
     }
     return render(request, 'entregador/detail_entregador.html', context)
-
