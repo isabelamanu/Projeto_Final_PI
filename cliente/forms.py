@@ -7,10 +7,12 @@ class UsuarioAdaptadoCreationForm(UserCreationForm):
     class Meta:
         model = UsuarioAdaptado
         fields = [
-            'username', 'email', 'cpf', 'nome_cidade', 'nome_mae',  'telefone', 'endereco', 'nome_bairro', 'password1', 'password2'
+            'username', 'first_name', 'last_name', 'email', 'cpf', 'nome_cidade', 'nome_mae',  'telefone', 'endereco', 'nome_bairro', 'password1', 'password2'
         ]
         widgets = {
             'username': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Nome de usuário'}),
+            'first_name': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Primeiro nome'}),
+            'last_name': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Sobrenome'}),
             'email': forms.EmailInput(attrs={'class': 'form-control', 'placeholder': 'seu@email.com'}),
             'cpf': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Digite seu CPF (apenas números)'}),
             'nome_cidade': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Cidade'}),

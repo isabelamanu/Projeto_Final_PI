@@ -2,4 +2,320 @@
 
 {% block content %}
 
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Perfil do Cliente - AgendaDoce</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+
+    <!-- Page Header -->
+    <section class="page-header">
+        <div class="container">
+            <div class="page-header-content">
+                <div style="display: flex; align-items: center; gap: 1rem; margin-bottom: 1rem;">
+                    <a href="{% url 'cliente_list' %}" class="btn-secondary" style="text-decoration: none">← Voltar</a>
+                    <div class="status-badge status-pronto">Ativo</div>
+                </div>
+                <h2 class="page-title">Perfil do <span class="highlight">Cliente</span></h2>
+                <p class="page-description">
+                    Visualize e gerencie todas as informações cadastrais do cliente. Mantenha os dados sempre atualizados para um melhor atendimento.
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Detalhes do Perfil -->
+    <section class="encomendas">
+        <div class="container">
+
+            <!-- Card Principal com Foto e Informações -->
+            <div class="encomenda-card" style="margin-bottom: 2rem;">
+                <div class="encomenda-header">
+                    <div class="encomenda-id">#CLI001</div>
+                    <div class="mb-3">
+                        {% if user.is_superuser %}
+                            <span class="badge bg-warning text-dark">
+                                <i class="bi bi-star-fill"></i> Superusuário
+                            </span>
+                        {% else %}
+                            {% for group in user.groups.all %}
+                                <span class="badge bg-success">
+                                    <i class="bi bi-people-fill"></i> {{ group.name }}
+                                </span>
+                            {% empty %}
+                                <span class="badge bg-secondary">Sem grupo</span>
+                            {% endfor %}
+                        {% endif %}
+                    </div>
+                </div>
+                <div style="display: grid; grid-template-columns: 300px 1fr; gap: 2rem; padding: 1.5rem;">
+
+                    <!-- Foto de Perfil -->
+                    <div style="display: flex; flex-direction: column; align-items: center; gap: 1rem;">
+                        {% if user.foto_perfil %}
+                            <img src="{{ user.foto_perfil.url }}" alt="Foto de perfil" class="rounded-circle img-thumbnail mb-3" style="width: 200px; height: 200px; background: #fce7f3; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 4rem; font-weight: 700; color: #ec4899; box-shadow: 0 4px 15px rgba(236, 72, 153, 0.2);">
+                        {% else %}
+                            <div class="rounded-circle bg-light d-inline-flex align-items-center justify-content-center mb-3" style="width: 200px; height: 200px; background: #fce7f3; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 4rem; font-weight: 700; color: #ec4899; box-shadow: 0 4px 15px rgba(236, 72, 153, 0.2);">
+                                <i class="bi bi-person-circle text-muted" style="font-size: 5rem;"></i>
+                            </div>
+                        {% endif %}
+                        <div style="text-align: center;">
+                            <h4 class="encomenda-title" style="margin-bottom: 0.5rem;">{{ user.get_full_name|default:user.username }}</h4>
+                            <h3 class="encomenda-title" style="margin-bottom: 0.5rem;">{{ user.username }}</h3>
+                            <p style="color: #6b7280; font-size: 0.875rem;">Cliente desde: {{ user.date_joined|date:"d/m/Y" }}</p>
+                        </div>
+                        <a href="{% url 'cliente_update' id=user.id %}" class="btn-primary" style="width: 100%; text-align: center; text-decoration: none; margin-top: 0.5rem;">
+                            Editar Perfil
+                        </a>
+                    </div>
+
+                    <!-- Informações Principais -->
+                    <div class="encomenda-content" style="padding: 0;">
+                        <h3 class="encomenda-title">Informações Pessoais</h3>
+                        <div class="encomenda-details">
+                            <div class="detail-item">
+                                <span class="detail-label">Nome Completo:</span>
+                                <span class="detail-value">Maria Silva Santos</span>
+                            </div>
+                            <div class="detail-item">
+                                <span class="detail-label">CPF:</span>
+                                <span class="detail-value">{{ user.cpf|default:"Não informado" }}</span>
+                            </div>
+                            <div class="detail-item">
+                                <span class="detail-label">Email:</span>
+                                <span class="detail-value">{{ user.email|default:"Não informado" }}</span>
+                            </div>
+                            <div class="detail-item">
+                                <span class="detail-label">Nome da Mãe:</span>
+                                <span class="detail-value">{{ user.nome_mae|default:"Não informado" }}</span>
+                            </div>
+                            <div class="detail-item">
+                                <span class="detail-label">Telefone:</span>
+                                <span class="detail-value">{{ user.telefone|default:"Não informado" }}</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Endereço e Estatísticas -->
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; margin-bottom: 2rem;">
+
+                <!-- Endereço -->
+                <div class="encomenda-card">
+                    <div style="padding: 1.5rem;">
+                        <h4 style="font-size: 1.25rem; font-weight: 600; color: #1f2937; margin-bottom: 1rem;">
+                            📍 Endereço
+                        </h4>
+                        <div class="encomenda-details">
+                            <div class="detail-item">
+                                <span class="detail-label">Rua:</span>
+                                <span class="detail-value">{{ user.endereco|default:"Não informado" }}</span>
+                            </div>
+                            <div class="detail-item">
+                                <span class="detail-label">Bairro:</span>
+                                <span class="detail-value">{{ user.nome_bairro|default:"Não informado" }}</span>
+                            </div>
+                            <div class="detail-item">
+                                <span class="detail-label">Cidade:</span>
+                                <span class="detail-value">{{ user.nome_cidade|default:"Não informado" }}</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Estatísticas -->
+                <div class="encomenda-card">
+                    <div style="padding: 1.5rem;">
+                        <h4 style="font-size: 1.25rem; font-weight: 600; color: #1f2937; margin-bottom: 1rem;">
+                            📊 Estatísticas
+                        </h4>
+                        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;">
+                            <div style="background: #fef3c7; padding: 1rem; border-radius: 0.75rem; text-align: center;">
+                                <p style="font-size: 1.75rem; font-weight: 700; color: #1f2937; margin-bottom: 0.25rem;">8</p>
+                                <p style="font-size: 0.875rem; color: #6b7280;">Pedidos</p>
+                            </div>
+                            <div style="background: #fce7f3; padding: 1rem; border-radius: 0.75rem; text-align: center;">
+                                <p style="font-size: 1.75rem; font-weight: 700; color: #1f2937; margin-bottom: 0.25rem;">R$ 1.440</p>
+                                <p style="font-size: 0.875rem; color: #6b7280;">Total Gasto</p>
+                            </div>
+                        </div>
+                        <div style="background: #d1fae5; padding: 1rem; border-radius: 0.75rem; text-align: center; margin-top: 1rem;">
+                            <p style="font-size: 1rem; font-weight: 600; color: #1f2937; margin-bottom: 0.25rem;">Último acesso</p>
+                            <p style="font-size: 0.875rem; color: #6b7280;">{{ user.last_login|date:"d/m/Y H:i"|default:"Nunca" }}</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Histórico de Pedidos -->
+            <div style="margin-bottom: 2rem;">
+                <h3 style="font-size: 1.75rem; font-weight: 600; color: #1f2937; margin-bottom: 1.5rem;">
+                    🎂 Histórico de Pedidos
+                </h3>
+
+                <!-- Grid de Pedidos -->
+                <div class="encomendas-grid">
+
+                    <!-- Pedidos -->
+                    {% for pedido in pedidos %}
+                        <div class="encomenda-card">
+                            <div class="encomenda-header">
+                                <div class="status-badge status-producao">{{ pedido.status }}</div>
+                            </div>
+                            
+                            <div class="encomenda-image">
+                                {% if pedido.foto %}
+                                <img src="{{ pedido.foto.url }}" alt="{{ pedido.nome_pedido }}">
+                                {% endif %}
+                            </div>
+                            <div class="encomenda-content">
+                                <h3 class="encomenda-title">{{ pedido.nome_pedido }}</h3>
+                                <div class="encomenda-details">
+                                    <div class="detail-item">
+                                        <span class="detail-label">Nome do Cliente:</span>
+                                        <span class="detail-value">{{ pedido.cliente }}</span>
+                                    </div>
+                                    <div class="detail-item">
+                                        <span class="detail-label">Data de Entrega:</span>
+                                        <span class="detail-value">{{ pedido.data_entrega }}</span>
+                                    </div>
+                                    <div class="detail-item">
+                                        <span class="detail-label">Entregador:</span>
+                                        <span class="detail-value">{{ pedido.entregador }}</span>
+                                    </div>
+                                    <div class="detail-item">
+                                        <span class="detail-label">Observações:</span>
+                                        <span class="detail-value">{{ pedido.observacoes }}</span>
+                                    </div>
+                                </div>
+                                <div class="encomenda-footer">
+                                    <div class="price">R$ {{ pedido.valor }}</div>
+                                    <a href="{% url 'pedido_detail' id=pedido.id %}" class="btn-secondary" style="text-decoration: none">Ver Detalhes</a>
+                                </div>
+                            </div>
+                        </div>
+                    {% endfor %}
+
+                    <!-- Pedido 1 -->
+                    <div class="encomenda-card">
+                        <div class="encomenda-header">
+                            <div class="status-badge status-entregue">Entregue</div>
+                        </div>
+                        <div class="encomenda-image">
+                            <img src="https://images.pexels.com/photos/140831/pexels-photo-140831.jpeg" alt="Bolo de Chocolate">
+                        </div>
+                        <div class="encomenda-content">
+                            <h3 class="encomenda-title">Bolo de Chocolate Premium</h3>
+                            <div class="encomenda-details">
+                                <div class="detail-item">
+                                    <span class="detail-label">Data de Entrega:</span>
+                                    <span class="detail-value">15/01/2024</span>
+                                </div>
+                                <div class="detail-item">
+                                    <span class="detail-label">Massa:</span>
+                                    <span class="detail-value">Chocolate</span>
+                                </div>
+                                <div class="detail-item">
+                                    <span class="detail-label">Recheio:</span>
+                                    <span class="detail-value">Brigadeiro</span>
+                                </div>
+                                <div class="detail-item">
+                                    <span class="detail-label">Tamanho:</span>
+                                    <span class="detail-value">Grande (20 pessoas)</span>
+                                </div>
+                            </div>
+                            <div class="encomenda-footer">
+                                <div class="price">R$ 180,00</div>
+                                <a href="{% url 'pedido_detail' id=1 %}" class="btn-card" style="text-decoration: none">Ver Detalhes</a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Pedido 2 -->
+                    <div class="encomenda-card">
+                        <div class="encomenda-header">
+                            <div class="status-badge status-entregue">Entregue</div>
+                        </div>
+                        <div class="encomenda-image">
+                            <img src="https://images.pexels.com/photos/1721932/pexels-photo-1721932.jpeg" alt="Bolo de Morango">
+                        </div>
+                        <div class="encomenda-content">
+                            <h3 class="encomenda-title">Bolo de Morango Especial</h3>
+                            <div class="encomenda-details">
+                                <div class="detail-item">
+                                    <span class="detail-label">Data de Entrega:</span>
+                                    <span class="detail-value">03/12/2023</span>
+                                </div>
+                                <div class="detail-item">
+                                    <span class="detail-label">Massa:</span>
+                                    <span class="detail-value">Baunilha</span>
+                                </div>
+                                <div class="detail-item">
+                                    <span class="detail-label">Recheio:</span>
+                                    <span class="detail-value">Morango com Chantilly</span>
+                                </div>
+                                <div class="detail-item">
+                                    <span class="detail-label">Tamanho:</span>
+                                    <span class="detail-value">Médio (15 pessoas)</span>
+                                </div>
+                            </div>
+                            <div class="encomenda-footer">
+                                <div class="price">R$ 150,00</div>
+                                <a href="{% url 'pedido_detail' id=2 %}" class="btn-card" style="text-decoration: none">Ver Detalhes</a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Pedido 3 -->
+                    <div class="encomenda-card">
+                        <div class="encomenda-header">
+                            <div class="status-badge status-entregue">Entregue</div>
+                        </div>
+                        <div class="encomenda-image">
+                            <img src="https://images.pexels.com/photos/1055270/pexels-photo-1055270.jpeg" alt="Bolo Red Velvet">
+                        </div>
+                        <div class="encomenda-content">
+                            <h3 class="encomenda-title">Bolo Red Velvet</h3>
+                            <div class="encomenda-details">
+                                <div class="detail-item">
+                                    <span class="detail-label">Data de Entrega:</span>
+                                    <span class="detail-value">20/10/2023</span>
+                                </div>
+                                <div class="detail-item">
+                                    <span class="detail-label">Massa:</span>
+                                    <span class="detail-value">Red Velvet</span>
+                                </div>
+                                <div class="detail-item">
+                                    <span class="detail-label">Recheio:</span>
+                                    <span class="detail-value">Cream Cheese</span>
+                                </div>
+                                <div class="detail-item">
+                                    <span class="detail-label">Tamanho:</span>
+                                    <span class="detail-value">Grande (20 pessoas)</span>
+                                </div>
+                            </div>
+                            <div class="encomenda-footer">
+                                <div class="price">R$ 200,00</div>
+                                <a href="{% url 'pedido_detail' id=3 %}" class="btn-card" style="text-decoration: none">Ver Detalhes</a>
+                            </div>
+                        </div>
+                    </div>
+
+                    
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+</body>
+</html>
+
+
 {% endblock %}

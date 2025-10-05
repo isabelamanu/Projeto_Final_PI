@@ -1,0 +1,172 @@
+{% extends "base.html" %}
+
+{% block title %}Editar Pefil | AgendaDoce{% endblock %}
+
+{% block content %}
+    <!-- Page Header -->
+    <section class="page-header">
+        <div class="container">
+            <div class="page-header-content">
+                <div style="display: flex; align-items: center; gap: 1rem; margin-bottom: 1rem;">
+                    <a href="{% url 'cliente_list' %}" class="btn-secondary">← Voltar</a>
+                    <div class="status-badge status-pronto">Ativo</div>
+                </div>
+                <h2 class="page-title">Formulário de <span class="highlight">Edição</span></h2>
+                <p class="page-description">
+                    Edite todas as informações de perfil de cliente. Mantenha os dados sempre atualizados para um melhor atendimento.
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <section class="pedido-form-section" style="display: flex;justify-content: center; min-height: 100vh; ">
+        <div class="container">
+            <div class="form-container" style="margin-block: 30px;">
+                <!-- Coluna da Direita - Formulário de Edição -->
+                <div class="card shadow-sm" style="background-color: rgb(255, 252, 253)">
+                    <div class="card-header text-white" style="background-color: rgb(246, 84, 138)">
+                        <h5 class="mb-0" >
+                            <i class="bi bi-pencil-square" ></i> Editar Informações
+                        </h5>
+                    </div>
+                    <div class="card-body" style="margin-block: 10px;">
+                        <form method="post" enctype="multipart/form-data" class="form-container">
+                            {% csrf_token %}
+
+                            <!-- Dados Pessoais -->
+                            <div class="section-title mb-3">
+                                <h6 class="border-bottom pb-2" style="color: rgb(246, 84, 138)">
+                                    <i class="bi bi-person"></i> DADOS PESSOAIS
+                                </h6>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-md-6 mb-3">
+                                    <label for="{{ form.first_name.id_for_label }}" class="form-label fw-bold">
+                                        Primeiro Nome
+                                    </label>
+                                    {{ form.first_name }}
+                                    {% if form.first_name.errors %}
+                                        <div class="text-danger small mt-1">{{ form.first_name.errors }}</div>
+                                    {% endif %}
+                                </div>
+                                <div class="col-md-6 mb-3">
+                                    <label for="{{ form.last_name.id_for_label }}" class="form-label fw-bold">
+                                        Sobrenome
+                                    </label>
+                                    {{ form.last_name }}
+                                    {% if form.last_name.errors %}
+                                        <div class="text-danger small mt-1">{{ form.last_name.errors }}</div>
+                                    {% endif %}
+                                </div>
+                            </div>
+
+                            <div class="mb-3">
+                                <label for="{{ form.email.id_for_label }}" class="form-label fw-bold">
+                                    <i class="bi bi-envelope text-success"></i> E-mail
+                                </label>
+                                {{ form.email }}
+                                {% if form.email.errors %}
+                                    <div class="text-danger small mt-1">{{ form.email.errors }}</div>
+                                {% endif %}
+                            </div>
+
+                            <div class="mb-3">
+                                <label for="{{ form.nome_mae.id_for_label }}" class="form-label fw-bold">
+                                    Nome da Mãe
+                                </label>
+                                {{ form.nome_mae }}
+                                {% if form.nome_mae.errors %}
+                                    <div class="text-danger small mt-1">{{ form.nome_mae.errors }}</div>
+                                {% endif %}
+                            </div>
+
+                            <!-- Foto de Perfil -->
+                            <div class="section-title mb-3 mt-4">
+                                <h6 class="border-bottom pb-2" style="color: rgb(246, 84, 138)">
+                                    <i class="bi bi-image"></i> FOTO DE PERFIL
+                                </h6>
+                            </div>
+
+                            <div class="mb-3">
+                                <label for="{{ form.foto_perfil.id_for_label }}" class="form-label fw-bold">
+                                    Escolher Foto
+                                </label>
+                                
+                                {% if user.foto_perfil %}
+                                    <div class="mb-3">
+                                        <img src="{{ user.foto_perfil.url }}" alt="Foto atual" class="img-thumbnail" style="max-width: 200px; max-height: 200px; object-fit: cover;">
+                                        <p class="text-muted small mt-2">Foto atual. Envie uma nova para substituir.</p>
+                                    </div>
+                                {% endif %}
+                                
+                                {{ form.foto_perfil }}
+                                {% if form.foto_perfil.errors %}
+                                    <div class="text-danger small mt-1">{{ form.foto_perfil.errors }}</div>
+                                {% endif %}
+                                <small class="text-muted">Formatos aceitos: JPG, PNG. Tamanho máximo: 2MB</small>
+                            </div>
+
+                            <!-- Endereço -->
+                            <div class="section-title mb-3 mt-4">
+                                <h6 class="border-bottom pb-2" style="color: rgb(246, 84, 138)">
+                                    <i class="bi bi-geo-alt"></i> ENDEREÇO
+                                </h6>
+                            </div>
+
+                            <div class="mb-3">
+                                <label for="{{ form.endereco.id_for_label }}" class="form-label fw-bold">
+                                    Endereço Completo
+                                </label>
+                                {{ form.endereco }}
+                                {% if form.endereco.errors %}
+                                    <div class="text-danger small mt-1">{{ form.endereco.errors }}</div>
+                                {% endif %}
+                            </div>
+
+                            <div class="row">
+                                <div class="col-md-6 mb-3">
+                                    <label for="{{ form.nome_bairro.id_for_label }}" class="form-label fw-bold">
+                                        Bairro
+                                    </label>
+                                    {{ form.nome_bairro }}
+                                    {% if form.nome_bairro.errors %}
+                                        <div class="text-danger small mt-1">{{ form.nome_bairro.errors }}</div>
+                                    {% endif %}
+                                </div>
+                                <div class="col-md-6 mb-3">
+                                    <label for="{{ form.nome_cidade.id_for_label }}" class="form-label fw-bold">
+                                        Cidade
+                                    </label>
+                                    {{ form.nome_cidade }}
+                                    {% if form.nome_cidade.errors %}
+                                        <div class="text-danger small mt-1">{{ form.nome_cidade.errors }}</div>
+                                    {% endif %}
+                                </div>
+                            </div>
+
+                            <!-- Erros gerais -->
+                            {% if form.non_field_errors %}
+                                <div class="alert alert-danger">
+                                    {{ form.non_field_errors }}
+                                </div>
+                            {% endif %}
+
+                            <!-- Botões -->
+                            <div class="d-flex gap-2 justify-content-end mt-4 pt-3 border-top">
+                                <a href= "{% url 'perfil' %}" type="button" class="btn-secondary btn-large" style="text-decoration: none">
+                                    <span class="btn-icon">↩️</span>
+                                    Cancelar
+                                </a>
+                                <button type="submit" class="btn-primary btn-large">
+                                    <span class="btn-icon">✅</span>
+                                    Salvar Alterações
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+{% endblock %}

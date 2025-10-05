@@ -34,8 +34,11 @@
     <!-- Encomendas Section -->
     <section class="encomendas">
         <div class="filter-tabs" style="justify-content: right; padding-right: 100px;" >
-            <a class="btn-primary">Fazer meu pedido</a>
+            <a href="{% url 'pedido_create' %}" class="btn-primary" style="text-align: center; text-decoration: none; margin-top: 0.5rem;">
+            Fazer meu pedido
+            </a>
         </div>
+        
         
         <div class="container">
             <div class="encomendas-stats" style="padding-top: 20px;">
@@ -98,7 +101,11 @@
                             </div>
                             <div class="encomenda-footer">
                                 <div class="price">R$ {{ pedido.valor }}</div>
-                                <a href="{% url 'pedido_detail' id=pedido.id %}" class="btn-secondary">Ver Detalhes</a>
+                                <a class="btn-card" href="{% url 'pedido_detail' id=pedido.id %}" style="flex: 1; min-width: 80px; text-decoration: none">Ver Detalhes</a>
+                                <!-- {% if user.is_administrador %} -->
+                                <a href="{% url 'pedido_update' id=pedido.id %}" class="btn-secondary" style="padding: 0.5rem 1rem; font-size: 0.875rem; text-decoration: none">Editar</a>
+                                <a href="{% url 'pedido_delete' id=pedido.id %}" style="background: #ef4444; color: white; border: none; padding: 0.5rem 1rem; border-radius: 0.5rem; font-size: 0.875rem; cursor: pointer; text-decoration: none">Excluir</a>
+                                <!-- {% endif %} -->
                             </div>
                         </div>
                     </div>
@@ -154,7 +161,7 @@
                 <p class="cta-description">
                     Entre em contato conosco e faça seu próximo pedido personalizado. Garantimos qualidade, sabor e um atendimento excepcional.
                 </p>
-                <a class="btn-cta" href="{% url 'pedido_create' %}">Nova Encomenda</a>
+                <a class="btn-cta" href="{% url 'pedido_create' %}" style="text-decoration: none">Nova Encomenda</a>
             </div>
         </div>
     </section>

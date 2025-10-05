@@ -17,7 +17,7 @@
         <div class="container">
             <div class="page-header-content">
                 <div style="display: flex; align-items: center; gap: 1rem; margin-bottom: 1rem;">
-                    <a href="{% url 'pedido_list' %}" class="btn-secondary">← Voltar</a>
+                    <a href="{% url 'pedido_list' %}" class="btn-secondary" style="text-decoration: none">← Voltar</a>
                     <div class="status-badge status-producao">{{ pedido.status }}</div>
                 </div>
                 <h2 class="page-title">Encomenda <span class="highlight">#ENC00{{ pedido.id }}</span></h2>
@@ -75,7 +75,7 @@
                         </div>
                         <div class="encomenda-footer">
                             <div class="price">R$ {{ pedido.valor }}</div>
-                            <a href="{% url 'pedido_update' id=pedido.id %}" class="btn-primary">Alterar Pedido</a>
+                            <a href="{% url 'pedido_update' id=pedido.id %}" class="btn-primary" style="text-decoration: none">Alterar Pedido</a>
                         </div>
                     </div>
                 </div>
@@ -125,7 +125,7 @@
 
             <!-- Ações -->
             <div style="display: flex; gap: 1rem; justify-content: center; margin-top: 2rem; flex-wrap: wrap;">
-                <a href="{% url 'pedido_delete' id=pedido.id %}" class="btn-secondary btn-large">Cancelar Pedido</a>
+                <a href="{% url 'pedido_delete' id=pedido.id %}" class="btn-secondary btn-large" style="text-decoration: none">Cancelar Pedido</a>
             </div>
         </div>
     </section>
