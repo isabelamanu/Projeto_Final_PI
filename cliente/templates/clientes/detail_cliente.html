@@ -80,7 +80,7 @@
                         <div class="encomenda-details">
                             <div class="detail-item">
                                 <span class="detail-label">Nome Completo:</span>
-                                <span class="detail-value">Maria Silva Santos</span>
+                                <span class="detail-value">{{ user.get_full_name|default:user.username }}</span>
                             </div>
                             <div class="detail-item">
                                 <span class="detail-label">CPF:</span>

@@ -42,7 +42,7 @@ def login_view(request):
                 messages.success(request, f'Bem-vindo, {user.username}!')
                 
                 # Redireciona para a página solicitada
-                next_page = request.GET.get('next', 'pedido_list')
+                next_page = request.GET.get('next', 'historico')
                 return redirect(next_page)
         else:
             messages.error(request, 'Usuário ou senha inválidos.')
@@ -90,13 +90,13 @@ def cliente_update(request, id):
     cliente = get_object_or_404(UsuarioAdaptado, id=id)
     
     if request.method == 'POST':
-        form = UsuarioAdaptadoCreationForm(request.POST, instance=cliente)
+        form = PerfilForm(request.POST, instance=cliente)
         if form.is_valid():
             cliente = form.save()
-            messages.success(request, f'Cliente "{cliente.nome_cliente}" atualizado com sucesso!')
+            messages.success(request, f'Cliente "{cliente.username}" atualizado com sucesso!')
             return redirect('cliente_detail', id=cliente.id)
     else:
-        form = UsuarioAdaptadoCreationForm(instance=cliente)
+        form = PerfilForm(instance=cliente)
     
     return render(request, 'clientes/update_cliente.html', {'form':form})
 

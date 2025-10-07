@@ -13,7 +13,7 @@ class UsuarioAdaptado(AbstractUser):
     def __str__(self):
         return f"{self.username}"
     
-    def is_gerente(self):
+    def is_administrador(self):
         return self.groups.filter(name="ADMINISTRADOR").exists()
     
     def is_user_simples(self):

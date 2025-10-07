@@ -19,7 +19,7 @@
                 </p>
                 <div class="hero-buttons">
                     {% if request.user.is_authenticated %}
-                    <a class="btn-primary btn-large" href="{% url 'pedido_list' %}" style="text-decoration: none">Encomendas</a>
+                    <a class="btn-primary btn-large" href="{% url 'historico' %}" style="text-decoration: none">Encomendas</a>
                     {% else %}
                     <a class="btn-primary btn-large" href="{% url 'login' %}" style="text-decoration: none">Fazer Login</a>
                     {% endif %}

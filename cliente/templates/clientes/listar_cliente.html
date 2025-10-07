@@ -61,10 +61,10 @@
             <!-- Grid de Clientes -->
             <div class="encomendas-grid">
                 <!-- Cliente 1 -->
-                {% for cliente in clientes %}
+                {% for user in clientes %}
                     <div class="encomenda-card">
                         <div class="encomenda-header">
-                            <div class="encomenda-id">#CLI00{{ cliente.id }}</div>
+                            <div class="encomenda-id">#CLI00{{ user.id }}</div>
                             <div class="status-badge status-pronto">Ativo</div>
                         </div>
                         <div class="encomenda-content">
@@ -73,25 +73,25 @@
                                     MS
                                 </div>
                                 <div>
-                                    <h3 class="encomenda-title" style="margin-bottom: 0.25rem;">{{ cliente.username }}</h3>
+                                    <h3 class="encomenda-title" style="margin-bottom: 0.25rem;">{{ user.username }}</h3>
                                 </div>
                             </div>
                             <div class="encomenda-details">
                                 <div class="detail-item">
                                     <span class="detail-label">CPF:</span>
-                                    <span class="detail-value">{{ cliente.cpf }}</span>
+                                    <span class="detail-value">{{ user.cpf }}</span>
                                 </div>
                                 <div class="detail-item">
                                     <span class="detail-label">Email:</span>
-                                    <span class="detail-value">{{ cliente.email }}</span>
+                                    <span class="detail-value">{{ user.email }}</span>
                                 </div>
                                 <div class="detail-item">
                                     <span class="detail-label">Telefone:</span>
-                                    <span class="detail-value">{{ cliente.telefone }}</span>
+                                    <span class="detail-value">{{ user.telefone }}</span>
                                 </div>
                                 <div class="detail-item">
                                     <span class="detail-label">Endereço:</span>
-                                    <span class="detail-value">{{ cliente.endereco }}</span>
+                                    <span class="detail-value">{{ user.endereco }}</span>
                                 </div>
                                 <div class="detail-item">
                                     <span class="detail-label">Pedidos:</span>
@@ -104,11 +104,9 @@
                             </div>
                             <div style="display: flex; gap: 0.5rem; margin-top: 1.5rem; flex-wrap: wrap;">
                                 <div style="display: flex; gap: 0.5rem; margin-top: 1.5rem; flex-wrap: wrap;">
-                                    <a class="btn-card" href="{% url 'cliente_detail' id=cliente.id %}" style="flex: 1; min-width: 80px; text-decoration: none">Ver Detalhes</a>
-                                    {% if user.is_administrador %}
-                                    <a href="{% url 'cliente_update' id=cliente.id %}" class="btn-secondary" style="padding: 0.5rem 1rem; font-size: 0.875rem; text-decoration: none">Editar</a>
-                                    <a href="{% url 'cliente_delete' id=cliente.id %}" style="background: #ef4444; color: white; border: none; padding: 0.5rem 1rem; border-radius: 0.5rem; font-size: 0.875rem; cursor: pointer; text-decoration: none">Excluir</a>
-                                    {% endif %}
+                                    <a class="btn-card" href="{% url 'cliente_detail' id=user.id %}" style="flex: 1; min-width: 80px; text-decoration: none">Ver Detalhes</a>
+                                    <a href="{% url 'cliente_update' id=user.id %}" class="btn-secondary" style="padding: 0.5rem 1rem; font-size: 0.875rem; text-decoration: none">Editar</a>
+                                    <a href="{% url 'cliente_delete' id=user.id %}" style="background: #ef4444; color: white; border: none; padding: 0.5rem 1rem; border-radius: 0.5rem; font-size: 0.875rem; cursor: pointer; text-decoration: none">Excluir</a>
                                 </div>
                             </div>
                         </div>
