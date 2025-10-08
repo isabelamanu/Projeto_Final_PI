@@ -13,7 +13,7 @@
                 </div>
                 <h2 class="page-title">Formulário de <span class="highlight">Edição</span></h2>
                 <p class="page-description">
-                    Edite todas as informações de perfil de cliente. Mantenha os dados sempre atualizados para um melhor atendimento.
+                    Edite informações de perfil de cliente. Mantenha os dados sempre atualizados para um melhor atendimento.
                 </p>
             </div>
         </div>
@@ -155,10 +155,17 @@
 
                             <!-- Botões -->
                             <div class="d-flex gap-2 justify-content-end mt-4 pt-3 border-top">
-                                <a href= "{% url 'perfil' %}" type="button" class="btn-secondary btn-large" style="text-decoration: none">
-                                    <span class="btn-icon">↩️</span>
-                                    Cancelar
-                                </a>
+                                {% if user.is_administrador %}
+                                    <a href= "{% url 'cliente_list' %}" type="button" class="btn-secondary btn-large" style="text-decoration: none">
+                                        <span class="btn-icon">↩️</span>
+                                        Cancelar
+                                    </a>
+                                {% else %}
+                                    <a href= "{% url 'perfil' %}" type="button" class="btn-secondary btn-large" style="text-decoration: none">
+                                        <span class="btn-icon">↩️</span>
+                                        Cancelar
+                                    </a>
+                                {% endif %}
                                 <button type="submit" class="btn-primary btn-large">
                                     <span class="btn-icon">✅</span>
                                     Salvar Alterações

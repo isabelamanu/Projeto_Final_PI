@@ -83,6 +83,12 @@
                         <div class="form-group full-width">
                             <label for="id_foto" class="form-label">Foto de Referência 📷</label>
                             <p>Clique para enviar uma foto de referência</p>
+                            {% if pedido.foto %}
+                                <div class="mb-3">
+                                    <img src="{{ pedido.foto.url }}" alt="Foto atual" class="img-thumbnail" style="max-width: 200px; max-height: 200px; object-fit: cover;">
+                                    <p class="text-muted small mt-2">Foto atual. Envie uma nova para substituir.</p>
+                                </div>
+                            {% endif %}
                             {{ form.foto }}
                             <small>Formatos aceitos: JPG, PNG, GIF (máx. 5MB)</small>
                         </div>
@@ -139,8 +145,13 @@
                             <div class="summary-item">
                                 <span class="summary-label">Status:</span>
                                 <span class="summary-value">
+                                    <span class="status-aguardando">{{ form.status }}</span>
+                                </span>
+
+                                <span class="summary-value">
                                     <span class="status-badge status-aguardando">Aguardando Confirmação</span>
                                 </span>
+
                             </div>
                             <div class="summary-note">
                                 <p><strong>Importante:</strong> Após enviar o pedido, nossa equipe entrará em contato em até 2 horas para confirmar todos os detalhes e informar o valor final.</p>
@@ -151,10 +162,17 @@
 
                 <!-- Botões de Ação -->
                 <div class="form-actions">
+                    {% if user.is_administrador %}
                     <a href= "{% url 'pedido_list' %}" type="button" class="btn-secondary btn-large" style="text-decoration: none">
                         <span class="btn-icon">↩️</span>
                         Voltar
                     </a>
+                    {% else %}
+                    <a href= "{% url 'historico' %}" type="button" class="btn-secondary btn-large" style="text-decoration: none">
+                        <span class="btn-icon">↩️</span>
+                        Voltar
+                    </a>
+                    {% endif %}
                     <button type="submit" class="btn-primary btn-large">
                         <span class="btn-icon">✅</span>
                         Enviar Pedido

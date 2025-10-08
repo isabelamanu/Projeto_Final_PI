@@ -90,7 +90,7 @@ def cliente_update(request, id):
     cliente = get_object_or_404(UsuarioAdaptado, id=id)
     
     if request.method == 'POST':
-        form = PerfilForm(request.POST, instance=cliente)
+        form = PerfilForm(request.POST, request.FILES, instance=cliente)
         if form.is_valid():
             cliente = form.save()
             messages.success(request, f'Cliente "{cliente.username}" atualizado com sucesso!')

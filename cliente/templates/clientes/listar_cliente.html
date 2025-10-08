@@ -30,7 +30,7 @@
             </div>
         </div>
     </section>
-
+    
     <!-- Estatísticas dos Clientes -->
     <section class="encomendas">
         <div class="container">
@@ -69,9 +69,14 @@
                         </div>
                         <div class="encomenda-content">
                             <div style="display: flex; align-items: center; gap: 1rem; margin-bottom: 1rem;">
-                                <div style="width: 60px; height: 60px; background: #fce7f3; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 1.5rem; font-weight: 600; color: #ec4899;">
-                                    MS
-                                </div>
+                                {% if user.foto_perfil %}
+                                    <img src="{{ user.foto_perfil.url }}" alt="Foto de perfil" class="rounded-circle img-thumbnail mb-3" style="width: 60px; height: 60px; background: #fce7f3; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 1.5rem; font-weight: 600; color: #ec4899;">
+                                {% else %}
+                                    <div style="width: 60px; height: 60px; background: #fce7f3; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 1.5rem; font-weight: 600; color: #ec4899;">
+                                        <i class="bi bi-person-circle text-muted" style="font-size: 5rem;"></i>
+                                    </div>
+                                {% endif %}
+                                
                                 <div>
                                     <h3 class="encomenda-title" style="margin-bottom: 0.25rem;">{{ user.username }}</h3>
                                 </div>
@@ -112,55 +117,6 @@
                         </div>
                     </div>
                 {% endfor %}
-
-                <!-- Cliente 2 -->
-                <div class="encomenda-card">
-                    <div class="encomenda-header">
-                        <div class="encomenda-id">#CLI002</div>
-                        <div class="status-badge status-entregue">VIP</div>
-                    </div>
-                    <div class="encomenda-content">
-                        <div style="display: flex; align-items: center; gap: 1rem; margin-bottom: 1rem;">
-                            <div style="width: 60px; height: 60px; background: #fce7f3; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 1.5rem; font-weight: 600; color: #ec4899;">
-                                JS
-                            </div>
-                            <div>
-                                <h3 class="encomenda-title" style="margin-bottom: 0.25rem;">João Santos</h3>
-                                <p style="color: #6b7280; font-size: 0.875rem;">Cliente desde Mar/2022</p>
-                            </div>
-                        </div>
-                        <div class="encomenda-details">
-                            <div class="detail-item">
-                                <span class="detail-label">Email:</span>
-                                <span class="detail-value">joao@email.com</span>
-                            </div>
-                            <div class="detail-item">
-                                <span class="detail-label">Telefone:</span>
-                                <span class="detail-value">(11) 98888-7777</span>
-                            </div>
-                            <div class="detail-item">
-                                <span class="detail-label">Pedidos:</span>
-                                <span class="detail-value">15 encomendas</span>
-                            </div>
-                            <div class="detail-item">
-                                <span class="detail-label">Último Pedido:</span>
-                                <span class="detail-value">10/01/2024</span>
-                            </div>
-                            <div class="detail-item">
-                                <span class="detail-label">Total Gasto:</span>
-                                <span class="detail-value">R$ 2.850,00</span>
-                            </div>
-                        </div>
-                        <div style="display: flex; gap: 0.5rem; margin-top: 1.5rem; flex-wrap: wrap;">
-                            <a class="btn-card" href="{% url 'perfil' %}" style="flex: 1; min-width: 80px; text-decoration: none">Ver Detalhes</a>
-                            {% if user.is_administrador %}
-                            <a href="{% url 'cliente_update' id=cliente.id %}" class="btn-secondary" style="padding: 0.5rem 1rem; font-size: 0.875rem; text-decoration: none">Editar</a>
-                            <a href="{% url 'cliente_delete' id=cliente.id %}" style="background: #ef4444; color: white; border: none; padding: 0.5rem 1rem; border-radius: 0.5rem; font-size: 0.875rem; cursor: pointer; text-decoration: none">Excluir</a>
-                            {% endif %}
-                        </div>
-                    </div>
-                </div>
-                
             </div>
         </div>
     </section>

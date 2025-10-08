@@ -33,7 +33,7 @@ class PedidoForm(ModelForm):
 
     class Meta:
         model = Pedido
-        fields = ['nome_pedido', 'tipo_massa', 'recheio', 'formato', 'tamanho', 'foto', 'observacoes', 'data_entrega', 'endereco_pedido', 'tipo_pagamento']
+        fields = ['nome_pedido', 'tipo_massa', 'recheio', 'formato', 'tamanho', 'foto', 'observacoes', 'data_entrega', 'endereco_pedido', 'tipo_pagamento', 'status']
         widgets = {
             'nome_pedido': forms.TextInput(attrs={'class': 'form-control'}),
             'tipo_massa': forms.Select(attrs={'class': 'form-select' }),
@@ -45,4 +45,5 @@ class PedidoForm(ModelForm):
             'data_entrega': forms.DateTimeInput(attrs={'class': 'form-control', 'type': 'datetime-local' }, format='%Y-%m-%dT%H:%M'),
             'endereco_pedido': forms.TextInput(attrs={'class': 'form-control', 'rows': 2 }),
             'tipo_pagamento': forms.Select(attrs={'class': 'form-select' }),
+            'status': forms.Select(attrs={'class': 'form-select'}),
         }

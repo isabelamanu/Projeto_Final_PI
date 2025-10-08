@@ -1,6 +1,149 @@
 {% extends 'base.html' %}
 
+{% block title %} Fomulário de Entregador | AgendaDoce{% endblock %}
+
 {% block content %}
 
+    <!-- Page Header -->
+    <section class="page-header">
+        <div class="container">
+            <div class="page-header-content">
+                <div style="display: flex; align-items: center; gap: 1rem; margin-bottom: 1rem;">
+                    <a href="{% url 'cliente_list' %}" class="btn-secondary">← Voltar</a>
+                    <div class="status-badge status-pronto">Ativo</div>
+                </div>
+                <h2 class="page-title">Formulário de <span class="highlight">Entregador</span></h2>
+                <p class="page-description">
+                    Edite informações de perfil de cliente. Mantenha os dados sempre atualizados para um melhor gerenciamento.
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <section class="pedido-form-section" style="display: flex;justify-content: center; min-height: 100vh; ">
+        <div class="container">
+            <div class="form-container" style="margin-block: 30px;">
+                <!-- Coluna da Direita - Formulário de Edição -->
+                <div class="card shadow-sm" style="background-color: rgb(255, 252, 253)">
+                    <div class="card-header text-white" style="background-color: rgb(246, 84, 138)">
+                        <h5 class="mb-0" >
+                            <i class="bi bi-pencil-square" ></i> Editar Informações
+                        </h5>
+                    </div>
+                    <div class="card-body" style="margin-block: 10px;">
+                        <form method="post" enctype="multipart/form-data" class="form-container">
+                            {% csrf_token %}
+
+                            <!-- Dados Pessoais -->
+                            <div class="section-title mb-3">
+                                <h6 class="border-bottom pb-2" style="color: rgb(246, 84, 138)">
+                                    <i class="bi bi-person"></i> DADOS PESSOAIS
+                                </h6>
+                            </div>
+
+                            <div class="mb-3">
+                                <label for="{{ form.nome_mae.id_for_label }}" class="form-label fw-bold">
+                                    Nome do Entregador
+                                </label>
+                                {{ form.nome_entregador }}
+                                {% if form.nome_entregador %}
+                                    <div class="text-danger small mt-1">{{ form.nome_entregador.errors }}</div>
+                                {% endif %}
+                            </div>
+
+                            <div class="mb-3">
+                                <label for="{{ form.cpf.id_for_label }}" class="form-label fw-bold">
+                                    <i class="bi bi-envelope text-success"></i> CPF
+                                </label>
+                                {{ form.cpf }}
+                                {% if form.cpf.errors %}
+                                    <div class="text-danger small mt-1">{{ form.cpf.errors }}</div>
+                                {% endif %}
+                            </div>
+
+                            <div class="mb-3">
+                                <label for="{{ form.nome_mae.id_for_label }}" class="form-label fw-bold">
+                                    Telefone
+                                </label>
+                                {{ form.telefone }}
+                                {% if form.telefone.errors %}
+                                    <div class="text-danger small mt-1">{{ form.telefone.errors }}</div>
+                                {% endif %}
+                            </div>
+
+                            <!-- Informações de serviço -->
+                            <div class="section-title mb-3 mt-4">
+                                <h6 class="border-bottom pb-2" style="color: rgb(246, 84, 138)">
+                                    <i class="bi bi-geo-alt"></i> INFORMAÇÕES DE SERVIÇO
+                                </h6>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-md-6 mb-3">
+                                    <label for="{{ form.nome_bairro.id_for_label }}" class="form-label fw-bold">
+                                        Veículo
+                                    </label>
+                                    {{ form.veiculo }}
+                                    {% if form.veiculo.errors %}
+                                        <div class="text-danger small mt-1">{{ form.veiculo.errors }}</div>
+                                    {% endif %}
+                                </div>
+                                <div class="col-md-6 mb-3">
+                                    <label for="{{ form.nome_cidade.id_for_label }}" class="form-label fw-bold">
+                                        Disponibilidade
+                                    </label>
+                                    {{ form.disponibilidade }}
+                                    {% if form.disponilidade.errors %}
+                                        <div class="text-danger small mt-1">{{ form.disponibilidade.errors }}</div>
+                                    {% endif %}
+                                </div>
+                                
+                            </div>
+
+                            <div class="row">
+                                <div class="col-md-6 mb-3">
+                                    <label for="{{ form.endereco.id_for_label }}" class="form-label fw-bold">
+                                        Data de Contratação
+                                    </label>
+                                    {{ form.data_contratacao }}
+                                    {% if form.data_contratacao.errors %}
+                                        <div class="text-danger small mt-1">{{ form.data_contratacao.errors }}</div>
+                                    {% endif %}
+                                </div>
+                                <div class="col-md-6 mb-3">
+                                    <label for="{{ form.nome_cidade.id_for_label }}" class="form-label fw-bold">
+                                        Número de Entregas
+                                    </label>
+                                    {{ form.num_entregas }}
+                                    {% if form.num_entregas.errors %}
+                                        <div class="text-danger small mt-1">{{ form.num_entregas.errors }}</div>
+                                    {% endif %}
+                                </div>
+                            </div>
+
+                            <!-- Erros gerais -->
+                            {% if form.non_field_errors %}
+                                <div class="alert alert-danger">
+                                    {{ form.non_field_errors }}
+                                </div>
+                            {% endif %}
+
+                            <!-- Botões -->
+                            <div class="d-flex gap-2 justify-content-end mt-4 pt-3 border-top">
+                                <a href= "{% url 'entregador_list' %}" type="button" class="btn-secondary btn-large" style="text-decoration: none">
+                                    <span class="btn-icon">↩️</span>
+                                    Cancelar
+                                </a>
+                                <button type="submit" class="btn-primary btn-large">
+                                    <span class="btn-icon">✅</span>
+                                    Salvar Alterações
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
 
 {% endblock %}

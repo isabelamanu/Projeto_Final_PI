@@ -116,7 +116,7 @@ def entregador_create(request):
         form = EntregadorForm(request.POST)
         if form.is_valid():
             entregador = form.save()
-            messages.success(request, f'Entregador "{entregador.nome_vendedor}" criado com sucesso!')
+            messages.success(request, f'Entregador "{entregador.nome_entregador}" criado com sucesso!')
             return redirect('entregador_list')
     else:
         form = EntregadorForm()
