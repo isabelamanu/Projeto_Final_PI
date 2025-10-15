@@ -1,6 +1,7 @@
 from django.forms import ModelForm
 from django import forms
 from .models import Entregador, Cliente, Pedido
+from django.conf import settings
 
 class EntregadorForm(ModelForm):
 
@@ -47,3 +48,59 @@ class PedidoForm(ModelForm):
             'tipo_pagamento': forms.Select(attrs={'class': 'form-select' }),
             'status': forms.Select(attrs={'class': 'form-select'}),
         }
+
+class PedidoFiltroForm(forms.Form):
+    """Formulário para filtrar vagas"""
+    
+    descricao = forms.CharField(
+        required=False,
+        widget=forms.TextInput(attrs={
+            'class': 'form-control',
+            'placeholder': 'Buscar por descrição...'
+        }),
+        label='Descrição'
+    )
+    
+    data_inicio = forms.DateField(
+        required=False,
+        widget=forms.DateInput(attrs={
+            'class': 'form-control',
+            'type': 'date'
+        }),
+        label='Data Início'
+    )
+    
+    data_fim = forms.DateField(
+        required=False,
+        widget=forms.DateInput(attrs={
+            'class': 'form-control',
+            'type': 'date'
+        }),
+        label='Data Fim'
+    )
+
+    cliente = forms.CharField(
+        required=False,
+        widget=forms.Select(attrs={
+            'class': 'form-select'
+        }),
+        label='Cliente'
+    )
+
+    entregador = forms.CharField(
+        required=False,
+        widget=forms.Select(attrs={
+            'class': 'form-select'
+        }),
+        label='Entregador'
+    )
+
+
+    
+    status = forms.CharField(
+        required=False,
+        widget=forms.Select(attrs={
+            'class': 'form-select'
+        }),
+        label='Status do pedido'
+    )

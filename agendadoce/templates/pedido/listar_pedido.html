@@ -34,6 +34,8 @@
         </div>
     </section>
 
+    
+
     {% if pedidos %}
         <!-- Encomendas Section -->
         <section class="encomendas">
@@ -61,6 +63,98 @@
                         </div>
                     </div>
                 </div>
+
+                <!-- ========== ADICIONE TODO ESTE BLOCO AQUI ========== -->
+                
+                <!-- Formulário de Filtros -->
+                <div class="row mb-4">
+                    <div class="col-12">
+                        <div class="card shadow-sm border-0">
+                            <div class="card-header bg-light border-bottom border-success border-2">
+                                <h5 class="mb-0">
+                                    <i class="bi bi-funnel text-success"></i> Filtros de Busca
+                                </h5>
+                            </div>
+                            <div class="card-body p-4">
+                                <form method="get" id="filtroForm">
+                                    <div class="row g-3">
+                                        
+                                        <!-- Filtro por Descrição -->
+                                        <div class="col-md-4">
+                                            <label for="{{ filtro_form.descricao.id_for_label }}" class="form-label fw-bold">
+                                                <i class="bi bi-search text-success"></i> Descrição
+                                            </label>
+                                            {{ filtro_form.descricao }}
+                                            <small class="text-muted">Digite palavras-chave para buscar</small>
+                                        </div>
+
+                                        <!-- Filtro por Data Início -->
+                                        <div class="col-md-3">
+                                            <label for="{{ filtro_form.data_inicio.id_for_label }}" class="form-label fw-bold">
+                                                <i class="bi bi-calendar-event text-success"></i> Data Início
+                                            </label>
+                                            {{ filtro_form.data_inicio }}
+                                            <small class="text-muted">Pedidos cadastrados a partir de</small>
+                                        </div>
+
+                                        <!-- Filtro por Data Fim -->
+                                        <div class="col-md-3">
+                                            <label for="{{ filtro_form.data_fim.id_for_label }}" class="form-label fw-bold">
+                                                <i class="bi bi-calendar-check text-success"></i> Data Fim
+                                            </label>
+                                            {{ filtro_form.data_fim }}
+                                            <small class="text-muted">Pedidos cadastrados até</small>
+                                        </div>
+
+                                        <!-- Filtro Apenas Ativas -->
+                                        <div class="col-md-2">
+                                            <label class="form-label fw-bold d-block">
+                                                <i class="bi bi-toggle-on text-success"></i> Status
+                                            </label>
+                                            <div class="form-check form-switch mt-2">
+                                                {{ filtro_form.status }}
+                                                <label class="form-check-label" for="{{ filtro_form.apenas_ativas.id_for_label }}">
+                                                    Apenas Ativas
+                                                </label>
+                                            </div>
+                                        </div>
+                                        
+                                    </div>
+
+                                    <!-- Botões de Ação -->
+                                    <div class="row mt-4">
+                                        <div class="col-12">
+                                            <div class="d-flex gap-2">
+                                                <button type="submit" class="btn btn-success">
+                                                    <i class="bi bi-search"></i> Buscar
+                                                </button>
+                                                <a href="{% url 'pedido_list' %}" class="btn btn-outline-secondary">
+                                                    <i class="bi bi-x-circle"></i> Limpar Filtros
+                                                </a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Contador de Resultados -->
+                {% if request.GET %}
+                <div class="row mb-3">
+                    <div class="col-12">
+                        <div class="alert alert-info d-flex align-items-center">
+                            <i class="bi bi-info-circle me-2 fs-5"></i>
+                            <div>
+                                Encontrado(s) <strong>{{ pedidos.count }}</strong> pedido(s) com os filtros aplicados.
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                {% endif %}
+                
+                <!-- ========== FIM DO BLOCO DE FILTROS ========== -->
 
                 <div class="encomendas-grid">
                     <!-- Encomenda 1 -->
@@ -145,6 +239,12 @@
                         </div>
                     </div>
 
+                    <!-- Paginação -->
+                    <div class="row mt-5">
+                        <div class="col-12">
+                            {% include '../includes/pagination.html' %}
+                        </div>
+                    </div>
                 </div>
             </div>
         </section>

@@ -4,9 +4,10 @@ user = get_user_model()
 from django.db.models import Count
 from datetime import date
 from django.contrib import messages
+from django.core.paginator import Paginator
 from django.contrib.auth.decorators import login_required
 from .models import Entregador, Pedido
-from .forms import EntregadorForm, PedidoForm
+from .forms import EntregadorForm, PedidoForm, PedidoFiltroForm
 
 def index(request):
     total_pedidos = Pedido.objects.count()
@@ -25,10 +26,59 @@ def index(request):
 @login_required
 def pedido_list(request):
     pedidos = Pedido.objects.all()
-    context ={
-        'pedidos': pedidos
-    }
-    return render(request, 'pedido/listar_pedido.html',context)
+
+    # ========== ADICIONE ESTE BLOCO ==========
+    # Criar instância do formulário
+    filtro_form = PedidoFiltroForm(request.GET or None)
+    
+    # Aplicar filtros se válido
+    if filtro_form.is_valid():
+        # Filtro por descrição
+        descricao = filtro_form.cleaned_data.get('descricao')
+        if descricao:
+            pedidos = pedidos.filter(descricao__icontains=descricao)
+        
+        # Filtro por data início
+        data_inicio = filtro_form.cleaned_data.get('data_inicio')
+        if data_inicio:
+            pedidos = pedidos.filter(data_cadastro__date__gte=data_inicio)
+        
+        # Filtro por data fim
+        data_fim = filtro_form.cleaned_data.get('data_fim')
+        if data_fim:
+            pedidos = pedidos.filter(data_cadastro__date__lte=data_fim)
+
+        # Filtro por cliente
+        cliente = filtro_form.cleaned_data.get('cliente')
+        if cliente:
+            pedidos = pedidos.filter(ativo=True)
+
+        # Filtro por entregador
+        entregador = filtro_form.cleaned_data.get('entregador')
+        if entregador:
+            pedidos = pedidos.filter(ativo=True)
+        
+        # Filtro por status
+        status = filtro_form.cleaned_data.get('status')
+        if status:
+            pedidos = pedidos.filter(ativo=True)
+    # ========== FIM DO BLOCO ==========
+
+    # 2. Criar o paginador (9 vagas por página)
+    paginator = Paginator(pedidos, 9)
+
+    # 3. Pegar o número da página da URL (?page=2)
+    page_number = request.GET.get('page')
+
+    # 4. Obter os dados daquela página específica
+    page_obj = paginator.get_page(page_number)
+
+    # 5. Enviar para o template
+    return render(request, 'pedido/listar_pedido.html', {
+        'pedidos': page_obj,
+        'page_obj': page_obj,
+        'filtro_form': filtro_form  # ← ADICIONE
+    })
 
 def atribuir_entregador_automatico():
     # Conta quantos pedidos cada entregador tem em andamento

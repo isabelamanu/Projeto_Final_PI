@@ -1,0 +1,34 @@
+{% if page_obj.has_other_pages %}
+<nav>
+    <ul class="pagination">
+
+        <!-- Botão ANTERIOR -->
+        {% if page_obj.has_previous %}
+            <li class="page-item">
+                <a href="?page={{ page_obj.previous_page_number }}">◄ Anterior</a>
+            </li>
+        {% endif %}
+
+        <!-- Números das páginas -->
+        {% for num in page_obj.paginator.page_range %}
+            <li class="page-item {% if page_obj.number == num %}active{% endif %}">
+                <a href="?page={{ num }}">{{ num }}</a>
+            </li>
+        {% endfor %}
+
+        <!-- Botão PRÓXIMA -->
+        {% if page_obj.has_next %}
+            <li class="page-item">
+                <a href="?page={{ page_obj.next_page_number }}">Próxima ►</a>
+            </li>
+        {% endif %}
+
+    </ul>
+
+    <!-- Informações -->
+    <p>
+        Mostrando {{ page_obj.start_index }}-{{ page_obj.end_index }}
+        de {{ page_obj.paginator.count }} vagas
+    </p>
+</nav>
+{% endif %}
