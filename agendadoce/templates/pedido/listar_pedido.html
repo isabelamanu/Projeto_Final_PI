@@ -34,13 +34,133 @@
         </div>
     </section>
 
-    
+    <section class="encomendas">
+        <div class="container">
+            <!-- ========== ADICIONE TODO ESTE BLOCO AQUI ========== -->
+                
+            <!-- Formulário de Filtros -->
+            <div class="row mb-4">
+                <div class="col-12">
+                    <div class="card shadow-sm border-0">
+                        <div class="card-header bg-light border-bottom border-success border-2">
+                            <h5 class="mb-0">
+                                <i class="bi bi-funnel text-success"></i> Filtros de Busca
+                            </h5>
+                        </div>
+                        <div class="card-body p-4">
+                            <form method="get" id="filtroForm">
+                                <div class="row g-3">
+                                    
+                                    <!-- Filtro por Descrição -->
+                                    <div class="col-md-3">
+                                        <label for="{{ filtro_form.descricao.id_for_label }}" class="form-label fw-bold">
+                                            <i class="bi bi-search text-success"></i> Nome
+                                        </label>
+                                        {{ filtro_form.descricao }}
+                                        <small class="text-muted">Digite palavras-chave para buscar</small>
+                                    </div>
+
+                                    <!-- Filtro por Data Início -->
+                                    <div class="col-md-3">
+                                        <label for="{{ filtro_form.data_inicio.id_for_label }}" class="form-label fw-bold">
+                                            <i class="bi bi-calendar-event text-success"></i> Data Início
+                                        </label>
+                                        {{ filtro_form.data_inicio }}
+                                        <small class="text-muted">Pedidos com entrega a partir de</small>
+                                    </div>
+
+                                    <!-- Filtro por Data Fim -->
+                                    <div class="col-md-3">
+                                        <label for="{{ filtro_form.data_fim.id_for_label }}" class="form-label fw-bold">
+                                            <i class="bi bi-calendar-check text-success"></i> Data Fim
+                                        </label>
+                                        {{ filtro_form.data_fim }}
+                                        <small class="text-muted">Pedidos com entrega até</small>
+                                    </div>
+
+                                    <!-- Filtro Clientes -->
+                                    <div class="col-md-2">
+                                        <label class="form-label fw-bold d-block">
+                                            <i class="bi bi-toggle-on text-success"></i> Cliente
+                                        </label>
+                                        <div class="form-check form-switch mt-2">
+                                            {{ filtro_form.cliente }}
+                                            <label class="form-check-label" for="{{ filtro_form.apenas_ativas.id_for_label }}">
+                                                Cliente referente ao pedido
+                                            </label>
+                                        </div>
+                                    </div>
+
+                                    <!-- Filtro Entregadores -->
+                                    <div class="col-md-2">
+                                        <label class="form-label fw-bold d-block">
+                                            <i class="bi bi-toggle-on text-success"></i> Entregador
+                                        </label>
+                                        <div class="form-check form-switch mt-2">
+                                            {{ filtro_form.entregador }}
+                                            <label class="form-check-label" for="{{ filtro_form.apenas_ativas.id_for_label }}">
+                                                Entregador referente ao pedido
+                                            </label>
+                                        </div>
+                                    </div>
+
+                                    <!-- Filtro Apenas Ativas -->
+                                    <div class="col-md-2">
+                                        <label class="form-label fw-bold d-block">
+                                            <i class="bi bi-toggle-on text-success"></i> Status
+                                        </label>
+                                        <div class="form-check form-switch mt-2">
+                                            {{ filtro_form.status }}
+                                            <label class="form-check-label" for="{{ filtro_form.apenas_ativas.id_for_label }}">
+                                                Situação de pedido
+                                            </label>
+                                        </div>
+                                    </div>
+                                    
+                                </div>
+
+                                <!-- Botões de Ação -->
+                                <div class="row mt-4">
+                                    <div class="col-12">
+                                        <div class="d-flex gap-2">
+                                            <button type="submit" class="btn btn-success">
+                                                <i class="bi bi-search"></i> Buscar
+                                            </button>
+                                            <a href="{% url 'pedido_list' %}" class="btn btn-outline-secondary">
+                                                <i class="bi bi-x-circle"></i> Limpar Filtros
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- Contador de Resultados -->
+            {% if request.GET %}
+            <div class="row mb-3">
+                <div class="col-12">
+                    <div class="alert alert-info d-flex align-items-center">
+                        <i class="bi bi-info-circle me-2 fs-5"></i>
+                        <div>
+                            Encontrado(s) <strong>{{ pedidos.count }}</strong> pedido(s) com os filtros aplicados.
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {% endif %}
+            
+            <!-- ========== FIM DO BLOCO DE FILTROS ========== -->
+        </div>
+    </section>
+
 
     {% if pedidos %}
         <!-- Encomendas Section -->
         <section class="encomendas">
-            <div class="container">
-                <div class="encomendas-stats">
+            <div class="container" style="margin-top: 0%;">
+                <div class="encomendas-stats" >
                     <div class="stat-card">
                         <div class="stat-icon">📦</div>
                         <div class="stat-content">
@@ -63,99 +183,7 @@
                         </div>
                     </div>
                 </div>
-
-                <!-- ========== ADICIONE TODO ESTE BLOCO AQUI ========== -->
                 
-                <!-- Formulário de Filtros -->
-                <div class="row mb-4">
-                    <div class="col-12">
-                        <div class="card shadow-sm border-0">
-                            <div class="card-header bg-light border-bottom border-success border-2">
-                                <h5 class="mb-0">
-                                    <i class="bi bi-funnel text-success"></i> Filtros de Busca
-                                </h5>
-                            </div>
-                            <div class="card-body p-4">
-                                <form method="get" id="filtroForm">
-                                    <div class="row g-3">
-                                        
-                                        <!-- Filtro por Descrição -->
-                                        <div class="col-md-4">
-                                            <label for="{{ filtro_form.descricao.id_for_label }}" class="form-label fw-bold">
-                                                <i class="bi bi-search text-success"></i> Descrição
-                                            </label>
-                                            {{ filtro_form.descricao }}
-                                            <small class="text-muted">Digite palavras-chave para buscar</small>
-                                        </div>
-
-                                        <!-- Filtro por Data Início -->
-                                        <div class="col-md-3">
-                                            <label for="{{ filtro_form.data_inicio.id_for_label }}" class="form-label fw-bold">
-                                                <i class="bi bi-calendar-event text-success"></i> Data Início
-                                            </label>
-                                            {{ filtro_form.data_inicio }}
-                                            <small class="text-muted">Pedidos cadastrados a partir de</small>
-                                        </div>
-
-                                        <!-- Filtro por Data Fim -->
-                                        <div class="col-md-3">
-                                            <label for="{{ filtro_form.data_fim.id_for_label }}" class="form-label fw-bold">
-                                                <i class="bi bi-calendar-check text-success"></i> Data Fim
-                                            </label>
-                                            {{ filtro_form.data_fim }}
-                                            <small class="text-muted">Pedidos cadastrados até</small>
-                                        </div>
-
-                                        <!-- Filtro Apenas Ativas -->
-                                        <div class="col-md-2">
-                                            <label class="form-label fw-bold d-block">
-                                                <i class="bi bi-toggle-on text-success"></i> Status
-                                            </label>
-                                            <div class="form-check form-switch mt-2">
-                                                {{ filtro_form.status }}
-                                                <label class="form-check-label" for="{{ filtro_form.apenas_ativas.id_for_label }}">
-                                                    Apenas Ativas
-                                                </label>
-                                            </div>
-                                        </div>
-                                        
-                                    </div>
-
-                                    <!-- Botões de Ação -->
-                                    <div class="row mt-4">
-                                        <div class="col-12">
-                                            <div class="d-flex gap-2">
-                                                <button type="submit" class="btn btn-success">
-                                                    <i class="bi bi-search"></i> Buscar
-                                                </button>
-                                                <a href="{% url 'pedido_list' %}" class="btn btn-outline-secondary">
-                                                    <i class="bi bi-x-circle"></i> Limpar Filtros
-                                                </a>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </form>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                
-                <!-- Contador de Resultados -->
-                {% if request.GET %}
-                <div class="row mb-3">
-                    <div class="col-12">
-                        <div class="alert alert-info d-flex align-items-center">
-                            <i class="bi bi-info-circle me-2 fs-5"></i>
-                            <div>
-                                Encontrado(s) <strong>{{ pedidos.count }}</strong> pedido(s) com os filtros aplicados.
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                {% endif %}
-                
-                <!-- ========== FIM DO BLOCO DE FILTROS ========== -->
-
                 <div class="encomendas-grid">
                     <!-- Encomenda 1 -->
                     {% for pedido in pedidos %}
@@ -202,48 +230,11 @@
                             </div>
                         </div>
                     {% endfor %}
-
-                    <!-- Encomenda 3 -->
-                    <div class="encomenda-card">
-                        <div class="encomenda-header">
-                            <div class="encomenda-id">#ENC003</div>
-                            <div class="status-badge status-entregue">Entregue</div>
-                        </div>
-                        <div class="encomenda-image">
-                            <img src="https://images.pexels.com/photos/827513/pexels-photo-827513.jpeg" alt="Bolo de Morango">
-                        </div>
-                        <div class="encomenda-content">
-                            <h3 class="encomenda-title">Bolo de Morango</h3>
-                            <div class="encomenda-details">
-                                <div class="detail-item">
-                                    <span class="detail-label">Data da Encomenda:</span>
-                                    <span class="detail-value">05/01/2024</span>
-                                </div>
-                                <div class="detail-item">
-                                    <span class="detail-label">Data de Entrega:</span>
-                                    <span class="detail-value">12/01/2024</span>
-                                </div>
-                                <div class="detail-item">
-                                    <span class="detail-label">Peso:</span>
-                                    <span class="detail-value">3kg</span>
-                                </div>
-                                <div class="detail-item">
-                                    <span class="detail-label">Observações:</span>
-                                    <span class="detail-value">Chantilly, morangos frescos, 2 andares</span>
-                                </div>
-                            </div>
-                            <div class="encomenda-footer">
-                                <div class="price">R$ 220,00</div>
-                                <button class="btn-card">Avaliar</button>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Paginação -->
-                    <div class="row mt-5">
-                        <div class="col-12">
-                            {% include '../includes/pagination.html' %}
-                        </div>
+                </div>
+                <!-- Paginação -->
+                <div class="row mt-5">
+                    <div class="col-12">
+                        {% include 'includes/pagination.html' %}
                     </div>
                 </div>
             </div>

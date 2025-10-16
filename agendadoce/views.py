@@ -36,32 +36,32 @@ def pedido_list(request):
         # Filtro por descrição
         descricao = filtro_form.cleaned_data.get('descricao')
         if descricao:
-            pedidos = pedidos.filter(descricao__icontains=descricao)
+            pedidos = pedidos.filter(nome_pedido__icontains=descricao)
         
         # Filtro por data início
         data_inicio = filtro_form.cleaned_data.get('data_inicio')
         if data_inicio:
-            pedidos = pedidos.filter(data_cadastro__date__gte=data_inicio)
+            pedidos = pedidos.filter(data_entrega__date__gte=data_inicio)
         
         # Filtro por data fim
         data_fim = filtro_form.cleaned_data.get('data_fim')
         if data_fim:
-            pedidos = pedidos.filter(data_cadastro__date__lte=data_fim)
+            pedidos = pedidos.filter(data_entrega__date__lte=data_fim)
 
         # Filtro por cliente
         cliente = filtro_form.cleaned_data.get('cliente')
         if cliente:
-            pedidos = pedidos.filter(ativo=True)
+            pedidos = pedidos.filter(cliente=cliente)
 
         # Filtro por entregador
         entregador = filtro_form.cleaned_data.get('entregador')
         if entregador:
-            pedidos = pedidos.filter(ativo=True)
+            pedidos = pedidos.filter(entregador=entregador)
         
         # Filtro por status
         status = filtro_form.cleaned_data.get('status')
         if status:
-            pedidos = pedidos.filter(ativo=True)
+            pedidos = pedidos.filter(status=status)
     # ========== FIM DO BLOCO ==========
 
     # 2. Criar o paginador (9 vagas por página)

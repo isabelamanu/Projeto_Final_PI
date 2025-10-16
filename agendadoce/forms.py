@@ -1,7 +1,7 @@
 from django.forms import ModelForm
 from django import forms
 from .models import Entregador, Cliente, Pedido
-from django.conf import settings
+from cliente.models import UsuarioAdaptado
 
 class EntregadorForm(ModelForm):
 
@@ -56,9 +56,9 @@ class PedidoFiltroForm(forms.Form):
         required=False,
         widget=forms.TextInput(attrs={
             'class': 'form-control',
-            'placeholder': 'Buscar por descrição...'
+            'placeholder': 'Buscar por nome de pedido...'
         }),
-        label='Descrição'
+        label='Nome do Pedido'
     )
     
     data_inicio = forms.DateField(
@@ -79,26 +79,35 @@ class PedidoFiltroForm(forms.Form):
         label='Data Fim'
     )
 
-    cliente = forms.CharField(
+    cliente = forms.ModelChoiceField(
         required=False,
+        queryset=UsuarioAdaptado.objects.all(),
         widget=forms.Select(attrs={
             'class': 'form-select'
         }),
         label='Cliente'
     )
 
-    entregador = forms.CharField(
+    entregador = forms.ModelChoiceField(
         required=False,
+        queryset=Entregador.objects.all(),
         widget=forms.Select(attrs={
             'class': 'form-select'
         }),
         label='Entregador'
     )
-
-
     
-    status = forms.CharField(
+    STATUS_CHOICES = [
+        ('', '---------'),
+        ("Aguardando Confirmação", "Aguardando Confirmação"),
+        ("Em producao", "Em Produção"),
+        ("Entregue", "Entregue"),
+        ("Cancelado", "Cancelado"),
+    ]
+
+    status = forms.ChoiceField(
         required=False,
+        choices=STATUS_CHOICES,
         widget=forms.Select(attrs={
             'class': 'form-select'
         }),
