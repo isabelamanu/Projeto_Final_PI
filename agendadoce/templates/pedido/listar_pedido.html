@@ -6,7 +6,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Minhas Encomendas - AgendaDoce</title>
+    <title>Lista de Encomendas | AgendaDoce</title>
     <link rel="stylesheet" href="../static/styles.css">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 </head>
@@ -37,120 +37,94 @@
     <section class="encomendas">
         <div class="container">
             <!-- ========== ADICIONE TODO ESTE BLOCO AQUI ========== -->
-                
-            <!-- Formulário de Filtros -->
-            <div class="row mb-4">
-                <div class="col-12">
-                    <div class="card shadow-sm border-0">
-                        <div class="card-header bg-light border-bottom border-success border-2">
-                            <h5 class="mb-0">
-                                <i class="bi bi-funnel text-success"></i> Filtros de Busca
-                            </h5>
+
+            <!-- ====== FILTROS DE BUSCA ====== -->
+            <div class="card shadow-sm border-0 filtros-card">
+                <div class="card-header text-white">
+                    <h5 class="mb-0">
+                        <i class="bi bi-funnel"></i> Filtros de Busca
+                    </h5>
+                </div>
+
+                <div class="card-body">
+                    <form method="get" id="filtroForm">
+                        <div class="row g-3 align-items-end">
+
+                            <!-- Nome -->
+                            <div class="col-md-3">
+                                <label for="{{ filtro_form.descricao.id_for_label }}" class="form-label fw-bold">
+                                    <i class="bi bi-search"></i> Nome
+                                </label>
+                                {{ filtro_form.descricao }}
+                                <small>Digite palavras-chave para buscar</small>
+                            </div>
+
+                            <!-- Data Início -->
+                            <div class="col-md-3">
+                                <label for="{{ filtro_form.data_inicio.id_for_label }}" class="form-label fw-bold">
+                                    <i class="bi bi-calendar-event"></i> Data Início
+                                </label>
+                                {{ filtro_form.data_inicio }}
+                                <small>Pedidos com entrega a partir de</small>
+                            </div>
+
+                            <!-- Data Fim -->
+                            <div class="col-md-3">
+                                <label for="{{ filtro_form.data_fim.id_for_label }}" class="form-label fw-bold">
+                                    <i class="bi bi-calendar-check"></i> Data Fim
+                                </label>
+                                {{ filtro_form.data_fim }}
+                                <small>Pedidos com entrega até</small>
+                            </div>
+
+                            <!-- Cliente -->
+                            <div class="col-md-3">
+                                <label for="{{ filtro_form.cliente.id_for_label }}" class="form-label fw-bold">
+                                    <i class="bi bi-person"></i> Cliente
+                                </label>
+                                {{ filtro_form.cliente }}
+                                <small>Cliente referente ao pedido</small>
+                            </div>
+
+                            <!-- Entregador -->
+                            <div class="col-md-3">
+                                <label for="{{ filtro_form.entregador.id_for_label }}" class="form-label fw-bold">
+                                    <i class="bi bi-truck"></i> Entregador
+                                </label>
+                                {{ filtro_form.entregador }}
+                                <small>Entregador referente ao pedido</small>
+                            </div>
+
+                            <!-- Status -->
+                            <div class="col-md-3">
+                                <label for="{{ filtro_form.status.id_for_label }}" class="form-label fw-bold">
+                                    <i class="bi bi-flag"></i> Status
+                                </label>
+                                {{ filtro_form.status }}
+                                <small>Situação de pedido</small>
+                            </div>
                         </div>
-                        <div class="card-body p-4">
-                            <form method="get" id="filtroForm">
-                                <div class="row g-3">
-                                    
-                                    <!-- Filtro por Descrição -->
-                                    <div class="col-md-3">
-                                        <label for="{{ filtro_form.descricao.id_for_label }}" class="form-label fw-bold">
-                                            <i class="bi bi-search text-success"></i> Nome
-                                        </label>
-                                        {{ filtro_form.descricao }}
-                                        <small class="text-muted">Digite palavras-chave para buscar</small>
-                                    </div>
 
-                                    <!-- Filtro por Data Início -->
-                                    <div class="col-md-3">
-                                        <label for="{{ filtro_form.data_inicio.id_for_label }}" class="form-label fw-bold">
-                                            <i class="bi bi-calendar-event text-success"></i> Data Início
-                                        </label>
-                                        {{ filtro_form.data_inicio }}
-                                        <small class="text-muted">Pedidos com entrega a partir de</small>
-                                    </div>
-
-                                    <!-- Filtro por Data Fim -->
-                                    <div class="col-md-3">
-                                        <label for="{{ filtro_form.data_fim.id_for_label }}" class="form-label fw-bold">
-                                            <i class="bi bi-calendar-check text-success"></i> Data Fim
-                                        </label>
-                                        {{ filtro_form.data_fim }}
-                                        <small class="text-muted">Pedidos com entrega até</small>
-                                    </div>
-
-                                    <!-- Filtro Clientes -->
-                                    <div class="col-md-2">
-                                        <label class="form-label fw-bold d-block">
-                                            <i class="bi bi-toggle-on text-success"></i> Cliente
-                                        </label>
-                                        <div class="form-check form-switch mt-2">
-                                            {{ filtro_form.cliente }}
-                                            <label class="form-check-label" for="{{ filtro_form.apenas_ativas.id_for_label }}">
-                                                Cliente referente ao pedido
-                                            </label>
-                                        </div>
-                                    </div>
-
-                                    <!-- Filtro Entregadores -->
-                                    <div class="col-md-2">
-                                        <label class="form-label fw-bold d-block">
-                                            <i class="bi bi-toggle-on text-success"></i> Entregador
-                                        </label>
-                                        <div class="form-check form-switch mt-2">
-                                            {{ filtro_form.entregador }}
-                                            <label class="form-check-label" for="{{ filtro_form.apenas_ativas.id_for_label }}">
-                                                Entregador referente ao pedido
-                                            </label>
-                                        </div>
-                                    </div>
-
-                                    <!-- Filtro Apenas Ativas -->
-                                    <div class="col-md-2">
-                                        <label class="form-label fw-bold d-block">
-                                            <i class="bi bi-toggle-on text-success"></i> Status
-                                        </label>
-                                        <div class="form-check form-switch mt-2">
-                                            {{ filtro_form.status }}
-                                            <label class="form-check-label" for="{{ filtro_form.apenas_ativas.id_for_label }}">
-                                                Situação de pedido
-                                            </label>
-                                        </div>
-                                    </div>
-                                    
-                                </div>
-
-                                <!-- Botões de Ação -->
-                                <div class="row mt-4">
-                                    <div class="col-12">
-                                        <div class="d-flex gap-2">
-                                            <button type="submit" class="btn btn-success">
-                                                <i class="bi bi-search"></i> Buscar
-                                            </button>
-                                            <a href="{% url 'pedido_list' %}" class="btn btn-outline-secondary">
-                                                <i class="bi bi-x-circle"></i> Limpar Filtros
-                                            </a>
-                                        </div>
-                                    </div>
-                                </div>
-                            </form>
+                        <!-- Botões -->
+                        <div class="mt-4 d-flex gap-2">
+                            <button type="submit" class="btn btn-pink">
+                                <i class="bi bi-search"></i> Buscar
+                            </button>
+                            <a href="{% url 'pedido_list' %}" class="btn btn-outline-pink">
+                                <i class="bi bi-x-circle"></i> Limpar Filtros
+                            </a>
                         </div>
-                    </div>
+                    </form>
                 </div>
             </div>
-            <!-- Contador de Resultados -->
+
             {% if request.GET %}
-            <div class="row mb-3">
-                <div class="col-12">
-                    <div class="alert alert-info d-flex align-items-center">
-                        <i class="bi bi-info-circle me-2 fs-5"></i>
-                        <div>
-                            Encontrado(s) <strong>{{ pedidos.count }}</strong> pedido(s) com os filtros aplicados.
-                        </div>
-                    </div>
-                </div>
+            <div class="alert alert-info mt-3 d-flex align-items-center">
+                <i class="bi bi-info-circle me-2 fs-5"></i>
+                <div>Encontrado(s) <strong>{{ pedidos.count }}</strong> pedido(s) com os filtros aplicados.</div>
             </div>
             {% endif %}
-            
+
             <!-- ========== FIM DO BLOCO DE FILTROS ========== -->
         </div>
     </section>
@@ -245,9 +219,9 @@
                 <div class="alert alert-info text-center" role="alert">
                     <i class="bi bi-info-circle" style="font-size: 2rem;"></i>
                     <h4 class="mt-3">Nenhum Pedido Cadastrado</h4>
-                    <p>Comece cadastrando seu primeiro pedido!</p>
-                    <a href="{% url 'pedido_create' %}" class="btn btn-success mt-2">
-                        <i class="bi bi-plus-circle"></i> Cadastrar Primeiro Pedido
+                    <p>Comece cadastrando um novo pedido!</p>
+                    <a href="{% url 'pedido_create' %}" class="btn btn-success mt-2" style="background-color: #e83e8c; border-color: #e83e8c;">
+                        <i class="bi bi-plus-circle"></i> Cadastrar Pedido
                     </a>
                 </div>
             </div>
@@ -268,5 +242,146 @@
             </div>
         </div>
     </section>
+
+
+<style>
+
+/* ====== Estilo Geral ====== */
+.filtros-card {
+    border-radius: 12px;
+    overflow: hidden;
+    margin-bottom: 20px;
+}
+
+/* Cabeçalho */
+.filtros-card .card-header {
+    background-color: #f78fb3;
+    border: none;
+    padding: 12px 20px;
+}
+
+.filtros-card .card-header h5 {
+    color: #fff;
+    font-weight: 600;
+}
+
+.filtros-card .card-header i {
+    color: #fff;
+}
+
+/* ====== Campos ====== */
+#filtroForm label {
+    color: #d63384;
+}
+
+#filtroForm small {
+    display: block;
+    color: #888;
+    font-size: 0.85rem;
+    margin-top: 4px;
+}
+
+#filtroForm select,
+#filtroForm input {
+    height: 38px;
+    border-radius: 6px;
+    border: 1px solid #ddd;
+    transition: border-color 0.2s;
+}
+
+#filtroForm select:focus,
+#filtroForm input:focus {
+    border-color: #e83e8c;
+    box-shadow: 0 0 0 0.15rem rgba(232, 62, 140, 0.25);
+}
+
+/* ====== Botões ====== */
+.btn-pink {
+    background-color: #e83e8c;
+    color: white;
+    border: none;
+    transition: 0.3s;
+}
+
+.btn-pink:hover {
+    background-color: #d63384;
+}
+
+.btn-outline-pink {
+    border: 1.5px solid #e83e8c;
+    color: #e83e8c;
+    background-color: white;
+    transition: 0.3s;
+}
+
+.btn-outline-pink:hover {
+    background-color: #e83e8c;
+    color: white;
+}
+
+/* ====== Alinhamento e Grid ====== */
+#filtroForm .row.g-3 > div {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+}
+
+/* ====== Alerta ====== */
+.alert-info {
+    border-left: 5px solid #e83e8c;
+    background-color: #fff5f9;
+    color: #333;
+}
+
+/* ====== Responsividade ====== */
+
+/* Tablet médio (≤ 992px): 2 colunas */
+@media (max-width: 992px) {
+    #filtroForm .row.g-3 {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 1.2rem;
+    }
+
+    #filtroForm .btn-pink,
+    #filtroForm .btn-outline-pink {
+        width: 100%;
+    }
+}
+
+/* Celular (≤ 576px): 1 coluna */
+@media (max-width: 576px) {
+    #filtroForm .row.g-3 {
+        grid-template-columns: 1fr;
+        gap: 1rem;
+    }
+
+    .filtros-card .card-header h5 {
+        font-size: 1.1rem;
+        text-align: center;
+    }
+
+    .filtros-card .card-body {
+        padding: 1rem;
+    }
+
+    #filtroForm .btn-pink,
+    #filtroForm .btn-outline-pink {
+        width: 100%;
+    }
+
+    #filtroForm .d-flex.gap-2 {
+        flex-direction: column;
+        gap: 0.8rem;
+    }
+}
+
+/* ====== Hover e transições suaves ====== */
+button,
+a.btn {
+    transition: all 0.25s ease-in-out;
+}
+
+</style>
 
 {% endblock %}

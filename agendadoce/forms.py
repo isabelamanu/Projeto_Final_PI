@@ -12,7 +12,7 @@ class EntregadorForm(ModelForm):
             'nome_entregador': forms.TextInput(attrs={'class': 'form-control'}),
             'cpf': forms.TextInput(attrs={'class': 'form-control'}),
             'telefone': forms.TextInput(attrs={'class': 'form-control'}),
-            'data_contratacao': forms.DateInput(attrs={'class': 'form-control'}),
+            'data_contratacao': forms.DateInput(attrs={'class': 'form-control', 'type': 'date'}),
             'veiculo': forms.TextInput(attrs={"class": "form-control"}),
             'disponibilidade': forms.CheckboxInput(attrs={"class": "form-check-input"}),
         }
