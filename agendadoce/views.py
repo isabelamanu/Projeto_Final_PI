@@ -7,7 +7,7 @@ from django.contrib import messages
 from django.core.paginator import Paginator
 from django.contrib.auth.decorators import login_required
 from .models import Entregador, Pedido
-from .forms import EntregadorForm, PedidoForm, PedidoFiltroForm
+from .forms import EntregadorForm, PedidoForm, PedidoFiltroForm, EntregadorFiltroForm
 
 def index(request):
     total_pedidos = Pedido.objects.count()
@@ -154,11 +154,52 @@ def pedido_detail(request, id):
     
 @login_required
 def entregador_list(request):
+    # Iniciar com todas as vagas
     entregadores = Entregador.objects.all()
-    context = {
-        'entregadores': entregadores,
-    }
-    return render(request, 'entregador/listar_entregador.html', context)
+    
+    # ========== ADICIONE ESTE BLOCO ==========
+    # Criar instância do formulário
+    filtro_form = EntregadorFiltroForm(request.GET or None)
+    
+    # Aplicar filtros se válido
+    if filtro_form.is_valid():
+        # Filtro por descrição
+        descricao = filtro_form.cleaned_data.get('descricao')
+        if descricao:
+            entregadores = entregadores.filter(nome_entregador__icontains=descricao)
+        
+        # Filtro por data início
+        data_inicio = filtro_form.cleaned_data.get('data_inicio')
+        if data_inicio:
+            entregadores = entregadores.filter(data_contratatacao__date__gte=data_inicio)
+        
+        # Filtro por data fim
+        data_fim = filtro_form.cleaned_data.get('data_fim')
+        if data_fim:
+            entregadores = entregadores.filter(data_contratacao__date__lte=data_fim)
+        
+        # Filtro por status
+        disponibilidade = filtro_form.cleaned_data.get('disponibilidade')
+        if disponibilidade == 'true':
+            entregadores = entregadores.filter(disponibilidade=True)
+        elif disponibilidade == 'false':
+            entregadores = entregadores.filter(disponibilidade=False)
+    # ========== FIM DO BLOCO ==========
+
+    paginator = Paginator(entregadores, 9)
+
+    # 3. Pegar o número da página da URL (?page=2)
+    page_number = request.GET.get('page')
+
+    # 4. Obter os dados daquela página específica
+    page_obj = paginator.get_page(page_number)
+
+    # MODIFIQUE o return
+    return render(request, 'entregador/listar_entregador.html', {
+        'entregadores': page_obj,
+        'page_obj': page_obj,
+        'filtro_form': filtro_form  # ← ADICIONE
+    })
 
 @login_required
 def entregador_create(request):
@@ -181,7 +222,7 @@ def entregador_update(request, id):
         form = EntregadorForm(request.POST, instance=entregador)
         if form.is_valid():
             entregador = form.save()
-            messages.success(request, f'Entregador "{entregador.nome_vendedor}" atualizado com sucesso!')
+            messages.success(request, f'Entregador "{entregador.nome_entregador}" atualizado com sucesso!')
             return redirect('entregador_detail', id=entregador.id)
     else:
         form = EntregadorForm(instance=entregador)

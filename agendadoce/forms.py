@@ -17,6 +17,49 @@ class EntregadorForm(ModelForm):
             'disponibilidade': forms.CheckboxInput(attrs={"class": "form-check-input"}),
         }
 
+class EntregadorFiltroForm(forms.Form):
+    """Formulário para filtrar vagas"""
+    
+    descricao = forms.CharField(
+        required=False,
+        widget=forms.TextInput(attrs={
+            'class': 'form-control',
+            'placeholder': 'Buscar por nome...'
+        }),
+        label='Descrição'
+    )
+    
+    data_inicio = forms.DateField(
+        required=False,
+        widget=forms.DateInput(attrs={
+            'class': 'form-control',
+            'type': 'date'
+        }),
+        label='Data Início'
+    )
+    
+    data_fim = forms.DateField(
+        required=False,
+        widget=forms.DateInput(attrs={
+            'class': 'form-control',
+            'type': 'date'
+        }),
+        label='Data Fim'
+    )
+    
+    disponibilidade = forms.ChoiceField(
+        required=False,
+        label='Status',
+        choices=[
+            ('', 'Todos'),
+            ('true', 'Disponível'),
+            ('false', 'Indisponível'),
+        ],
+        widget=forms.Select(attrs={
+            'class': 'form-select'
+        })
+    )
+
 class ClienteForm(ModelForm):
 
     class Meta:

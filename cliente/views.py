@@ -2,10 +2,11 @@ from django.shortcuts import render, get_object_or_404, redirect
 from django.contrib.auth import login, authenticate, logout
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
-from .forms import UsuarioAdaptadoCreationForm, LoginForm,PerfilForm
+from .forms import UsuarioAdaptadoCreationForm, LoginForm, PerfilForm, UsuarioFiltroForm, UsuarioEditForm
 from .models import UsuarioAdaptado
 from django.contrib.auth.models import Group
-
+from django.shortcuts import get_object_or_404
+from django.core.paginator import Paginator
 
 
 def cliente_create(request):
@@ -79,11 +80,104 @@ def cliente_detail(request, id):
 
 @login_required
 def cliente_list(request):
-    clientes = UsuarioAdaptado.objects.all()
-    context = {
-        'clientes': clientes,
-    }
-    return render(request, 'clientes/listar_cliente.html', context)
+    """View para listar usuários com filtros e paginação"""
+    
+    # Buscar todos os usuários
+    usuarios = UsuarioAdaptado.objects.all()
+    
+    # ========== FILTROS ==========
+    filtro_form = UsuarioFiltroForm(request.GET or None)
+    
+    if filtro_form.is_valid():
+        # Filtro por username
+        username = filtro_form.cleaned_data.get('username')
+        if username:
+            usuarios = usuarios.filter(username__icontains=username)
+        
+        # Filtro por email
+        email = filtro_form.cleaned_data.get('email')
+        if email:
+            usuarios = usuarios.filter(email__icontains=email)
+        
+        # Filtro por cidade
+        cidade = filtro_form.cleaned_data.get('cidade')
+        if cidade:
+            usuarios = usuarios.filter(nome_cidade__icontains=cidade)
+        
+        # Filtro por grupo
+        grupo = filtro_form.cleaned_data.get('grupo')
+        if grupo:
+            usuarios = usuarios.filter(groups=grupo)
+        
+        # Filtro por status
+        is_active = filtro_form.cleaned_data.get('is_active')
+        if is_active == 'true':
+            usuarios = usuarios.filter(is_active=True)
+        elif is_active == 'false':
+            usuarios = usuarios.filter(is_active=False)
+    
+    # ========== PAGINAÇÃO ==========
+    paginator = Paginator(usuarios, 9)
+    page_number = request.GET.get('page')
+    page_obj = paginator.get_page(page_number)
+    
+    return render(request, 'clientes/listar_cliente.html', {
+        'usuarios': page_obj,
+        'page_obj': page_obj,
+        'filtro_form': filtro_form,
+       })
+
+@login_required
+def create_usuario_admin(request):
+    """View para criar usuário (apenas para gerentes)"""
+    
+    if not request.user.is_administrador() and not request.user.is_superuser:
+        messages.error(request, 'Você não tem permissão para acessar esta página.')
+        return redirect('historico')
+    
+    if request.method == 'POST':
+        form = UsuarioAdaptadoCreationForm(request.POST)
+        if form.is_valid():
+            user = form.save()
+            
+            # Adicionar ao grupo USUARIO_SIMPLES por padrão
+            grupo_simples, created = Group.objects.get_or_create(name='USUARIO_SIMPLES')
+            user.groups.add(grupo_simples)
+            
+            messages.success(request, f'Usuário {user.username} criado com sucesso!')
+            return redirect('cliente_list')
+    else:
+        form = UsuarioAdaptadoCreationForm()
+    
+    return render(request, 'clientes/update_cliente.html', {
+        'form': form, 
+        'titulo': 'Criar Novo Usuário'
+    })
+
+
+@login_required
+def update_usuario_admin(request, id):
+    """View para editar usuário (apenas para gerentes)"""
+    
+    if not request.user.is_administrador() and not request.user.is_superuser:
+        return redirect('historico')
+    
+    usuario = get_object_or_404(UsuarioAdaptado, id=id)
+    
+    if request.method == 'POST':
+        form = UsuarioEditForm(request.POST, request.FILES, instance=usuario)
+        if form.is_valid():
+            form.save()
+            messages.success(request, f'Usuário {usuario.username} atualizado com sucesso!')
+            return redirect('cliente_list')
+    else:
+        form = UsuarioEditForm(instance=usuario)
+    
+    return render(request, 'clientes/update_cliente.html', {
+        'form': form, 
+        'titulo': f'Editar Usuário: {usuario.username}',
+        'usuario': usuario
+    })
 
 @login_required
 def cliente_update(request, id):
@@ -96,16 +190,34 @@ def cliente_update(request, id):
             messages.success(request, f'Cliente "{cliente.username}" atualizado com sucesso!')
             return redirect('cliente_detail', id=cliente.id)
     else:
-        form = PerfilForm(instance=cliente)
+        form = UsuarioEditForm(instance=cliente)
     
     return render(request, 'clientes/update_cliente.html', {'form':form})
 
 def cliente_delete(request, id):
-    cliente = get_object_or_404(UsuarioAdaptado, id=id)
-    nome = UsuarioAdaptado.username
-    cliente.delete()
-    messages.success(request, f'Cliente "{nome}" excluído com sucesso!')
-    return redirect('cliente_list')
+    """View para deletar usuário (apenas para gerentes)"""
+    
+    usuario = get_object_or_404(UsuarioAdaptado, id=id)
+    
+    # Impedir que o usuário delete a si mesmo
+    if usuario == request.user:
+        messages.error(request, 'Você não pode deletar seu próprio usuário!')
+        return redirect('cliente_list')
+    
+    # Impedir que delete superusuários
+    if usuario.is_superuser:
+        messages.error(request, 'Não é possível deletar um superusuário!')
+        return redirect('cliente_list')
+    
+    if request.method == 'POST':
+        username = usuario.username
+        usuario.delete()
+        messages.success(request, f'Usuário {username} deletado com sucesso!')
+        return redirect('cliente_list')
+    
+    return render(request, 'clientes/delete_usuario.html', {
+        'usuario': usuario
+    })
 
 def historico_cliente(request):
     return render(request, 'clientes/historico_cliente.html')
