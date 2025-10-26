@@ -102,19 +102,6 @@ class UsuarioFiltroForm(forms.Form):
         }),
         empty_label="Todos os grupos"
     )
-    
-    is_active = forms.ChoiceField(
-        required=False,
-        label='Status',
-        choices=[
-            ('', 'Todos'),
-            ('true', 'Ativo'),
-            ('false', 'Inativo')
-        ],
-        widget=forms.Select(attrs={
-            'class': 'form-select'
-        })
-    )
 
 
 class UsuarioEditForm(forms.ModelForm):

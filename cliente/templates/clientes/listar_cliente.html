@@ -89,15 +89,6 @@
                                 {{ filtro_form.grupo }}
                                 <small>Selecione grupo para buscar</small>
                             </div>
-
-                            <!-- Filtro por Status -->
-                            <div class="col-md-3">
-                                <label for="{{ filtro_form.is_active.id_for_label }}" class="form-label fw-bold">
-                                    <i class="bi bi-search"></i> Status
-                                </label>
-                                {{ filtro_form.is_active }}
-                                <small>Selecione status para buscar</small>
-                            </div>
                             
                         </div>
 
@@ -162,11 +153,10 @@
                 <!-- Grid de Clientes -->
                 <div class="encomendas-grid">
                     <!-- Cliente 1 -->
-                    {% for user in clientes %}
+                    {% for user in usuarios %}
                         <div class="encomenda-card">
                             <div class="encomenda-header">
                                 <div class="encomenda-id">#CLI00{{ user.id }}</div>
-                                <div class="status-badge status-pronto">Ativo</div>
                             </div>
                             <div class="encomenda-content">
                                 <div style="display: flex; align-items: center; gap: 1rem; margin-bottom: 1rem;">
@@ -223,7 +213,7 @@
                 <!-- Paginação -->
                 <div class="row mt-4">
                     <div class="col-12">
-                        {% include 'includes/pagination.html' %}
+                        {% include 'includes/cliente_pagination.html' %}
                     </div>
                 </div>
 

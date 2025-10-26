@@ -108,15 +108,9 @@ def cliente_list(request):
         grupo = filtro_form.cleaned_data.get('grupo')
         if grupo:
             usuarios = usuarios.filter(groups=grupo)
-        
-        # Filtro por status
-        is_active = filtro_form.cleaned_data.get('is_active')
-        if is_active == 'true':
-            usuarios = usuarios.filter(is_active=True)
-        elif is_active == 'false':
-            usuarios = usuarios.filter(is_active=False)
     
     # ========== PAGINAÇÃO ==========
+
     paginator = Paginator(usuarios, 9)
     page_number = request.GET.get('page')
     page_obj = paginator.get_page(page_number)

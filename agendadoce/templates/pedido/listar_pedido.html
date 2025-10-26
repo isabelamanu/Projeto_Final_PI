@@ -98,7 +98,7 @@
                             <!-- Status -->
                             <div class="col-md-3">
                                 <label for="{{ filtro_form.status.id_for_label }}" class="form-label fw-bold">
-                                    <i class="bi bi-flag"></i> Status
+                                    <i class="bi bi-flag" ></i> Status
                                 </label>
                                 {{ filtro_form.status }}
                                 <small>Situação de pedido</small>
@@ -164,7 +164,7 @@
                         <div class="encomenda-card">
                             <div class="encomenda-header">
                                 <div class="encomenda-id">#ENC00{{ pedido.id }}</div>
-                                <div class="status-badge status-producao">{{ pedido.status }}</div>
+                                <div class="status-badge status-pronto">{{ pedido.status }}</div>
                             </div>
                             
                             <div class="encomenda-image">
@@ -208,7 +208,7 @@
                 <!-- Paginação -->
                 <div class="row mt-5">
                     <div class="col-12">
-                        {% include 'includes/pagination.html' %}
+                        {% include 'includes/pedido_pagination.html' %}
                     </div>
                 </div>
             </div>
