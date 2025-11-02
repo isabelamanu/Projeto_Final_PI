@@ -25,6 +25,7 @@ def index(request):
 
 @login_required
 def pedido_list(request):
+    total_pedidos = Pedido.objects.count()
     pedidos = Pedido.objects.all()
 
     # ========== ADICIONE ESTE BLOCO ==========
@@ -77,7 +78,8 @@ def pedido_list(request):
     return render(request, 'pedido/listar_pedido.html', {
         'pedidos': page_obj,
         'page_obj': page_obj,
-        'filtro_form': filtro_form  # ← ADICIONE
+        'filtro_form': filtro_form, 
+        'total_pedidos': total_pedidos,
     })
 
 def atribuir_entregador_automatico():
@@ -156,6 +158,7 @@ def pedido_detail(request, id):
 def entregador_list(request):
     # Iniciar com todas as vagas
     entregadores = Entregador.objects.all()
+    total_entregadores = Entregador.objects.count()
     
     # ========== ADICIONE ESTE BLOCO ==========
     # Criar instância do formulário
@@ -198,7 +201,8 @@ def entregador_list(request):
     return render(request, 'entregador/listar_entregador.html', {
         'entregadores': page_obj,
         'page_obj': page_obj,
-        'filtro_form': filtro_form  # ← ADICIONE
+        'filtro_form': filtro_form,
+        'total_entregadores': total_entregadores,
     })
 
 @login_required

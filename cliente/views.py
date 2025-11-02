@@ -4,6 +4,7 @@ from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from .forms import UsuarioAdaptadoCreationForm, LoginForm, PerfilForm, UsuarioFiltroForm, UsuarioEditForm
 from .models import UsuarioAdaptado
+from agendadoce.models import Pedido
 from django.contrib.auth.models import Group
 from django.shortcuts import get_object_or_404
 from django.core.paginator import Paginator
@@ -84,6 +85,9 @@ def cliente_list(request):
     
     # Buscar todos os usuários
     usuarios = UsuarioAdaptado.objects.all()
+    total_usuarios = UsuarioAdaptado.objects.count()
+    total_pedidos = Pedido.objects.count()
+    pedido_por_cliente = str(int(total_pedidos)/int(total_usuarios))
     
     # ========== FILTROS ==========
     filtro_form = UsuarioFiltroForm(request.GET or None)
@@ -119,6 +123,8 @@ def cliente_list(request):
         'usuarios': page_obj,
         'page_obj': page_obj,
         'filtro_form': filtro_form,
+        'total_usuarios': total_usuarios,
+        'pedido_por_cliente': pedido_por_cliente,
        })
 
 @login_required

@@ -3,5 +3,116 @@
 {% block title %}Detalhes do Entregador | AgendaDoce{% endblock %}
 
 {% block content %}
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Perfil do Entregador - AgendaDoce</title>
+    <link rel="stylesheet" href="../../static/styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+
+    <!-- Page Header -->
+    <section class="page-header">
+        <div class="container">
+            <div class="page-header-content">
+                <div style="display: flex; align-items: center; gap: 1rem; margin-bottom: 1rem;">
+                    <a href="{% url 'entregador_list' %}" class="btn-secondary" style="text-decoration: none">← Voltar</a>
+                </div>
+                <h2 class="page-title">Perfil do <span class="highlight">Entregador</span></h2>
+                <p class="page-description">
+                    Visualize e gerencie todas as informações do entregador cadastrado. Mantenha os dados sempre atualizados para um melhor gerenciamento.
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Detalhes do Perfil -->
+    <section class="encomendas">
+        <div class="container">
+
+            <!-- Card Principal com Foto e Informações -->
+            <div class="encomenda-card" style="margin-bottom: 2rem;">
+                <div class="encomenda-header">
+                    <div class="encomenda-id">#ENT001</div>
+                </div>
+                <div style="display: grid; grid-template-columns: 300px 1fr; gap: 2rem; padding: 1.5rem;">
+
+                    <!-- Foto de Perfil -->
+                    <div style="display: flex; flex-direction: column; align-items: center; gap: 1rem;">
+                        {% if user.foto_perfil %}
+                            <img src="{{ user.foto_perfil.url }}" alt="Foto de perfil" class="rounded-circle img-thumbnail mb-3" style="width: 200px; height: 200px; background: #fce7f3; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 4rem; font-weight: 700; color: #ec4899; box-shadow: 0 4px 15px rgba(236, 72, 153, 0.2);">
+                        {% else %}
+                            <div class="rounded-circle bg-light d-inline-flex align-items-center justify-content-center mb-3" style="width: 200px; height: 200px; background: #fce7f3; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 4rem; font-weight: 700; color: #ec4899; box-shadow: 0 4px 15px rgba(236, 72, 153, 0.2);">
+                                <i class="bi bi-person-circle text-muted" style="font-size: 5rem;"></i>
+                            </div>
+                        {% endif %}
+                        <div style="text-align: center;">
+                            <h4 class="encomenda-title" style="margin-bottom: 0.5rem;">{{ entregador.nome_entregador }}</h4>
+                        </div>
+                        <a href="{% url 'entregador_update' id=entregador.id %}" class="btn-primary" style="width: 100%; text-align: center; text-decoration: none; margin-top: 0.5rem;">
+                            Editar Perfil
+                        </a>
+                    </div>
+
+                    <!-- Informações Principais -->
+                    <div class="encomenda-content" style="padding: 0;">
+                        <h3 class="encomenda-title">Informações Pessoais</h3>
+                        <div class="encomenda-details">
+                            <div class="detail-item">
+                                <span class="detail-label">Nome:</span>
+                                <span class="detail-value">{{ entregador.nome_entregador }}</span>
+                            </div>
+                            <div class="detail-item">
+                                <span class="detail-label">CPF:</span>
+                                <span class="detail-value">{{ entregador.cpf|default:"Não informado" }}</span>
+                            </div>
+                            <div class="detail-item">
+                                <span class="detail-label">Telefone:</span>
+                                <span class="detail-value">{{ entregador.telefone|default:"Não informado" }}</span>
+                            </div>
+                            <div class="detail-item">
+                                <span class="detail-label">Veículo:</span>
+                                <span class="detail-value">{{ entregador.veiculo }}</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Endereço e Estatísticas -->
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; margin-bottom: 2rem;">
+
+                <!-- Estatísticas -->
+                <div class="encomenda-card">
+                    <div style="padding: 1.5rem;">
+                        <h4 style="font-size: 1.25rem; font-weight: 600; color: #1f2937; margin-bottom: 1rem;">
+                            📊 Estatísticas
+                        </h4>
+                        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;">
+                            <div style="background: #fef3c7; padding: 1rem; border-radius: 0.75rem; text-align: center;">
+                                <p style="font-size: 1.75rem; font-weight: 700; color: #1f2937; margin-bottom: 0.25rem;">{{ entregador.num_entregas }}</p>
+                                <p style="font-size: 0.875rem; color: #6b7280;">Entregas Feitas</p>
+                            </div>
+                            <div style="background: #fce7f3; padding: 1rem; border-radius: 0.75rem; text-align: center;">
+                                <p style="font-size: 1.75rem; font-weight: 700; color: #1f2937; margin-bottom: 0.25rem;">{{ entregador.disponibilidade }}</p>
+                                <p style="font-size: 0.875rem; color: #6b7280;">Disponibilidade</p>
+                            </div>
+                        </div>
+                        <div style="background: #d1fae5; padding: 1rem; border-radius: 0.75rem; text-align: center; margin-top: 1rem;">
+                            <p style="font-size: 1rem; font-weight: 600; color: #1f2937; margin-bottom: 0.25rem;">Data de Contratação</p>
+                            <p style="font-size: 0.875rem; color: #6b7280;">{{ entregador.data_contratacao|date:"d/m/Y" }}</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+</body>
+</html>
 
 {% endblock %}

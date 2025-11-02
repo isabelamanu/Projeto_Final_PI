@@ -106,7 +106,7 @@
                     <div class="stat-card">
                         <div class="stat-icon">📦</div>
                         <div class="stat-content">
-                            <p class="stat-number">8</p>
+                            <p class="stat-number">{{ total_entregadores }}</p>
                             <p class="stat-label">Total de Entregadores</p>
                         </div>
                     </div>
@@ -124,7 +124,7 @@
                     {% for entregador in entregadores %}
                         <div class="encomenda-card">
                             <div class="encomenda-header">
-                                <div class="encomenda-id">#CLI00{{ entregador.id }}</div>
+                                <div class="encomenda-id">#ENT00{{ entregador.id }}</div>
                                 <div class="status-badge status-pronto"> {{ entregador.disponibilidade }}</div>
                             </div>
                             <div class="encomenda-content">

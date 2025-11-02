@@ -5,7 +5,7 @@
         <!-- Botão Primeira Página -->
         {% if page_obj.has_previous %}
             <li class="page-item">
-                <a class="page-link" href="?page=1{% if request.GET.descricao %}&descricao={{ request.GET.descricao }}{% endif %}{% if request.GET.data_inicio %}&data_inicio={{ request.GET.data_inicio }}{% endif %}{% if request.GET.data_fim %}&data_fim={{ request.GET.data_fim }}{% endif %}{% if request.GET.disponibilidade %}&disponibilidade={{ request.GET.disponibilidade }}" aria-label="Primeira">
+                <a class="page-link" href="?page=1{% if request.GET.descricao %}&descricao={{ request.GET.descricao }}{% endif %}{% if request.GET.data_inicio %}&data_inicio={{ request.GET.data_inicio }}{% endif %}{% if request.GET.data_fim %}&data_fim={{ request.GET.data_fim }}{% endif %}{% if request.GET.disponibilidade %}&disponibilidade={{ request.GET.disponibilidade }}{% endif %}" aria-label="Primeira">
                     <span aria-hidden="true">&laquo;&laquo;</span>
                 </a>
             </li>
@@ -18,7 +18,7 @@
         <!-- Botão Página Anterior -->
         {% if page_obj.has_previous %}
             <li class="page-item">
-                <a class="page-link" href="?page={{ page_obj.previous_page_number }}{% if request.GET.descricao %}&descricao={{ request.GET.descricao }}{% endif %}{% if request.GET.data_inicio %}&data_inicio={{ request.GET.data_inicio }}{% endif %}{% if request.GET.data_fim %}&data_fim={{ request.GET.data_fim }}{% endif %}{% if request.GET.disponibilidade %}&disponibilidade={{ request.GET.disponibilidade }}" aria-label="Anterior">
+                <a class="page-link" href="?page={{ page_obj.previous_page_number }}{% if request.GET.descricao %}&descricao={{ request.GET.descricao }}{% endif %}{% if request.GET.data_inicio %}&data_inicio={{ request.GET.data_inicio }}{% endif %}{% if request.GET.data_fim %}&data_fim={{ request.GET.data_fim }}{% endif %}{% if request.GET.disponibilidade %}&disponibilidade={{ request.GET.disponibilidade }}{% endif %}" aria-label="Anterior">
                     <span aria-hidden="true">&laquo;</span>
                 </a>
             </li>
@@ -36,7 +36,7 @@
                 </li>
             {% elif num > page_obj.number|add:'-3' and num < page_obj.number|add:'3' %}
                 <li class="page-item">
-                    <a class="page-link" href="?page={{ num }}{% if request.GET.descricao %}&descricao={{ request.GET.descricao }}{% endif %}{% if request.GET.data_inicio %}&data_inicio={{ request.GET.data_inicio }}{% endif %}{% if request.GET.data_fim %}&data_fim={{ request.GET.data_fim }}{% endif %}{% if request.GET.disponibilidade %}&disponibilidade={{ request.GET.disponibilidade }}">{{ num }}</a>
+                    <a class="page-link" href="?page={{ num }}{% if request.GET.descricao %}&descricao={{ request.GET.descricao }}{% endif %}{% if request.GET.data_inicio %}&data_inicio={{ request.GET.data_inicio }}{% endif %}{% if request.GET.data_fim %}&data_fim={{ request.GET.data_fim }}{% endif %}{% if request.GET.disponibilidade %}&disponibilidade={{ request.GET.disponibilidade }}{% endif %}">{{ num }}</a>
                 </li>
             {% endif %}
         {% endfor %}
@@ -44,7 +44,7 @@
         <!-- Botão Próxima Página -->
         {% if page_obj.has_next %}
             <li class="page-item">
-                <a class="page-link" href="?page={{ page_obj.next_page_number }}{% if request.GET.descricao %}&descricao={{ request.GET.descricao }}{% endif %}{% if request.GET.data_inicio %}&data_inicio={{ request.GET.data_inicio }}{% endif %}{% if request.GET.data_fim %}&data_fim={{ request.GET.data_fim }}{% endif %}{% if request.GET.disponibilidade %}&disponibilidade={{ request.GET.disponibilidade }}" aria-label="Próxima">
+                <a class="page-link" href="?page={{ page_obj.next_page_number }}{% if request.GET.descricao %}&descricao={{ request.GET.descricao }}{% endif %}{% if request.GET.data_inicio %}&data_inicio={{ request.GET.data_inicio }}{% endif %}{% if request.GET.data_fim %}&data_fim={{ request.GET.data_fim }}{% endif %}{% if request.GET.disponibilidade %}&disponibilidade={{ request.GET.disponibilidade }}{% endif %}" aria-label="Próxima">
                     <span aria-hidden="true">&raquo;</span>
                 </a>
             </li>
@@ -57,7 +57,7 @@
         <!-- Botão Última Página -->
         {% if page_obj.has_next %}
             <li class="page-item">
-                <a class="page-link" href="?page={{ page_obj.paginator.num_pages }}{% if request.GET.descricao %}&descricao={{ request.GET.descricao }}{% endif %}{% if request.GET.data_inicio %}&data_inicio={{ request.GET.data_inicio }}{% endif %}{% if request.GET.data_fim %}&data_fim={{ request.GET.data_fim }}{% endif %}{% if request.GET.disponibilidade %}&disponibilidade={{ request.GET.disponibilidade }}" aria-label="Última">
+                <a class="page-link" href="?page={{ page_obj.paginator.num_pages }}{% if request.GET.descricao %}&descricao={{ request.GET.descricao }}{% endif %}{% if request.GET.data_inicio %}&data_inicio={{ request.GET.data_inicio }}{% endif %}{% if request.GET.data_fim %}&data_fim={{ request.GET.data_fim }}{% endif %}{% if request.GET.disponibilidade %}&disponibilidade={{ request.GET.disponibilidade }}{% endif %}" aria-label="Última">
                     <span aria-hidden="true">&raquo;&raquo;</span>
                 </a>
             </li>
