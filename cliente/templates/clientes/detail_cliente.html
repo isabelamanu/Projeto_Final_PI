@@ -10,6 +10,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Perfil do Cliente - AgendaDoce</title>
+ 
     <link rel="stylesheet" href="../../static/styles.css">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 </head>
@@ -63,7 +64,7 @@
 
                     <!-- Foto de Perfil -->
                     <div style="display: flex; flex-direction: column; align-items: center; gap: 1rem;">
-                        {% if user.foto_perfil %}
+                        {% if cliente.foto_perfil %}
                             <img src="{{ user.foto_perfil.url }}" alt="Foto de perfil" class="rounded-circle img-thumbnail mb-3" style="width: 200px; height: 200px; background: #fce7f3; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 4rem; font-weight: 700; color: #ec4899; box-shadow: 0 4px 15px rgba(236, 72, 153, 0.2);">
                         {% else %}
                             <div class="rounded-circle bg-light d-inline-flex align-items-center justify-content-center mb-3" style="width: 200px; height: 200px; background: #fce7f3; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 4rem; font-weight: 700; color: #ec4899; box-shadow: 0 4px 15px rgba(236, 72, 153, 0.2);">
@@ -71,38 +72,37 @@
                             </div>
                         {% endif %}
                         <div style="text-align: center;">
-                            <h4 class="encomenda-title" style="margin-bottom: 0.5rem;">{{ user.get_full_name|default:user.username }}</h4>
-                            <h3 class="encomenda-title" style="margin-bottom: 0.5rem;">{{ user.username }}</h3>
-                            <p style="color: #6b7280; font-size: 0.875rem;">Cliente desde: {{ user.date_joined|date:"d/m/Y" }}</p>
+                            <h4 class="encomenda-title" style="margin-bottom: 0.5rem;">{{ cliente.get_full_name|default:cliente.username }}</h4>
+                            <h3 class="encomenda-title" style="margin-bottom: 0.5rem;">{{ cliente.username }}</h3>
+                            <p style="color: #6b7280; font-size: 0.875rem;">Cliente desde: {{ cliente.date_joined|date:"d/m/Y" }}</p>
                         </div>
                         <a href="{% url 'cliente_update' id=user.id %}" class="btn-primary" style="width: 100%; text-align: center; text-decoration: none; margin-top: 0.5rem;">
                             Editar Perfil
                         </a>
                     </div>
-
                     <!-- Informações Principais -->
                     <div class="encomenda-content" style="padding: 0;">
                         <h3 class="encomenda-title">Informações Pessoais</h3>
                         <div class="encomenda-details">
                             <div class="detail-item">
                                 <span class="detail-label">Nome Completo:</span>
-                                <span class="detail-value">{{ user.get_full_name|default:user.username }}</span>
+                                <span class="detail-value">{{ cliente.get_full_name|default:cliente.username }}</span>
                             </div>
                             <div class="detail-item">
                                 <span class="detail-label">CPF:</span>
-                                <span class="detail-value">{{ user.cpf|default:"Não informado" }}</span>
+                                <span class="detail-value">{{ cliente.cpf|default:"Não informado" }}</span>
                             </div>
                             <div class="detail-item">
                                 <span class="detail-label">Email:</span>
-                                <span class="detail-value">{{ user.email|default:"Não informado" }}</span>
+                                <span class="detail-value">{{ cliente.email|default:"Não informado" }}</span>
                             </div>
                             <div class="detail-item">
                                 <span class="detail-label">Nome da Mãe:</span>
-                                <span class="detail-value">{{ user.nome_mae|default:"Não informado" }}</span>
+                                <span class="detail-value">{{ cliente.nome_mae|default:"Não informado" }}</span>
                             </div>
                             <div class="detail-item">
                                 <span class="detail-label">Telefone:</span>
-                                <span class="detail-value">{{ user.telefone|default:"Não informado" }}</span>
+                                <span class="detail-value">{{ cliente.telefone|default:"Não informado" }}</span>
                             </div>
                         </div>
                     </div>
@@ -121,15 +121,15 @@
                         <div class="encomenda-details">
                             <div class="detail-item">
                                 <span class="detail-label">Rua:</span>
-                                <span class="detail-value">{{ user.endereco|default:"Não informado" }}</span>
+                                <span class="detail-value">{{ cliente.endereco|default:"Não informado" }}</span>
                             </div>
                             <div class="detail-item">
                                 <span class="detail-label">Bairro:</span>
-                                <span class="detail-value">{{ user.nome_bairro|default:"Não informado" }}</span>
+                                <span class="detail-value">{{ cliente.nome_bairro|default:"Não informado" }}</span>
                             </div>
                             <div class="detail-item">
                                 <span class="detail-label">Cidade:</span>
-                                <span class="detail-value">{{ user.nome_cidade|default:"Não informado" }}</span>
+                                <span class="detail-value">{{ cliente.nome_cidade|default:"Não informado" }}</span>
                             </div>
                         </div>
                     </div>
@@ -153,7 +153,7 @@
                         </div>
                         <div style="background: #d1fae5; padding: 1rem; border-radius: 0.75rem; text-align: center; margin-top: 1rem;">
                             <p style="font-size: 1rem; font-weight: 600; color: #1f2937; margin-bottom: 0.25rem;">Último acesso</p>
-                            <p style="font-size: 0.875rem; color: #6b7280;">{{ user.last_login|date:"d/m/Y H:i"|default:"Nunca" }}</p>
+                            <p style="font-size: 0.875rem; color: #6b7280;">{{ cliente.last_login|date:"d/m/Y H:i"|default:"Nunca" }}</p>
                         </div>
                     </div>
                 </div>

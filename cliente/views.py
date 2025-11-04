@@ -30,7 +30,10 @@ def cliente_create(request):
 
 def login_view(request):
     if request.user.is_authenticated:
-       return redirect('pedido_list')
+        if not request.user.is_administrador() and not request.user.is_superuser:
+            return redirect('historico')
+        else:
+            return redirect('pedido_list')
    
     if request.method == 'POST':
         form = LoginForm(request, data=request.POST)
@@ -57,7 +60,7 @@ def login_view(request):
 def logout_view(request):
     logout(request)
     messages.info(request, 'Você saiu do sistema.')
-    return redirect('login')
+    return redirect('index')
 
 @login_required
 def perfil_view(request):
