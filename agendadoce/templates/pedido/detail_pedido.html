@@ -19,7 +19,11 @@
         <div class="container">
             <div class="page-header-content">
                 <div style="display: flex; align-items: center; gap: 1rem; margin-bottom: 1rem;">
+                    {% if user.is_administrador %}
                     <a href="{% url 'pedido_list' %}" class="btn-secondary" style="text-decoration: none">← Voltar</a>
+                    {% else %}
+                    <a href="{% url 'historico' %}" class="btn-secondary" style="text-decoration: none">← Voltar</a>
+                    {% endif %}
                     <div class="status-badge status-producao">{{ pedido.status }}</div>
                 </div>
                 <h2 class="page-title">Encomenda <span class="highlight">#ENC00{{ pedido.id }}</span></h2>
@@ -106,19 +110,19 @@
                         <div class="encomenda-details">
                             <div class="detail-item">
                                 <span class="detail-label">Nome:</span>
-                                <span class="detail-value">{{ user.get_full_name }}</span>
+                                <span class="detail-value">{{ cliente.get_full_name }}</span>
                             </div>
                             <div class="detail-item">
                                 <span class="detail-label">Telefone:</span>
-                                <span class="detail-value">{{ user.telefone }}</span>
+                                <span class="detail-value">{{ cliente.telefone }}</span>
                             </div>
                             <div class="detail-item">
                                 <span class="detail-label">Email:</span>
-                                <span class="detail-value">{{ user.email }}</span>
+                                <span class="detail-value">{{ cliente.email }}</span>
                             </div>
                             <div class="detail-item">
                                 <span class="detail-label">Endereço:</span>
-                                <span class="detail-value">{{ user.endereco }}</span>
+                                <span class="detail-value">{{ cliente.endereco }}</span>
                             </div>
                         </div>
                     </div>

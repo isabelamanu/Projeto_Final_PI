@@ -146,9 +146,9 @@
                                     Escolher Foto
                                 </label>
                                 
-                                {% if user.foto_perfil %}
+                                {% if cliente.foto_perfil %}
                                     <div class="mb-3">
-                                        <img src="{{ user.foto_perfil.url }}" alt="Foto atual" class="img-thumbnail" style="max-width: 200px; max-height: 200px; object-fit: cover;">
+                                        <img src="{{ cliente.foto_perfil.url }}" alt="Foto atual" class="img-thumbnail" style="max-width: 200px; max-height: 200px; object-fit: cover;">
                                         <p class="text-muted small mt-2">Foto atual. Envie uma nova para substituir.</p>
                                     </div>
                                 {% endif %}

@@ -3,6 +3,7 @@ from django.contrib.auth import login, authenticate, logout
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from .forms import UsuarioAdaptadoCreationForm, LoginForm, PerfilForm, UsuarioFiltroForm, UsuarioEditForm
+from agendadoce.forms import PedidoFiltroForm
 from .models import UsuarioAdaptado
 from agendadoce.models import Pedido
 from django.contrib.auth.models import Group
@@ -29,12 +30,6 @@ def cliente_create(request):
 
 
 def login_view(request):
-    if request.user.is_authenticated:
-        if not request.user.is_administrador() and not request.user.is_superuser:
-            return redirect('historico')
-        else:
-            return redirect('pedido_list')
-   
     if request.method == 'POST':
         form = LoginForm(request, data=request.POST)
         if form.is_valid():
@@ -47,7 +42,10 @@ def login_view(request):
                 messages.success(request, f'Bem-vindo, {user.username}!')
                 
                 # Redireciona para a página solicitada
-                next_page = request.GET.get('next', 'historico')
+                if not request.user.is_administrador() and not request.user.is_superuser:
+                    next_page = request.GET.get('next', 'historico')
+                else:
+                    next_page = request.GET.get('next', 'pedido_list')
                 return redirect(next_page)
         else:
             messages.error(request, 'Usuário ou senha inválidos.')
@@ -72,8 +70,13 @@ def perfil_view(request):
             return redirect('perfil')
     else:
         form = PerfilForm(instance=request.user)
+
+    pedidos = Pedido.objects.filter(cliente=request.user)
     
-    return render(request, 'clientes/detail_cliente.html', {'form': form})
+    return render(request, 'clientes/detail_cliente.html', {
+        'form': form,
+        'pedidos': pedidos,
+    })
 
 def cliente_detail(request, id):
     cliente = get_object_or_404(UsuarioAdaptado, id=id)
@@ -187,7 +190,7 @@ def cliente_update(request, id):
     cliente = get_object_or_404(UsuarioAdaptado, id=id)
     
     if request.method == 'POST':
-        form = PerfilForm(request.POST, request.FILES, instance=cliente)
+        form = UsuarioEditForm(request.POST, request.FILES, instance=cliente)
         if form.is_valid():
             cliente = form.save()
             messages.success(request, f'Cliente "{cliente.username}" atualizado com sucesso!')
@@ -222,5 +225,53 @@ def cliente_delete(request, id):
         'usuario': usuario
     })
 
+@login_required
 def historico_cliente(request):
-    return render(request, 'clientes/historico_cliente.html')
+    total_pedidos = Pedido.objects.count()
+    pedidos = Pedido.objects.filter(cliente=request.user)
+
+    filtro_form = PedidoFiltroForm(request.GET or None)
+    
+    # Aplicar filtros se válido
+    if filtro_form.is_valid():
+        # Filtro por descrição
+        descricao = filtro_form.cleaned_data.get('descricao')
+        if descricao:
+            pedidos = pedidos.filter(nome_pedido__icontains=descricao)
+        
+        # Filtro por data início
+        data_inicio = filtro_form.cleaned_data.get('data_inicio')
+        if data_inicio:
+            pedidos = pedidos.filter(data_entrega__date__gte=data_inicio)
+        
+        # Filtro por data fim
+        data_fim = filtro_form.cleaned_data.get('data_fim')
+        if data_fim:
+            pedidos = pedidos.filter(data_entrega__date__lte=data_fim)
+
+        # Filtro por entregador
+        entregador = filtro_form.cleaned_data.get('entregador')
+        if entregador:
+            pedidos = pedidos.filter(entregador=entregador)
+        
+        # Filtro por status
+        status = filtro_form.cleaned_data.get('status')
+        if status:
+            pedidos = pedidos.filter(status=status)
+
+    # 2. Criar o paginador (9 vagas por página)
+    paginator = Paginator(pedidos, 9)
+
+    # 3. Pegar o número da página da URL (?page=2)
+    page_number = request.GET.get('page')
+
+    # 4. Obter os dados daquela página específica
+    page_obj = paginator.get_page(page_number)
+
+    # 5. Enviar para o template
+    return render(request, 'clientes/historico_cliente.html', {
+        'pedidos': page_obj,
+        'page_obj': page_obj,
+        'filtro_form': filtro_form, 
+        'total_pedidos': total_pedidos,
+    })

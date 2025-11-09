@@ -19,4 +19,351 @@
         </div>
     </section>
 
+    <section class="encomendas">
+        <div class="container">
+            <!-- ========== ADICIONE TODO ESTE BLOCO AQUI ========== -->
+
+            <!-- ====== FILTROS DE BUSCA ====== -->
+            <div class="card shadow-sm border-0 filtros-card">
+                <div class="card-header text-white">
+                    <h5 class="mb-0">
+                        <i class="bi bi-funnel"></i> Filtros de Busca
+                    </h5>
+                </div>
+
+                <div class="card-body">
+                    <form method="get" id="filtroForm">
+                        <div class="row g-3 align-items-end">
+
+                            <!-- Nome -->
+                            <div class="col-md-3">
+                                <label for="{{ filtro_form.descricao.id_for_label }}" class="form-label fw-bold">
+                                    <i class="bi bi-search"></i> Nome
+                                </label>
+                                {{ filtro_form.descricao }}
+                                <small>Digite palavras-chave para buscar</small>
+                            </div>
+
+                            <!-- Data Início -->
+                            <div class="col-md-3">
+                                <label for="{{ filtro_form.data_inicio.id_for_label }}" class="form-label fw-bold">
+                                    <i class="bi bi-calendar-event"></i> Data Início
+                                </label>
+                                {{ filtro_form.data_inicio }}
+                                <small>Pedidos com entrega a partir de</small>
+                            </div>
+
+                            <!-- Data Fim -->
+                            <div class="col-md-3">
+                                <label for="{{ filtro_form.data_fim.id_for_label }}" class="form-label fw-bold">
+                                    <i class="bi bi-calendar-check"></i> Data Fim
+                                </label>
+                                {{ filtro_form.data_fim }}
+                                <small>Pedidos com entrega até</small>
+                            </div>
+
+                            <!-- Entregador -->
+                            <div class="col-md-3">
+                                <label for="{{ filtro_form.entregador.id_for_label }}" class="form-label fw-bold">
+                                    <i class="bi bi-truck"></i> Entregador
+                                </label>
+                                {{ filtro_form.entregador }}
+                                <small>Entregador referente ao pedido</small>
+                            </div>
+
+                            <!-- Status -->
+                            <div class="col-md-3">
+                                <label for="{{ filtro_form.status.id_for_label }}" class="form-label fw-bold">
+                                    <i class="bi bi-flag" ></i> Status
+                                </label>
+                                {{ filtro_form.status }}
+                                <small>Situação de pedido</small>
+                            </div>
+                        </div>
+
+                        <!-- Botões -->
+                        <div class="mt-4 d-flex gap-2">
+                            <button type="submit" class="btn btn-pink">
+                                <i class="bi bi-search"></i> Buscar
+                            </button>
+                            {% if user.administrador %}
+                            <a href="{% url 'pedido_list' %}" class="btn btn-outline-pink">
+                                <i class="bi bi-x-circle"></i> Limpar Filtros
+                            </a>
+                            {% else %}
+                            <a href="{% url 'historico' %}" class="btn btn-outline-pink">
+                                <i class="bi bi-x-circle"></i> Limpar Filtros
+                            </a>
+                            {% endif %}
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+            {% if request.GET %}
+            <div class="alert alert-info mt-3 d-flex align-items-center" style="border-color: #e83e8c;">
+                <i class="bi bi-info-circle me-2 fs-5"></i>
+                <div>Encontrado(s) <strong>{{ pedidos.count }}</strong> pedido(s) com os filtros aplicados.</div>
+            </div>
+            {% endif %}
+
+            <!-- ========== FIM DO BLOCO DE FILTROS ========== -->
+        </div>
+    </section>
+
+
+    {% if pedidos %}
+        <!-- Encomendas Section -->
+        <section class="encomendas">
+            <div class="container" style="margin-top: 0%;">
+                <div class="encomendas-stats" >
+                    <div class="stat-card">
+                        <div class="stat-icon">📦</div>
+                        <div class="stat-content">
+                            <p class="stat-number">{{ total_pedidos }}</p>
+                            <p class="stat-label">Total de Encomendas</p>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon">⏳</div>
+                        <div class="stat-content">
+                            <p class="stat-number">3</p>
+                            <p class="stat-label">Em Produção</p>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon">✅</div>
+                        <div class="stat-content">
+                            <p class="stat-number">5</p>
+                            <p class="stat-label">Concluídas</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="encomendas-grid">
+                    <!-- Encomenda 1 -->
+                    {% for pedido in pedidos %}
+                        <div class="encomenda-card">
+                            <div class="encomenda-header">
+                                <div class="encomenda-id">#ENC00{{ pedido.id }}</div>
+                                <div class="status-badge status-pronto">{{ pedido.status }}</div>
+                            </div>
+                            
+                            <div class="encomenda-image">
+                                {% if pedido.foto %}
+                                <img src="{{ pedido.foto.url }}" alt="{{ pedido.nome_pedido }}">
+                                {% endif %}
+                            </div>
+                            <div class="encomenda-content">
+                                <h3 class="encomenda-title">{{ pedido.nome_pedido }}</h3>
+                                <div class="encomenda-details">
+                                    <div class="detail-item">
+                                        <span class="detail-label">Nome do Cliente:</span>
+                                        <span class="detail-value">{{ pedido.cliente }}</span>
+                                    </div>
+                                    <div class="detail-item">
+                                        <span class="detail-label">Data de Entrega:</span>
+                                        <span class="detail-value">{{ pedido.data_entrega }}</span>
+                                    </div>
+                                    <div class="detail-item">
+                                        <span class="detail-label">Entregador:</span>
+                                        <span class="detail-value">{{ pedido.entregador }}</span>
+                                    </div>
+                                    <div class="detail-item">
+                                        <span class="detail-label">Observações:</span>
+                                        <span class="detail-value">{{ pedido.observacoes }}</span>
+                                    </div>
+                                </div>
+                                <div class="encomenda-footer">
+                                    <div class="price">R$ {{ pedido.valor }}</div>
+                                    
+                                </div>
+                                <div class="price">
+                                    <a class="btn-card" href="{% url 'pedido_detail' id=pedido.id %}" style="padding: 0.5rem 1rem; font-size: 0.875rem; text-decoration: none">Ver Detalhes</a>
+                                    <a href="{% url 'pedido_update' id=pedido.id %}" class="btn-secondary" style="padding: 0.5rem 1rem; font-size: 0.875rem; text-decoration: none">Editar</a>
+                                    <a href="{% url 'pedido_delete' id=pedido.id %}" style="background: #ef4444; color: white; border: none; padding: 0.5rem 1rem; border-radius: 0.5rem; font-size: 0.875rem; cursor: pointer; text-decoration: none">Excluir</a>
+                                </div>
+                            </div>
+                        </div>
+                    {% endfor %}
+                </div>
+                <!-- Paginação -->
+                <div class="row mt-5">
+                    <div class="col-12">
+                        {% include 'includes/pedido_pagination.html' %}
+                    </div>
+                </div>
+            </div>
+        </section>
+    {% else %}
+        <div class="row">
+            <div class="col-12">
+                <div class="alert alert-info text-center" role="alert" style="border-color: #e83e8c;">
+                    <i class="bi bi-info-circle" style="font-size: 2rem;" style="border-color: #e83e8c;"></i>
+                    <h4 class="mt-3">Nenhum Pedido Cadastrado</h4>
+                    <p>Comece cadastrando um novo pedido!</p>
+                    <a href="{% url 'pedido_create' %}" class="btn btn-success mt-2" style="background-color: #e83e8c; border-color: #e83e8c;">
+                        <i class="bi bi-plus-circle"></i> Cadastrar Pedido
+                    </a>
+                </div>
+            </div>
+        </div>
+    {% endif %}
+
+    <!-- CTA Section -->
+    <section class="cta">
+        <div class="container">
+            <div class="cta-content">
+                <h3 class="cta-title">
+                    Quer Fazer uma Nova Encomenda?
+                </h3>
+                <p class="cta-description">
+                    Entre em contato conosco e faça seu próximo pedido personalizado. Garantimos qualidade, sabor e um atendimento excepcional.
+                </p>
+                <a class="btn-cta" href="{% url 'pedido_create' %}" style="text-decoration: none">Nova Encomenda</a>
+            </div>
+        </div>
+    </section>
+
+
+<style>
+
+/* ====== Estilo Geral ====== */
+.filtros-card {
+    border-radius: 12px;
+    overflow: hidden;
+    margin-bottom: 20px;
+}
+
+/* Cabeçalho */
+.filtros-card .card-header {
+    background-color: #e83e8c;
+    border: none;
+    padding: 12px 20px;
+}
+
+.filtros-card .card-header h5 {
+    color: #fff;
+    font-weight: 600;
+}
+
+.filtros-card .card-header i {
+    color: #fff;
+}
+
+/* ====== Campos ====== */
+#filtroForm label {
+    color: #d63384;
+}
+
+#filtroForm small {
+    display: block;
+    color: #888;
+    font-size: 0.85rem;
+    margin-top: 4px;
+}
+
+#filtroForm select,
+#filtroForm input {
+    height: 38px;
+    border-radius: 6px;
+    border: 1px solid #ddd;
+    transition: border-color 0.2s;
+}
+
+#filtroForm select:focus,
+#filtroForm input:focus {
+    border-color: #e83e8c;
+    box-shadow: 0 0 0 0.15rem rgba(232, 62, 140, 0.25);
+}
+
+/* ====== Botões ====== */
+.btn-pink {
+    background-color: #e83e8c;
+    color: white;
+    border: none;
+    transition: 0.3s;
+}
+
+.btn-pink:hover {
+    background-color: #d63384;
+}
+
+.btn-outline-pink {
+    border: 1.5px solid #e83e8c;
+    color: #e83e8c;
+    background-color: white;
+    transition: 0.3s;
+}
+
+.btn-outline-pink:hover {
+    background-color: #e83e8c;
+    color: white;
+}
+
+/* ====== Alinhamento e Grid ====== */
+#filtroForm .row.g-3 > div {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+}
+
+/* ====== Alerta ====== */
+.alert-info {
+    border-left: 5px solid #e83e8c;
+    background-color: #fff5f9;
+    color: #333;
+}
+
+/* ====== Responsividade ====== */
+
+/* Tablet médio (≤ 992px): 2 colunas */
+@media (max-width: 992px) {
+    #filtroForm .row.g-3 {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 1.2rem;
+    }
+
+    #filtroForm .btn-pink,
+    #filtroForm .btn-outline-pink {
+        width: 100%;
+    }
+}
+
+/* Celular (≤ 576px): 1 coluna */
+@media (max-width: 576px) {
+    #filtroForm .row.g-3 {
+        grid-template-columns: 1fr;
+        gap: 1rem;
+    }
+
+    .filtros-card .card-header h5 {
+        font-size: 1.1rem;
+        text-align: center;
+    }
+
+    .filtros-card .card-body {
+        padding: 1rem;
+    }
+
+    #filtroForm .btn-pink,
+    #filtroForm .btn-outline-pink {
+        width: 100%;
+    }
+
+    #filtroForm .d-flex.gap-2 {
+        flex-direction: column;
+        gap: 0.8rem;
+    }
+}
+
+/* ====== Hover e transições suaves ====== */
+button,
+a.btn {
+    transition: all 0.25s ease-in-out;
+}
+
+</style>
+
 {% endblock %}

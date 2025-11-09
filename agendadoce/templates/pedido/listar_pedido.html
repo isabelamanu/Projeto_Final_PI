@@ -19,12 +19,6 @@
                 <p class="page-description">
                     Acompanhe as encomendas de bolos especiais dos clientes. Veja o status, detalhes e histórico dos pedidos.
                 </p>
-                <div class="filter-tabs">
-                    <button class="filter-tab active">Todas</button>
-                    <button class="filter-tab">Em Produção</button>
-                    <button class="filter-tab">Prontas</button>
-                    <button class="filter-tab">Entregues</button>
-                </div>
                 <div class="filter-tabs" style="justify-content: right; padding-right: 10px;" >
                     <a href="{% url 'pedido_create' %}" class="btn-primary" style="text-align: center; text-decoration: none; margin-top: 0.5rem;">
                     Fazer Pedido
@@ -145,15 +139,15 @@
                     <div class="stat-card">
                         <div class="stat-icon">⏳</div>
                         <div class="stat-content">
-                            <p class="stat-number">3</p>
+                            <p class="stat-number">{{ total_p_producao }}</p>
                             <p class="stat-label">Em Produção</p>
                         </div>
                     </div>
                     <div class="stat-card">
                         <div class="stat-icon">✅</div>
                         <div class="stat-content">
-                            <p class="stat-number">5</p>
-                            <p class="stat-label">Concluídas</p>
+                            <p class="stat-number">{{ total_p_entregues }}</p>
+                            <p class="stat-label">Entregues</p>
                         </div>
                     </div>
                 </div>

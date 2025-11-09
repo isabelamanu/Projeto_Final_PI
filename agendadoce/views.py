@@ -7,16 +7,14 @@ from django.contrib import messages
 from django.core.paginator import Paginator
 from django.contrib.auth.decorators import login_required
 from .models import Entregador, Pedido
+from cliente.models import UsuarioAdaptado
 from .forms import EntregadorForm, PedidoForm, PedidoFiltroForm, EntregadorFiltroForm
 
 def index(request):
-    total_pedidos = Pedido.objects.count()
     total_usuarios = user.objects.count()
     total_entregadores = Entregador.objects.count()
     
     context = {
-        'hoje': date.today(),
-        'total_pedidos': total_pedidos,
         'total_usuarios': total_usuarios,
         'total_entregadores': total_entregadores,
     }
@@ -26,6 +24,8 @@ def index(request):
 @login_required
 def pedido_list(request):
     total_pedidos = Pedido.objects.count()
+    total_p_producao = Pedido.objects.filter(status="Em Producao").count()
+    total_p_entregues = Pedido.objects.filter(status="Entregue").count()
     pedidos = Pedido.objects.all()
 
     # ========== ADICIONE ESTE BLOCO ==========
@@ -80,6 +80,8 @@ def pedido_list(request):
         'page_obj': page_obj,
         'filtro_form': filtro_form, 
         'total_pedidos': total_pedidos,
+        'total_p_producao': total_p_producao,
+        'total_p_entregues': total_p_entregues,
     })
 
 def atribuir_entregador_automatico():
@@ -114,10 +116,24 @@ def pedido_create(request):
             if not pedido.entregador:
                 messages.error(request, 'Nenhum entregador disponível no momento.')
                 return redirect('pedido_list')
+            
+            if pedido.tamanho == 'Mini':
+                pedido.valor = 50
+            elif pedido.tamanho == 'PP':
+                pedido.valor = 80
+            elif pedido.tamanho == 'P':
+                pedido.valor = 130
+            elif pedido.tamanho == 'M':
+                pedido.valor = 170
+            elif pedido.tamanho == 'G':
+                pedido.valor = 270
 
             pedido.save()
             messages.success(request, f'Pedido "{pedido.nome_pedido}" feito com sucesso!')
-            return redirect('pedido_list')
+            if not request.user.is_administrador() and not request.user.is_superuser:
+                return redirect('historico')
+            else:
+                return redirect('pedido_list')
     else:
         form = PedidoForm()
 
@@ -131,6 +147,17 @@ def pedido_update(request,id):
         form = PedidoForm(request.POST,request.FILES,instance=pedido)
 
         if form.is_valid():
+            if pedido.tamanho == 'Mini':
+                pedido.valor = 50
+            elif pedido.tamanho == 'PP':
+                pedido.valor = 80
+            elif pedido.tamanho == 'P':
+                pedido.valor = 130
+            elif pedido.tamanho == 'M':
+                pedido.valor = 170
+            elif pedido.tamanho == 'G':
+                pedido.valor = 270
+
             pedido = form.save()
             messages.success(request, f'Pedido "{pedido.nome_pedido}" atualizado com sucesso!')
             return redirect('pedido_detail', id=pedido.id)
@@ -149,8 +176,10 @@ def pedido_delete(request, id):
 @login_required
 def pedido_detail(request, id):
     pedido = get_object_or_404(Pedido, id=id)
+    cliente = get_object_or_404(UsuarioAdaptado, id=(pedido.cliente.id))
     context= {
-        'pedido': pedido
+        'pedido': pedido,
+        'cliente': cliente
     }
     return render(request, 'pedido/detail_pedido.html', context)
     

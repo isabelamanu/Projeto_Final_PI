@@ -13,5 +13,5 @@ urlpatterns = [
     path('detail/<int:id>/', views.cliente_detail, name='cliente_detail'), #ambos
 
     path('gerenciar/criar/', views.create_usuario_admin, name='create_usuario_admin'), #para administrador criar usuário
-    path('gerenciar/editar/<int:pk>/', views.update_usuario_admin, name='update_usuario_admin'), #para administrador editar usuário
+    path('gerenciar/editar/<int:id>/', views.update_usuario_admin, name='update_usuario_admin'), #para administrador editar usuário
 ]
