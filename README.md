@@ -1,6 +1,6 @@
 # AgendaDoce
 
-## Sistema Django que visa tornar mais eficiente o processo de encomenda de bolos personalizados, permitindo que os clientes realizem pedidos, acompanhem seu andamento e consultem o status de produção em tempo real.
+### Sistema Django que visa tornar mais eficiente o processo de encomenda de bolos personalizados, permitindo que os clientes realizem pedidos, acompanhem seu andamento e consultem o status de produção em tempo real.
 
 ### Alunos:
 - Isabela Emanuele de Souza Brito
@@ -57,7 +57,7 @@ http://127.0.0.1:8000/
 
 ---
 
-## OBS.:
+### OBS.:
 ### Caso necessário acesse "http://127.0.0.1:8000/admin" para criação do grupo de Administradores
 
 ---
