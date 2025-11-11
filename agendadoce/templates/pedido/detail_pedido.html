@@ -24,7 +24,6 @@
                     {% else %}
                     <a href="{% url 'historico' %}" class="btn-secondary" style="text-decoration: none">← Voltar</a>
                     {% endif %}
-                    <div class="status-badge status-producao">{{ pedido.status }}</div>
                 </div>
                 <h2 class="page-title">Encomenda <span class="highlight">#ENC00{{ pedido.id }}</span></h2>
                 <p class="page-description">
@@ -41,7 +40,15 @@
             <div class="encomenda-card" style="margin-bottom: 2rem;">
                 <div class="encomenda-header">
                     <div class="encomenda-id">#ENC00{{ pedido.id }}</div>
-                    <div class="status-badge status-producao">{{ pedido.status }}</div>
+                    {% if pedido.status == "Entregue" %}
+                        <span class="status-badge status-pronto">Entregue</span>
+                    {% elif pedido.status == "Aguardando Confirmação" %}
+                        <span class="status-badge status-producao">Aguardando Confirmação</span>
+                    {% elif pedido.status == "Em producao" %}
+                        <span class="status-badge status-entregue">Em Produção</span>
+                    {% elif pedido.status == "Cancelado" %}
+                        <span class="status-badge status-pronto" style="background-color: rgba(228, 136, 136, 0.933); color: rgb(255, 0, 0);">Cancelado</span>
+                    {% endif %}
                 </div>
                 <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; padding: 1.5rem;">
                     <div class="encomenda-image">

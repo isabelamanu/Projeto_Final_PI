@@ -147,14 +147,16 @@
                                 <span class="summary-value">
                                     <span class="status-aguardando">{{ form.status }}</span>
                                 </span>
-
-                                <span class="summary-value">
-                                    <span class="status-badge status-aguardando">Aguardando Confirmação</span>
-                                </span>
-
+                                <!-- {% if user.is_administrador %} -->
+                                
+                                <!-- {% else %} -->
+                                <!-- <span class="summary-value"> -->
+                                    <!-- <span class="status-badge status-aguardando">Aguardando Confirmação</span> -->
+                                <!-- </span> -->
+                                <!-- {% endif %} -->
                             </div>
                             <div class="summary-note">
-                                <p><strong>Importante:</strong> Após enviar o pedido, nossa equipe entrará em contato em até 2 horas para confirmar todos os detalhes e informar o valor final.</p>
+                                <p><strong>Importante:</strong> Após enviar o pedido, nossa equipe entrará em contato em até 2 horas para confirmar todos os detalhes.</p>
                             </div>
                         </div>
                     </div>

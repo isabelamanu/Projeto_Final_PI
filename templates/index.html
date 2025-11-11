@@ -19,11 +19,16 @@
                 </p>
                 <div class="hero-buttons">
                     {% if request.user.is_authenticated %}
-                    <a class="btn-primary btn-large" href="{% url 'historico' %}" style="text-decoration: none">Encomendas</a>
+                        {% if user.is_administrador %}
+                            <a class="btn-primary btn-large" href="{% url 'pedido_list' %}" style="text-decoration: none">Encomendas</a>
+                        {% else %}
+                            <a class="btn-primary btn-large" href="{% url 'historico' %}" style="text-decoration: none">Encomendas</a>
+                        {% endif %}
+                        <a class="btn-secondary btn-large" href="{% url 'logout' %}" style="text-decoration: none">Sair</a>
                     {% else %}
                     <a class="btn-primary btn-large" href="{% url 'login' %}" style="text-decoration: none">Fazer Login</a>
-                    {% endif %}
                     <a class="btn-secondary btn-large" href="{% url 'cliente_create' %}" style="text-decoration: none">Fazer Cadastro</a>
+                    {% endif %}
                 </div>
             </div>
             

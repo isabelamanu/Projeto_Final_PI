@@ -11,7 +11,7 @@
                     <a href="{% url 'cliente_list' %}" class="btn-secondary">← Voltar</a>
                     <div class="status-badge status-pronto">Ativo</div>
                 </div>
-                <h2 class="page-title">Formulário de <span class="highlight">Edição</span></h2>
+                <h2 class="page-title">Formulário de <span class="highlight">Usuário</span></h2>
                 <p class="page-description">
                     Edite informações de perfil de cliente. Mantenha os dados sempre atualizados para um melhor atendimento.
                 </p>
@@ -26,7 +26,7 @@
                 <div class="card shadow-sm" style="background-color: rgb(255, 252, 253)">
                     <div class="card-header text-white" style="background-color: rgb(246, 84, 138)">
                         <h5 class="mb-0" >
-                            <i class="bi bi-pencil-square" ></i> Editar Informações
+                            <i class="bi bi-pencil-square" ></i> Inserir Informações
                         </h5>
                     </div>
                     <div class="card-body" style="margin-block: 10px;">
@@ -109,6 +109,17 @@
                                     {{ form.last_name }}
                                     {% if form.last_name.errors %}
                                         <div class="text-danger small mt-1">{{ form.last_name.errors }}</div>
+                                    {% endif %}
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-6 mb-3">
+                                    <label for="{{ form.first_name.id_for_label }}" class="form-label fw-bold">
+                                        Telefone
+                                    </label>
+                                    {{ form.telefone }}
+                                    {% if form.telefone.errors %}
+                                        <div class="text-danger small mt-1">{{ form.telefone.errors }}</div>
                                     {% endif %}
                                 </div>
                             </div>

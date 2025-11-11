@@ -16,8 +16,8 @@
         <div class="container">
             <div class="nav-wrapper">
                 <div class="logo">
-                    <div class="logo-icon">🎂</div>
-                    <h1 class="logo-text">AgendaDoce</h1>
+                    <a href="{% url 'index' %}" class="logo-icon" style="text-decoration: none">🎂</a>
+                    <h1 href="{% url 'index' %}" class="logo-text">AgendaDoce</h1>
                 </div>
                 
                 {% if user.is_administrador %}

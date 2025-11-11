@@ -80,8 +80,10 @@ def perfil_view(request):
 
 def cliente_detail(request, id):
     cliente = get_object_or_404(UsuarioAdaptado, id=id)
+    pedidos = Pedido.objects.filter(cliente=id)
     context= {
-        'cliente': cliente
+        'cliente': cliente,
+        'pedidos': pedidos,
     }
     return render(request, 'clientes/detail_cliente.html', context)
 
@@ -145,6 +147,7 @@ def create_usuario_admin(request):
         form = UsuarioAdaptadoCreationForm(request.POST)
         if form.is_valid():
             user = form.save()
+            user.save()
             
             # Adicionar ao grupo USUARIO_SIMPLES por padrão
             grupo_simples, created = Group.objects.get_or_create(name='USUARIO_SIMPLES')
@@ -227,7 +230,7 @@ def cliente_delete(request, id):
 
 @login_required
 def historico_cliente(request):
-    total_pedidos = Pedido.objects.count()
+    total_p_cliente = Pedido.objects.filter(cliente=request.user).count()
     pedidos = Pedido.objects.filter(cliente=request.user)
 
     filtro_form = PedidoFiltroForm(request.GET or None)
@@ -273,5 +276,5 @@ def historico_cliente(request):
         'pedidos': page_obj,
         'page_obj': page_obj,
         'filtro_form': filtro_form, 
-        'total_pedidos': total_pedidos,
+        'total_p_cliente': total_p_cliente,
     })

@@ -24,7 +24,7 @@ def index(request):
 @login_required
 def pedido_list(request):
     total_pedidos = Pedido.objects.count()
-    total_p_producao = Pedido.objects.filter(status="Em Producao").count()
+    total_p_producao = Pedido.objects.filter(status="Em producao").count()
     total_p_entregues = Pedido.objects.filter(status="Entregue").count()
     pedidos = Pedido.objects.all()
 
@@ -188,6 +188,8 @@ def entregador_list(request):
     # Iniciar com todas as vagas
     entregadores = Entregador.objects.all()
     total_entregadores = Entregador.objects.count()
+    total_disponiveis = Entregador.objects.filter(disponibilidade=True).count()
+
     
     # ========== ADICIONE ESTE BLOCO ==========
     # Criar instância do formulário
@@ -232,6 +234,7 @@ def entregador_list(request):
         'page_obj': page_obj,
         'filtro_form': filtro_form,
         'total_entregadores': total_entregadores,
+        'total_disponiveis': total_disponiveis,
     })
 
 @login_required

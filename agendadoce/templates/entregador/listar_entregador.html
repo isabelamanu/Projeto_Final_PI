@@ -87,9 +87,9 @@
             </div>
 
             {% if request.GET %}
-            <div class="alert alert-info mt-3 d-flex align-items-center" style="border-color: #e83e8c;">
+            <div class="alert alert-info mt-3 d-flex align-items-center" style="border-color: #e83e8c; background-color: lightpink;">
                 <i class="bi bi-info-circle me-2 fs-5"></i>
-                <div>Encontrado(s) <strong>{{ entregadores.count }}</strong> entregadores(s) com os filtros aplicados.</div>
+                <div style="color: #e83e8c;">Encontrado(s) <strong>{{ entregadores.count }}</strong> entregadores(s) com os filtros aplicados.</div>
             </div>
             {% endif %}
 
@@ -113,7 +113,7 @@
                     <div class="stat-card">
                         <div class="stat-icon">⏳</div>
                         <div class="stat-content">
-                            <p class="stat-number">3</p>
+                            <p class="stat-number">{{ total_disponiveis }}</p>
                             <p class="stat-label">Ativos</p>
                         </div>
                     </div>
@@ -125,7 +125,11 @@
                         <div class="encomenda-card">
                             <div class="encomenda-header">
                                 <div class="encomenda-id">#ENT00{{ entregador.id }}</div>
-                                <div class="status-badge status-pronto"> {{ entregador.disponibilidade }}</div>
+                                {% if entregador.disponibilidade %}
+                                    <span class="status-badge status-pronto">Disponível</span>
+                                {% else %}
+                                    <span class="status-badge status-pronto" style="background-color:gray; color: white">Indisponível</span>
+                                {% endif %}
                             </div>
                             <div class="encomenda-content">
                                 <div style="display: flex; align-items: center; gap: 1rem; margin-bottom: 1rem;">
@@ -136,11 +140,11 @@
                                 <div class="encomenda-details">
                                     <div class="detail-item">
                                         <span class="detail-label">CPF:</span>
-                                        <span class="detail-value">{{ entregadr.cpf }}</span>
+                                        <span class="detail-value">{{ entregador.cpf }}</span>
                                     </div>
                                     <div class="detail-item">
                                         <span class="detail-label">Telefone:</span>
-                                        <span class="detail-value">{{ user.telefone }}</span>
+                                        <span class="detail-value">{{ entregador.telefone }}</span>
                                     </div>
                                     <div class="detail-item">
                                         <span class="detail-label">Data de Contratação:</span>
@@ -153,10 +157,6 @@
                                     <div class="detail-item">
                                         <span class="detail-label">Veículo:</span>
                                         <span class="detail-value">{{ entregador.veiculo }}</span>
-                                    </div>
-                                    <div class="detail-item">
-                                        <span class="detail-label">Disponibilidade:</span>
-                                        <span class="detail-value">{{ entregador.disponibilidade }}</span>
                                     </div>
                                 </div>
                                 <div style="display: flex; gap: 0.5rem; margin-top: 1.5rem; flex-wrap: wrap;">
@@ -183,10 +183,10 @@
     {% else %}
         <div class="row">
             <div class="col-12">
-                <div class="alert alert-info text-center" role="alert" style="border-color: #e83e8c;">
-                    <i class="bi bi-info-circle" style="font-size: 2rem;"></i>
-                    <h4 class="mt-3">Nenhum Entregador Cadastrado</h4>
-                    <p>Comece a cadastrar seus entregadores!</p>
+                <div class="alert alert-info text-center" role="alert" style="border-color: #e83e8c; background-color: lightpink;">
+                    <i class="bi bi-info-circle" style="font-size: 2rem;" style="border-color: #e83e8c;"></i>
+                    <h4 class="mt-3" style="color: #e83e8c;">Nenhum Entregador Cadastrado</h4>
+                    <p style="color: #e83e8c;">Comece a cadastrar seus entregadores!</p>
                     <a href="{% url 'entregador_create' %}" class="btn btn-success mt-2" style="background-color: #e83e8c; border-color: #e83e8c;">
                         <i class="bi bi-plus-circle"></i> Cadastrar Primeiro Entregador
                     </a>
