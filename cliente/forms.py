@@ -119,7 +119,7 @@ class UsuarioEditForm(forms.ModelForm):
         fields = [
             'username', 'first_name', 'last_name', 'email', 'cpf', 
             'nome_cidade', 'nome_mae', 'telefone', 'endereco', 'nome_bairro', 
-            'foto_perfil', 'is_active', 'is_staff'
+            'foto_perfil', 'grupos',
         ]
         widgets = {
             'username': forms.TextInput(attrs={'class': 'form-control'}),
@@ -133,8 +133,6 @@ class UsuarioEditForm(forms.ModelForm):
             'endereco': forms.TextInput(attrs={'class': 'form-control'}),
             'nome_bairro': forms.TextInput(attrs={'class': 'form-control'}),
             'foto_perfil': forms.FileInput(attrs={'class': 'form-control'}),
-            'is_active': forms.CheckboxInput(attrs={'class': 'form-check-input'}),
-            'is_staff': forms.CheckboxInput(attrs={'class': 'form-check-input'}),
         }
         labels = {
             'username': 'Nome de Usuário',
@@ -148,8 +146,6 @@ class UsuarioEditForm(forms.ModelForm):
             'endereco': 'Endereço',
             'nome_bairro': 'Bairro',
             'foto_perfil': 'Foto de Perfil',
-            'is_active': 'Usuário Ativo',
-            'is_staff': 'Acesso ao Admin',
         }
     
     def __init__(self, *args, **kwargs):

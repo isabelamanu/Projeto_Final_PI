@@ -72,10 +72,12 @@ def perfil_view(request):
         form = PerfilForm(instance=request.user)
 
     pedidos = Pedido.objects.filter(cliente=request.user)
+    usuario = request.user
     
     return render(request, 'clientes/detail_cliente.html', {
         'form': form,
         'pedidos': pedidos,
+        'usuario': usuario,
     })
 
 def cliente_detail(request, id):
@@ -168,9 +170,6 @@ def create_usuario_admin(request):
 def update_usuario_admin(request, id):
     """View para editar usuário (apenas para gerentes)"""
     
-    if not request.user.is_administrador() and not request.user.is_superuser:
-        return redirect('historico')
-    
     usuario = get_object_or_404(UsuarioAdaptado, id=id)
     
     if request.method == 'POST':
@@ -178,7 +177,10 @@ def update_usuario_admin(request, id):
         if form.is_valid():
             form.save()
             messages.success(request, f'Usuário {usuario.username} atualizado com sucesso!')
-            return redirect('cliente_list')
+            if not request.user.is_administrador() and not request.user.is_superuser:
+                return redirect('perfil')
+            else:
+                return redirect('cliente_detail')
     else:
         form = UsuarioEditForm(instance=usuario)
     

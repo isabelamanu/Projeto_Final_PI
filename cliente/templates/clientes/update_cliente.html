@@ -8,7 +8,7 @@
         <div class="container">
             <div class="page-header-content">
                 <div style="display: flex; align-items: center; gap: 1rem; margin-bottom: 1rem;">
-                    <a href="{% url 'cliente_list' %}" class="btn-secondary">← Voltar</a>
+                    <a href="{% url 'cliente_list' %}" class="btn-secondary" style="text-decoration: none">← Voltar</a>
                     <div class="status-badge status-pronto">Ativo</div>
                 </div>
                 <h2 class="page-title">Formulário de <span class="highlight">Usuário</span></h2>
@@ -157,7 +157,7 @@
                                     Escolher Foto
                                 </label>
                                 
-                                {% if cliente.foto_perfil %}
+                                {% if cliente_create_perfil %}
                                     <div class="mb-3">
                                         <img src="{{ cliente.foto_perfil.url }}" alt="Foto atual" class="img-thumbnail" style="max-width: 200px; max-height: 200px; object-fit: cover;">
                                         <p class="text-muted small mt-2">Foto atual. Envie uma nova para substituir.</p>
@@ -209,6 +209,33 @@
                                 </div>
                             </div>
 
+                            <!-- Grupos -->
+                            {% if user.is_administrador or user.is_superuser %}
+                            <div class="section-title mb-3 mt-4">
+                                <h6 class="border-bottom pb-2" style="color: rgb(246, 84, 138)">
+                                    <i class="bi bi-people"></i> GRUPOS DE ACESSO
+                                </h6>
+                            </div>
+
+                            <div class="row">
+                                {% for checkbox in form.grupos %}
+                                <div class="col-md-4 mb-3">
+                                    <label class="group-card">
+                                        {{ checkbox.tag }}
+                                        <div class="group-card-body">
+                                            {{ checkbox.choice_label }}
+                                        </div>
+                                    </label>
+                                </div>
+                                {% endfor %}
+                            </div>
+
+                            {% if form.grupos.errors %}
+                                <div class="text-danger small mt-1">{{ form.grupos.errors }}</div>
+                            {% endif %}
+                            {% endif %}
+
+
                             <!-- Erros gerais -->
                             {% if form.non_field_errors %}
                                 <div class="alert alert-danger">
@@ -240,4 +267,36 @@
             </div>
         </div>
     </section>
+
+<style>
+.group-card {
+    position: relative;
+    display: block;
+    cursor: pointer;
+}
+
+.group-card input {
+    position: absolute;
+    opacity: 0;
+    cursor: pointer;
+}
+
+.group-card-body {
+    padding: 12px;
+    border-radius: 10px;
+    background-color: #ffe3ed;
+    border: 2px solid #f6a5c6;
+    text-align: center;
+    font-weight: bold;
+    color: #d63384;
+    transition: 0.2s ease-in-out;
+}
+
+.group-card input:checked + .group-card-body {
+    background-color: #f6538a;
+    color: white;
+    border-color: #f3206d;
+    box-shadow: 0 0 10px rgba(246, 83, 138, 0.4);
+}
+</style>
 {% endblock %}

@@ -255,7 +255,7 @@
                             <h3 class="encomenda-title" style="margin-bottom: 0.5rem;">{{ user.username }}</h3>
                             <p style="color: #6b7280; font-size: 0.875rem;">Cliente desde: {{ user.date_joined|date:"d/m/Y" }}</p>
                         </div>
-                        <a href="{% url 'update_usuario_admin' id=user.id %}" class="btn-primary" style="width: 100%; text-align: center; text-decoration: none; margin-top: 0.5rem;">
+                        <a href="{% url 'update_usuario_admin' id=usuario.id %}" class="btn-primary" style="width: 100%; text-align: center; text-decoration: none; margin-top: 0.5rem;">
                             Editar Perfil
                         </a>
                     </div>
