@@ -89,7 +89,7 @@
             {% if request.GET %}
             <div class="alert alert-info mt-3 d-flex align-items-center" style="border-color: #e83e8c; background-color: lightpink;">
                 <i class="bi bi-info-circle me-2 fs-5"></i>
-                <div style="color: #e83e8c;">Encontrado(s) <strong>{{ entregadores.count }}</strong> entregadores(s) com os filtros aplicados.</div>
+                <div style="color: #e83e8c;">Encontrado(s) <strong>{{ entregadores|length }}</strong> entregadores(s) com os filtros aplicados.</div>
             </div>
             {% endif %}
 

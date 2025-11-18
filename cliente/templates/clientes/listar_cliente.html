@@ -106,7 +106,7 @@
             {% if request.GET %}
             <div class="alert alert-info mt-3 d-flex align-items-center" style="border-color: #e83e8c; background-color: lightpink;">
                 <i class="bi bi-info-circle me-2 fs-5"></i>
-                <div style="color: #e83e8c;">Encontrado(s) <strong>{{ usuarios.count }}</strong> usuários(s) com os filtros aplicados.</div>
+                <div style="color: #e83e8c;">Encontrado(s) <strong>{{ usuarios|length }}</strong> usuários(s) com os filtros aplicados.</div>
             </div>
             {% endif %}
 
@@ -131,7 +131,7 @@
                     <div class="stat-icon">🎂</div>
                     <div class="stat-content">
                         <p class="stat-number">{{ pedido_por_cliente }}</p>
-                        <p class="stat-label">Média de pedidos por Cliente</p>
+                        <p class="stat-label">Média de pedidos por Cliente</p>                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                              
                     </div>
                 </div>
             </div>

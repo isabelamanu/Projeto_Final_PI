@@ -97,7 +97,7 @@ def cliente_list(request):
     usuarios = UsuarioAdaptado.objects.all()
     total_usuarios = UsuarioAdaptado.objects.count()
     total_pedidos = Pedido.objects.count()
-    pedido_por_cliente = str(int(total_pedidos)/int(total_usuarios))
+    pedido_por_cliente = f"{(int(total_pedidos) / int(total_usuarios)):.1f}"
     
     # ========== FILTROS ==========
     filtro_form = UsuarioFiltroForm(request.GET or None)
@@ -147,6 +147,7 @@ def create_usuario_admin(request):
     
     if request.method == 'POST':
         form = UsuarioAdaptadoCreationForm(request.POST)
+
         if form.is_valid():
             user = form.save()
             user.save()

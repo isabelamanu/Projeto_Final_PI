@@ -1,0 +1,122 @@
+{% extends 'base.html' %}
+
+{% block title %}Excluir Pedido - WorkApp{% endblock %}
+
+{% block content %}
+
+<div class="container-fluid" style="margin-top: 50px; margin-bottom: 50 px;">
+    <div class="row justify-content-center">
+        <div class="col-lg-6">
+            <div class="card shadow-sm border-danger">
+                <div class="card-header bg-danger text-white">
+                    <h4 class="mb-0">
+                        <i class="bi bi-exclamation-triangle"></i>
+                        Confirmar Exclusão
+                    </h4>
+                </div>
+                <div class="card-body p-4">
+                    
+                    <div class="alert alert-warning">
+                        <i class="bi bi-exclamation-triangle-fill"></i>
+                        <strong>Atenção!</strong> Esta ação não pode ser desfeita.
+                    </div>
+
+                    <h5 class="mb-3">Você tem certeza que deseja excluir este Pedido?</h5>
+
+                    <!-- Detalhes do Usuário -->
+                    <div class="usuario-preview card bg-light mb-4">
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col-md-3 text-center">
+                                    {% if pedido.foto %}
+                                        <img src="{{ pedido.foto.url }}" alt="{{ pedido.nome_pedido }}" class="rounded-circle img-thumbnail" style="width: 100px; height: 100px; object-fit: cover;">
+                                    {% else %}
+                                        <i class="bi bi-person-circle text-muted" style="font-size: 5rem;"></i>
+                                    {% endif %}
+                                </div>
+                                <div class="col-md-9">
+                                    <h5 class="mb-3">
+                                        <i class="bi bi-person-badge text-success"></i> 
+                                        {{ pedido.nome_pedido }}
+                                    </h5>
+                                    
+                                    <div class="mb-2">
+                                        <strong><i class="bi bi-at text-success"></i> Cliente:</strong>
+                                        {{ pedido.cliente }}
+                                    </div>
+
+                                    <div class="mb-2">
+                                        <strong><i class="bi bi-card-text text-success"></i> Status:</strong>
+                                        {% if pedido.status == "Entregue" %}
+                                            <span class="status-badge status-pronto">Entregue</span>
+                                        {% elif pedido.status == "Aguardando Confirmação" %}
+                                            <span class="status-badge status-producao">Aguardando Confirmação</span>
+                                        {% elif pedido.status == "Em producao" %}
+                                            <span class="status-badge status-entregue">Em Produção</span>
+                                        {% elif pedido.status == "Cancelado" %}
+                                            <span class="status-badge status-pronto" style="background-color: rgba(228, 136, 136, 0.933); color: rgb(255, 0, 0);">Cancelado</span>
+                                        {% endif %}
+                                    </div>
+
+                                    <div class="mb-2">
+                                        <strong><i class="bi bi-calendar-check text-success"></i> Data de Entrega:</strong>
+                                        {{ pedido.data_entrega|date:"d/m/Y H:i" }}
+                                    </div>
+
+                                    <div class="mb-2">
+                                        <strong><i class="bi bi-geo-alt text-success"></i> Valor: R$</strong>
+                                        {{ pedido.valor }}
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Formulário de Confirmação -->
+                    <form method="post">
+                        {% csrf_token %}
+                        
+                        <div class="d-flex gap-2 justify-content-end">
+                            <a href="{% url 'pedido_list' %}" class="btn btn-secondary">
+                                <i class="bi bi-x-circle"></i> Cancelar
+                            </a>
+                            <button type="submit" class="btn btn-danger">
+                                <i class="bi bi-trash"></i> Sim, Excluir Pedido
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<p></p>
+
+{% block extra_css %}
+<style>
+    .card.border-danger {
+        border: 2px solid #dc3545 !important;
+    }
+
+    .usuario-preview {
+        border: 1px solid #dee2e6;
+        border-radius: 8px;
+    }
+
+    .btn-danger {
+        padding: 10px 25px;
+        font-weight: 500;
+    }
+
+    .btn-danger:hover {
+        background-color: #c82333;
+        border-color: #bd2130;
+    }
+
+    .img-thumbnail {
+        border: 2px solid #dc3545;
+    }
+</style>
+{% endblock %}
+{% endblock %}

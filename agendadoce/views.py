@@ -24,7 +24,7 @@ def index(request):
 @login_required
 def pedido_list(request):
     total_pedidos = Pedido.objects.count()
-    total_p_producao = Pedido.objects.filter(status="Em producao").count()
+    total_p_cancelados = Pedido.objects.filter(status="Cancelado").count()
     total_p_entregues = Pedido.objects.filter(status="Entregue").count()
     pedidos = Pedido.objects.all()
 
@@ -80,7 +80,7 @@ def pedido_list(request):
         'page_obj': page_obj,
         'filtro_form': filtro_form, 
         'total_pedidos': total_pedidos,
-        'total_p_producao': total_p_producao,
+        'total_p_cancelados': total_p_cancelados,
         'total_p_entregues': total_p_entregues,
     })
 
@@ -102,6 +102,11 @@ def atribuir_entregador_automatico():
 def pedido_create(request):
     if request.method == 'POST':
         form = PedidoForm(request.POST, request.FILES)
+
+        if not request.user.is_administrador() and not request.user.is_superuser:
+            if "status" in form.fields:
+                del form.fields["status"]
+
         if form.is_valid():
             pedido = form.save(commit=False)  # não salva ainda
 
@@ -168,10 +173,22 @@ def pedido_update(request,id):
 
 def pedido_delete(request, id):
     pedido = get_object_or_404(Pedido, id=id)
-    nome = pedido.nome_pedido
-    pedido.delete()
-    messages.success(request, f'Pedido "{nome}" excluído com sucesso!')
-    return redirect('pedido_list')
+
+    if request.method == 'POST':
+        nome = pedido.nome_pedido
+        pedido.delete()
+        messages.success(request, f'Pedido "{nome}" excluído com sucesso!')
+        return redirect('pedido_list')
+    
+    return render(request, 'pedido/delete_pedido.html', {
+        'pedido': pedido
+    })
+
+def cancelar_pedido(id):
+    pedido = get_object_or_404(Pedido, id=id)
+    pedido.status = "Cancelado"
+    
+    return pedido.status
 
 @login_required
 def pedido_detail(request, id):
@@ -267,11 +284,17 @@ def entregador_update(request, id):
 
 def entregador_delete(request, id):
     entregador = get_object_or_404(Entregador, id=id)
-    nome = entregador.nome_entregador
-    entregador.delete()
-    messages.success(request, f'Entregador "{nome}" excluído com sucesso!')
-    return redirect('entregador_list')
 
+    if request.method == 'POST':
+        nome = entregador.nome_entregador
+        entregador.delete()
+        messages.success(request, f'Entregador "{nome}" excluído com sucesso!')
+        return redirect('entregador_list')
+    
+    return render(request, 'entregador/delete_entregador.html', {
+        'entregador': entregador
+    })
+    
 @login_required
 def entregador_detail(request, id):
     entregador = get_object_or_404(Entregador, id=id)

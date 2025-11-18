@@ -71,7 +71,7 @@ class Pedido(models.Model):
     data_entrega = models.DateTimeField()
     endereco_pedido = models.TextField(blank=True, null=True)
     tipo_pagamento = models.CharField(max_length=20, choices=PAGAMENTO_CHOICES)
-    status = models.CharField(max_length=30, choices=STATUS_CHOICES, default="aguardando")
+    status = models.CharField(max_length=30, choices=STATUS_CHOICES, default="Aguardando Confirmação")
     valor = models.DecimalField(max_digits=8, decimal_places=2, default=0)
 
     def __str__(self):

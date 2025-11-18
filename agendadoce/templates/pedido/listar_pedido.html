@@ -115,7 +115,7 @@
             {% if request.GET %}
             <div class="alert alert-info mt-3 d-flex align-items-center" style="border-color: #e83e8c; background-color: lightpink;">
                 <i class="bi bi-info-circle me-2 fs-5"></i>
-                <div style="color: #e83e8c;">Encontrado(s) <strong>{{ pedidos.count }}</strong> pedido(s) com os filtros aplicados.</div>
+                <div style="color: #e83e8c;">Encontrado(s) <strong>{{ pedidos|length }}</strong> pedido(s) com os filtros aplicados.</div>
             </div>
             {% endif %}
 
@@ -137,17 +137,17 @@
                         </div>
                     </div>
                     <div class="stat-card">
-                        <div class="stat-icon">⏳</div>
-                        <div class="stat-content">
-                            <p class="stat-number">{{ total_p_producao }}</p>
-                            <p class="stat-label">Em Produção</p>
-                        </div>
-                    </div>
-                    <div class="stat-card">
                         <div class="stat-icon">✅</div>
                         <div class="stat-content">
                             <p class="stat-number">{{ total_p_entregues }}</p>
                             <p class="stat-label">Entregues</p>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon">⏳</div>
+                        <div class="stat-content">
+                            <p class="stat-number">{{ total_p_cancelados }}</p>
+                            <p class="stat-label">Canceladas</p>
                         </div>
                     </div>
                 </div>

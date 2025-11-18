@@ -103,7 +103,7 @@
             {% if request.GET %}
             <div class="alert alert-info mt-3 d-flex align-items-center" style="border-color: #e83e8c; background-color: lightpink;">
                 <i class="bi bi-info-circle me-2 fs-5"></i>
-                <div style="color: #e83e8c;">Encontrado(s) <strong>{{ pedidos.count }}</strong> pedido(s) com os filtros aplicados.</div>
+                <div style="color: #e83e8c;">Encontrado(s) <strong>{{ pedidos|length }}</strong> pedido(s) com os filtros aplicados.</div>
             </div>
             {% endif %}
 
@@ -116,30 +116,6 @@
         <!-- Encomendas Section -->
         <section class="encomendas">
             <div class="container" style="margin-top: 0%;">
-                <div class="encomendas-stats" >
-                    <div class="stat-card">
-                        <div class="stat-icon">📦</div>
-                        <div class="stat-content">
-                            <p class="stat-number">{{ total_p_cliente }}</p>
-                            <p class="stat-label">Total de Encomendas</p>
-                        </div>
-                    </div>
-                    <div class="stat-card">
-                        <div class="stat-icon">⏳</div>
-                        <div class="stat-content">
-                            <p class="stat-number">3</p>
-                            <p class="stat-label">Em Produção</p>
-                        </div>
-                    </div>
-                    <div class="stat-card">
-                        <div class="stat-icon">✅</div>
-                        <div class="stat-content">
-                            <p class="stat-number">5</p>
-                            <p class="stat-label">Concluídas</p>
-                        </div>
-                    </div>
-                </div>
-                
                 <div class="encomendas-grid">
                     <!-- Encomenda 1 -->
                     {% for pedido in pedidos %}
