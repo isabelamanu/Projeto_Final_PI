@@ -1,6 +1,7 @@
 from django.db import models
 from django.conf import settings
 
+
 class Entregador(models.Model):
     nome_entregador = models.CharField(max_length=150)
     cpf = models.CharField(max_length=11, unique=True, verbose_name="CPF")
@@ -13,6 +14,7 @@ class Entregador(models.Model):
     def __str__(self):
         return self.nome_entregador + " - " + str(self.disponibilidade)
 
+
 class Cliente(models.Model):
     nome_cliente = models.CharField(max_length=150)
     cpf = models.CharField(max_length=11, unique=True, verbose_name="CPF")
@@ -22,6 +24,7 @@ class Cliente(models.Model):
 
     def __str__(self):
         return self.nome_cliente
+
 
 class Pedido(models.Model):
     TIPO_MASSA_CHOICES = [
@@ -66,7 +69,7 @@ class Pedido(models.Model):
     recheio = models.CharField(max_length=20, choices=RECHEIO_CHOICES)
     formato = models.CharField(max_length=50)
     tamanho = models.CharField(max_length=20, choices=TAMANHO_CHOICES)
-    foto = models.ImageField(upload_to='fotos_pedidos/', blank=True, null=True)
+    foto = models.ImageField(upload_to="fotos_pedidos/", blank=True, null=True)
     observacoes = models.TextField(blank=True, null=True)
     data_entrega = models.DateTimeField()
     endereco_pedido = models.TextField(blank=True, null=True)

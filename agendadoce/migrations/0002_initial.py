@@ -11,18 +11,26 @@ class Migration(migrations.Migration):
 
     dependencies = [
         migrations.swappable_dependency(settings.AUTH_USER_MODEL),
-        ('agendadoce', '0001_initial'),
+        ("agendadoce", "0001_initial"),
     ]
 
     operations = [
         migrations.AddField(
-            model_name='pedido',
-            name='cliente',
-            field=models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='pedidos', to=settings.AUTH_USER_MODEL),
+            model_name="pedido",
+            name="cliente",
+            field=models.ForeignKey(
+                on_delete=django.db.models.deletion.CASCADE, related_name="pedidos", to=settings.AUTH_USER_MODEL
+            ),
         ),
         migrations.AddField(
-            model_name='pedido',
-            name='entregador',
-            field=models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.CASCADE, related_name='pedidos', to='agendadoce.entregador'),
+            model_name="pedido",
+            name="entregador",
+            field=models.ForeignKey(
+                blank=True,
+                null=True,
+                on_delete=django.db.models.deletion.CASCADE,
+                related_name="pedidos",
+                to="agendadoce.entregador",
+            ),
         ),
     ]

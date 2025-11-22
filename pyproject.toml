@@ -1,0 +1,56 @@
+[build-system]
+requires = ["setuptools>=61.0", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "Projeto_Final_PI"
+version = "0.1.0"
+description = "Projeto para atividade 7 - Integração e Entrega Contínua"
+authors = [
+    { name = "Isabela Emanuele de Souza Brito", email = "isabela.b@escolar.ifrn.edu.br" }
+    ]
+readme = "README.md"
+requires-python = ">=3.12"
+
+dependencies = [
+    "asgiref==3.9.1",
+    "django==5.2.6",
+    "sqlparse==0.5.3",
+    "tzdata==2025.2"
+]
+
+[project.urls]
+Homepage = "https://github.com/isabelamanu/Projeto_Final_PI.git"
+Repository = "https://github.com/isabelamanu/Projeto_Final_PI.git"
+"Bug Tracker" = "https://github.com/isabelamanu/Projeto_Final_PI.git/issues"
+
+[project.optional-dependencies]
+dev = [
+    "black==24.3.0",   
+    "flake8==7.0.0",     
+    "isort==5.13.2",    
+    "pytest==8.2.0",     
+    "pytest-django==4.8.0"
+]
+test = [
+    "pytest==8.3.5",
+    "pytest-django==4.8.0",
+    "coverage==7.5.0"
+]
+
+[tool.setuptools.packages.find]
+where = ["."]
+include = ["main*"]
+
+
+[tool.black]
+line-length = 120
+target-version = ["py312"]
+
+[tool.flake8]
+max-line-length = 120
+extend-ignore = ["E203", "W503"]
+
+[tool.pytest.ini_options]
+DJANGO_SETTINGS_MODULE = "main.settings"
+python_files = ["tests.py", "test_*.py"]

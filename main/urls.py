@@ -23,21 +23,21 @@ from agendadoce import views as agendadoce_views
 from django.urls import include
 
 urlpatterns = [
-    path('admin/', admin.site.urls),
-    path('', agendadoce_views.index, name='index'),
-    path('pedido/', agendadoce_views.pedido_list, name='pedido_list'),
-    path('pedido/cadastrar', agendadoce_views.pedido_create, name='pedido_create'),
-    path('pedido/editar/<int:id>/', agendadoce_views.pedido_update, name='pedido_update'),
-    path('pedido/remover/<int:id>/', agendadoce_views.pedido_delete, name='pedido_delete'),
-    path('pedido/<int:id>/', agendadoce_views.pedido_detail, name='pedido_detail'),
-    path('entregador/', agendadoce_views.entregador_list, name='entregador_list'),
-    path('entregador/cadastrar', agendadoce_views.entregador_create, name='entregador_create'),
-    path('entregador/editar/<int:id>/', agendadoce_views.entregador_update, name='entregador_update'),
-    path('entregador/remover/<int:id>/', agendadoce_views.entregador_delete, name='entregador_delete'),
-    path('entregador/<int:id>/', agendadoce_views.entregador_detail, name='entregador_detail'),
-    path('cliente/', include('cliente.urls')),
+    path("admin/", admin.site.urls),
+    path("", agendadoce_views.index, name="index"),
+    path("pedido/", agendadoce_views.pedido_list, name="pedido_list"),
+    path("pedido/cadastrar", agendadoce_views.pedido_create, name="pedido_create"),
+    path("pedido/editar/<int:id>/", agendadoce_views.pedido_update, name="pedido_update"),
+    path("pedido/remover/<int:id>/", agendadoce_views.pedido_delete, name="pedido_delete"),
+    path("pedido/<int:id>/", agendadoce_views.pedido_detail, name="pedido_detail"),
+    path("entregador/", agendadoce_views.entregador_list, name="entregador_list"),
+    path("entregador/cadastrar", agendadoce_views.entregador_create, name="entregador_create"),
+    path("entregador/editar/<int:id>/", agendadoce_views.entregador_update, name="entregador_update"),
+    path("entregador/remover/<int:id>/", agendadoce_views.entregador_delete, name="entregador_delete"),
+    path("entregador/<int:id>/", agendadoce_views.entregador_detail, name="entregador_detail"),
+    path("cliente/", include("cliente.urls")),
 ]
-    
+
 
 if settings.DEBUG:
     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
