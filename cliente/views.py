@@ -72,7 +72,7 @@ def perfil_view(request):
     else:
         form = PerfilForm(instance=request.user)
 
-    pedidos = Pedido.objects.filter(cliente=request.user)
+    pedidos = Pedido.objects.filter(cliente=request.user).exclude(status='Cancelado')
     usuario = request.user
 
     return render(
@@ -244,7 +244,11 @@ def cliente_delete(request, id):
 @login_required
 def historico_cliente(request):
     total_p_cliente = Pedido.objects.filter(cliente=request.user).count()
-    pedidos = Pedido.objects.filter(cliente=request.user)
+    if not request.user.is_administrador() and not request.user.is_superuser:
+        pedidos = Pedido.objects.filter(cliente=request.user).exclude(status="Cancelado")
+    else:
+        pedidos = Pedido.objects.filter(cliente=request.user)
+    
 
     filtro_form = PedidoFiltroForm(request.GET or None)
 

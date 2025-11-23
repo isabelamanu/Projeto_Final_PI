@@ -35,6 +35,7 @@ urlpatterns = [
     path("entregador/editar/<int:id>/", agendadoce_views.entregador_update, name="entregador_update"),
     path("entregador/remover/<int:id>/", agendadoce_views.entregador_delete, name="entregador_delete"),
     path("entregador/<int:id>/", agendadoce_views.entregador_detail, name="entregador_detail"),
+    path('pedido/cancelar/<int:id>/', agendadoce_views.cancelar_pedido, name='cancelar_pedido'),
     path("cliente/", include("cliente.urls")),
 ]
 

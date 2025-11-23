@@ -10,20 +10,11 @@ class Entregador(models.Model):
     num_entregas = models.PositiveIntegerField(default=0)
     veiculo = models.CharField(max_length=50, blank=True, null=True)
     disponibilidade = models.BooleanField(default=True)
+    foto_entregador = models.ImageField(upload_to="fotos_entregadores/", blank=True, null=True)
+
 
     def __str__(self):
         return self.nome_entregador + " - " + str(self.disponibilidade)
-
-
-class Cliente(models.Model):
-    nome_cliente = models.CharField(max_length=150)
-    cpf = models.CharField(max_length=11, unique=True, verbose_name="CPF")
-    email = models.EmailField()
-    telefone = models.CharField(max_length=150)
-    endereco = models.CharField(max_length=250)
-
-    def __str__(self):
-        return self.nome_cliente
 
 
 class Pedido(models.Model):

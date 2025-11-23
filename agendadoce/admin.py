@@ -1,18 +1,12 @@
 from django.contrib import admin
 from django.utils.html import format_html
-from .models import Entregador, Cliente, Pedido
+from .models import Entregador, Pedido
 
 
 @admin.register(Entregador)
 class EntregadorAdmin(admin.ModelAdmin):
-    list_display = ("nome_entregador", "cpf", "telefone", "num_entregas", "data_contratacao", "disponibilidade")
-    fields = ("nome_entregador", "cpf", "telefone", "num_entregas", "data_contratacao", "disponibilidade")
-
-
-@admin.register(Cliente)
-class ClienteAdmin(admin.ModelAdmin):
-    list_display = ("nome_cliente", "cpf", "email", "telefone", "endereco")
-    fields = ("nome_cliente", "cpf", "email", "telefone", "endereco")
+    list_display = ("nome_entregador", "cpf", "telefone", "num_entregas", "data_contratacao", "disponibilidade", "foto_entregador")
+    fields = ("nome_entregador", "cpf", "telefone", "num_entregas", "data_contratacao", "disponibilidade", "foto_entregador")
 
 
 @admin.register(Pedido)

@@ -193,12 +193,18 @@ def pedido_delete(request, id):
 
     return render(request, "pedido/delete_pedido.html", {"pedido": pedido})
 
-
-def cancelar_pedido(id):
+def cancelar_pedido(request, id):
     pedido = get_object_or_404(Pedido, id=id)
-    pedido.status = "Cancelado"
 
-    return pedido.status
+    if request.method == "POST":
+        pedido.status = "Cancelado"
+        pedido.save()
+        messages.success(request, "Pedido cancelado com sucesso!")
+    if not request.user.is_administrador() and not request.user.is_superuser:
+        return redirect('historico')
+    else:
+        return redirect('pedido_detail', id=id)
+    
 
 
 @login_required

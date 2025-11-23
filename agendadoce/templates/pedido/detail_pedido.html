@@ -137,9 +137,10 @@
             </div>
 
             <!-- Ações -->
-            <div style="display: flex; gap: 1rem; justify-content: center; margin-top: 2rem; flex-wrap: wrap;">
-                <a href="{% url 'cancelar_pedido' id=pedido.id %}" class="btn-secondary btn-large" style="text-decoration: none">Cancelar Pedido</a>
-            </div>
+            <form action="{% url 'cancelar_pedido' id=pedido.id %}" method="POST"style="display: flex; gap: 1rem; justify-content: center; margin-top: 2rem; flex-wrap: wrap;">
+                {% csrf_token %}
+                <button type="submit" class="btn-secondary btn-large" style="text-decoration: none">Cancelar Pedido</button>
+            </form>
         </div>
     </section>
 

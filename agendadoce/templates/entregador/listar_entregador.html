@@ -131,6 +131,11 @@
                                     <span class="status-badge status-pronto" style="background-color:gray; color: white">Indisponível</span>
                                 {% endif %}
                             </div>
+                            <div class="encomenda-image">
+                                {% if entregador.foto_entregador %}
+                                <img src="{{ entregador.foto_entregador.url }}" alt="{{ entregador.foto_entregador }}">
+                                {% endif %}
+                            </div>
                             <div class="encomenda-content">
                                 <div style="display: flex; align-items: center; gap: 1rem; margin-bottom: 1rem;">
                                     <div>

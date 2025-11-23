@@ -28,11 +28,11 @@
                         <div class="card-body">
                             <div class="row">
                                 <div class="col-md-3 text-center">
-                                    <!-- {% if entregador.foto_entregador %} -->
-                                        <!-- <img src="{{ entregador.foto_entregador.url }}" alt="{{ entregador.nome_entregador }}" class="rounded-circle img-thumbnail" style="width: 100px; height: 100px; object-fit: cover;"> -->
-                                    <!-- {% else %} -->
-                                        <!-- <i class="bi bi-person-circle text-muted" style="font-size: 5rem;"></i> -->
-                                    <!-- {% endif %} -->
+                                    {% if entregador.foto_entregador %}
+                                        <img src="{{ entregador.foto_entregador.url }}" alt="{{ entregador.nome_entregador }}" class="rounded-circle img-thumbnail" style="width: 100px; height: 100px; object-fit: cover;">
+                                    {% else %}
+                                        <i class="bi bi-person-circle text-muted" style="font-size: 5rem;"></i> 
+                                    {% endif %}
                                 </div>
                                 <div class="col-md-9">
                                     <h5 class="mb-3">

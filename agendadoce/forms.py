@@ -1,6 +1,6 @@
 from django.forms import ModelForm
 from django import forms
-from .models import Entregador, Cliente, Pedido
+from .models import Entregador, Pedido
 from cliente.models import UsuarioAdaptado
 
 
@@ -16,6 +16,7 @@ class EntregadorForm(ModelForm):
             "data_contratacao": forms.DateInput(attrs={"class": "form-control", "type": "date"}),
             "veiculo": forms.TextInput(attrs={"class": "form-control"}),
             "disponibilidade": forms.CheckboxInput(attrs={"class": "form-check-input"}),
+            "foto_entregador": forms.FileInput(attrs={"class": "form-control"}),
         }
 
 
@@ -46,20 +47,6 @@ class EntregadorFiltroForm(forms.Form):
         ],
         widget=forms.Select(attrs={"class": "form-select"}),
     )
-
-
-class ClienteForm(ModelForm):
-
-    class Meta:
-        model = Cliente
-        fields = "__all__"
-        widgets = {
-            "nome_cliente": forms.TextInput(attrs={"class": "form-control"}),
-            "cpf": forms.TextInput(attrs={"class": "form-control"}),
-            "email": forms.EmailInput(attrs={"class": "form-control"}),
-            "telefone": forms.TextInput(attrs={"class": "form-control"}),
-            "endereco": forms.TextInput(attrs={"class": "form-control"}),
-        }
 
 
 class PedidoForm(ModelForm):
