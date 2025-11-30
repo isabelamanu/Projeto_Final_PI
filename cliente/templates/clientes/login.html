@@ -25,15 +25,6 @@
                         <a class="auth-tab active" data-tab="login" href="{% url 'login' %}" style="text-decoration: none">Login</a>
                         <a class="auth-tab" data-tab="register" href="{% url 'cliente_create' %}" style="text-decoration: none">Cadastro</a>
                     </div>
-
-                    {% if messages %}
-                        {% for message in messages %}
-                            <div class="alert alert-{{ message.tags }} alert-dismissible fade show" role="alert">
-                                {{ message }}
-                                <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
-                            </div>
-                        {% endfor %}
-                    {% endif %}
                    
                     <!-- Formulário de Login -->
                     <div id="login-form" class="auth-form active">

@@ -23,8 +23,8 @@
                 <div class="auth-container">
                     <!-- Tabs para alternar entre Login e Cadastro -->
                     <div class="auth-tabs">
-                        <button class="auth-tab" data-tab="login" href="{% url 'login' %}">Login</button>
-                        <button class="auth-tab active" data-tab="register">Cadastro</button>
+                        <a class="auth-tab active" data-tab="login" href="{% url 'login' %}" style="text-decoration: none; text-align: center;">Login</a>
+                        <a class="auth-tab" data-tab="register" href="{% url 'cliente_create' %}" style="text-decoration: none; text-align: center;">Cadastro</a>
                     </div>
 
                     {% if messages %}

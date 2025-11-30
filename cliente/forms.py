@@ -20,6 +20,7 @@ class UsuarioAdaptadoCreationForm(UserCreationForm):
             "nome_bairro",
             "password1",
             "password2",
+            "foto_perfil",
         ]
         widgets = {
             "username": forms.TextInput(attrs={"class": "form-control", "placeholder": "Nome de usuário"}),
@@ -32,6 +33,7 @@ class UsuarioAdaptadoCreationForm(UserCreationForm):
             "telefone": forms.TextInput(attrs={"class": "form-control", "placeholder": "Telefone"}),
             "endereco": forms.TextInput(attrs={"class": "form-control", "placeholder": "Endereço completo"}),
             "nome_bairro": forms.TextInput(attrs={"class": "form-control", "placeholder": "Bairro"}),
+            "foto_perfil": forms.FileInput(attrs={"class": "form-control"}),
         }
 
     def __init__(self, *args, **kwargs):

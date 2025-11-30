@@ -1,8 +1,7 @@
 from django.shortcuts import render, get_object_or_404, redirect
 from django.contrib.auth import get_user_model
-
 user = get_user_model()
-from django.db.models import Count
+from django.db.models import Count, Sum
 from datetime import date
 from django.contrib import messages
 from django.core.paginator import Paginator

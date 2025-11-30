@@ -143,11 +143,11 @@
                         </h4>
                         <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;">
                             <div style="background: #fef3c7; padding: 1rem; border-radius: 0.75rem; text-align: center;">
-                                <p style="font-size: 1.75rem; font-weight: 700; color: #1f2937; margin-bottom: 0.25rem;">8</p>
+                                <p style="font-size: 1.75rem; font-weight: 700; color: #1f2937; margin-bottom: 0.25rem;">{{ total_pedidos_cliente }}</p>
                                 <p style="font-size: 0.875rem; color: #6b7280;">Pedidos</p>
                             </div>
                             <div style="background: #fce7f3; padding: 1rem; border-radius: 0.75rem; text-align: center;">
-                                <p style="font-size: 1.75rem; font-weight: 700; color: #1f2937; margin-bottom: 0.25rem;">R$ 1.440</p>
+                                <p style="font-size: 1.75rem; font-weight: 700; color: #1f2937; margin-bottom: 0.25rem;">R$ {{ total_gasto_cliente }}</p>
                                 <p style="font-size: 0.875rem; color: #6b7280;">Total Gasto</p>
                             </div>
                         </div>
@@ -172,6 +172,9 @@
                     {% for pedido in pedidos %}
                         <div class="encomenda-card">
                             <div class="encomenda-header">
+                                {% if user.is_administrador or user.is_superuser %}
+                                    <div class="encomenda-id">#ENC00{{ pedido.id }}</div>
+                                {% endif %}
                                 {% if pedido.status == "Entregue" %}
                                     <span class="status-badge status-pronto">Entregue</span>
                                 {% elif pedido.status == "Aguardando Confirmação" %}
@@ -226,8 +229,13 @@
                         </div>
                     {% endfor %}
                 </div>
+                <!-- Paginação -->
+                <div class="row mt-5">
+                    <div class="col-12">
+                        {% include 'includes/pedido_pagination.html' %}
+                    </div>
+                </div>
             </div>
-
         </div>
     </section>
     {% else %}
@@ -322,11 +330,11 @@
                         </h4>
                         <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;">
                             <div style="background: #fef3c7; padding: 1rem; border-radius: 0.75rem; text-align: center;">
-                                <p style="font-size: 1.75rem; font-weight: 700; color: #1f2937; margin-bottom: 0.25rem;">8</p>
+                                <p style="font-size: 1.75rem; font-weight: 700; color: #1f2937; margin-bottom: 0.25rem;">{{ total_pedidos_usu }}</p>
                                 <p style="font-size: 0.875rem; color: #6b7280;">Pedidos</p>
                             </div>
                             <div style="background: #fce7f3; padding: 1rem; border-radius: 0.75rem; text-align: center;">
-                                <p style="font-size: 1.75rem; font-weight: 700; color: #1f2937; margin-bottom: 0.25rem;">R$ 1.440</p>
+                                <p style="font-size: 1.75rem; font-weight: 700; color: #1f2937; margin-bottom: 0.25rem;">{{ total_gasto_cliente }}</p>
                                 <p style="font-size: 0.875rem; color: #6b7280;">Total Investido</p>
                             </div>
                         </div>
@@ -407,6 +415,11 @@
                             </div>
                         </div>
                     {% endfor %}
+                </div>
+                <div class="row mt-5">
+                    <div class="col-12">
+                        {% include 'includes/pedido_pagination.html' %}
+                    </div>
                 </div>
             </div>
 

@@ -9,6 +9,7 @@ from agendadoce.models import Pedido
 from django.contrib.auth.models import Group
 from django.shortcuts import get_object_or_404
 from django.core.paginator import Paginator
+from django.db.models import Sum
 
 
 def cliente_create(request):
@@ -73,14 +74,29 @@ def perfil_view(request):
         form = PerfilForm(instance=request.user)
 
     pedidos = Pedido.objects.filter(cliente=request.user).exclude(status='Cancelado')
+
+    # Soma todos os valores
+    total_gasto_cliente = pedidos.aggregate(Sum("valor"))["valor__sum"] or 0
+    total_pedidos_usu = pedidos.count()
+
     usuario = request.user
+    paginator = Paginator(pedidos, 3)
+
+    # 3. Pegar o número da página da URL (?page=2)
+    page_number = request.GET.get("page")
+
+    # 4. Obter os dados daquela página específica
+    page_obj = paginator.get_page(page_number)
 
     return render(
         request,
         "clientes/detail_cliente.html",
         {
+            "total_gasto_cliente": total_gasto_cliente,
+            "total_pedidos_usu": total_pedidos_usu,
+            "pedidos": page_obj,
+            "page_obj": page_obj,
             "form": form,
-            "pedidos": pedidos,
             "usuario": usuario,
         },
     )
@@ -89,11 +105,33 @@ def perfil_view(request):
 def cliente_detail(request, id):
     cliente = get_object_or_404(UsuarioAdaptado, id=id)
     pedidos = Pedido.objects.filter(cliente=id)
-    context = {
-        "cliente": cliente,
-        "pedidos": pedidos,
-    }
-    return render(request, "clientes/detail_cliente.html", context)
+
+    pedidos_usuario = Pedido.objects.filter(cliente=cliente).exclude(status="Cancelado")
+
+    # Soma todos os valores
+    total_gasto_cliente = pedidos_usuario.aggregate(Sum("valor"))["valor__sum"] or 0
+    total_pedidos_cliente = pedidos_usuario.count()
+    # 2. Criar o paginador (3 vagas por página)
+    paginator = Paginator(pedidos, 3)
+
+    # 3. Pegar o número da página da URL (?page=2)
+    page_number = request.GET.get("page")
+
+    # 4. Obter os dados daquela página específica
+    page_obj = paginator.get_page(page_number)
+
+    # 5. Enviar para o template
+    return render(
+        request,
+        "clientes/detail_cliente.html",
+        {
+            "cliente": cliente,
+            "total_gasto_cliente": total_gasto_cliente,
+            "total_pedidos_cliente": total_pedidos_cliente,
+            "pedidos": page_obj,
+            "page_obj": page_obj,
+        },
+    )
 
 
 @login_required
@@ -101,7 +139,7 @@ def cliente_list(request):
     """View para listar usuários com filtros e paginação"""
 
     # Buscar todos os usuários
-    usuarios = UsuarioAdaptado.objects.all()
+    usuarios = UsuarioAdaptado.objects.all().order_by('id')
     total_usuarios = UsuarioAdaptado.objects.count()
     total_pedidos = Pedido.objects.count()
     pedido_por_cliente = f"{(int(total_pedidos) / int(total_usuarios)):.1f}"
@@ -158,7 +196,7 @@ def create_usuario_admin(request):
         return redirect("historico")
 
     if request.method == "POST":
-        form = UsuarioAdaptadoCreationForm(request.POST)
+        form = UsuarioAdaptadoCreationForm(request.POST, request.FILES)
 
         if form.is_valid():
             user = form.save()
@@ -173,7 +211,7 @@ def create_usuario_admin(request):
     else:
         form = UsuarioAdaptadoCreationForm()
 
-    return render(request, "clientes/update_cliente.html", {"form": form, "titulo": "Criar Novo Usuário"})
+    return render(request, "clientes/update_cliente.html", {"form": form, "cliente": None, "titulo": "Criar Novo Usuário"})
 
 
 @login_required
