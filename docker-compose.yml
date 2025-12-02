@@ -1,0 +1,48 @@
+version: "3"
+
+services:
+  django:
+    build:
+      context: .
+      dockerfile: ./compose/django/Dockerfile
+
+    image: django
+    depends_on:
+      - nginx
+    env_file:
+      - .env
+    volumes:
+      - static_data:/app/staticfiles
+      - media_data:/app/media
+    #    ports:
+    #      - '5000:5000'
+    command: ./start.sh
+    restart: unless-stopped
+
+  nginx:
+    build:
+      context: .
+      dockerfile: ./compose/nginx/Dockerfile
+    volumes:
+      - static_data:/app/staticfiles
+      - media_data:/app/media
+    ports:
+      - 84:80
+    restart: unless-stopped
+
+  postgres:
+    image: postgres:latest
+    env_file: 
+      - .env 
+    ports:
+      - "5432:5432"
+    volumes:
+      - pgdata:/var/lib/postgresql
+
+
+
+volumes:
+  static_data:
+  media_data:
+  banco_data:
+  pgdata:
