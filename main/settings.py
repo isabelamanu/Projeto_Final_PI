@@ -28,7 +28,11 @@ DEBUG = True
 
 ALLOWED_HOSTS = ['*']
 
-CSRF_TRUSTED_ORIGINS = ['https://agendadoce.nadic.com.br']
+CSRF_TRUSTED_ORIGINS = [
+    'https://agendadoce.nadic.com.br',
+    'http://localhost:84',
+    'http://127.0.0.1:84',
+    ]
 
 
 # Application definition
