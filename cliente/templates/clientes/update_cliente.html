@@ -3,13 +3,21 @@
 {% block title %}Formulário de Usuário | AgendaDoce{% endblock %}
 
 {% block content %}
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../../static/styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
     <!-- Page Header -->
     <section class="page-header">
         <div class="container">
             <div class="page-header-content">
                 <div style="display: flex; align-items: center; gap: 1rem; margin-bottom: 1rem;">
                     <a href="{% url 'cliente_list' %}" class="btn-secondary" style="text-decoration: none">← Voltar</a>
-                    <div class="status-badge status-pronto">Ativo</div>
                 </div>
                 <h2 class="page-title">Formulário de <span class="highlight">Usuário</span></h2>
                 <p class="page-description">
@@ -24,7 +32,7 @@
             <div class="form-container" style="margin-block: 30px;">
                 <!-- Coluna da Direita - Formulário de Edição -->
                 <div class="card shadow-sm" style="background-color: rgb(255, 252, 253)">
-                    <div class="card-header text-white">
+                    <div class="card-header text-white" style="background-color: rgb(246, 84, 138) !important">
                         <h5 class="mb-0" >
                             <i class="bi bi-pencil-square" ></i> Inserir Informações
                         </h5>
@@ -210,29 +218,29 @@
                             </div>
 
                             <!-- Grupos -->
-                            {% if user.is_administrador or user.is_superuser %}
-                            <div class="section-title mb-3 mt-4">
-                                <h6 class="border-bottom pb-2" style="color: rgb(246, 84, 138)">
-                                    <i class="bi bi-people"></i> GRUPOS DE ACESSO
-                                </h6>
-                            </div>
-
-                            <div class="row">
-                                {% for checkbox in form.grupos %}
-                                <div class="col-md-4 mb-3">
-                                    <label class="group-card">
-                                        {{ checkbox.tag }}
-                                        <div class="group-card-body">
-                                            {{ checkbox.choice_label }}
-                                        </div>
-                                    </label>
+                            {% if user.is_administrador or user.is_superuser%}
+                                <div class="section-title mb-3 mt-4">
+                                    <h6 class="border-bottom pb-2" style="color: rgb(246, 84, 138)">
+                                        <i class="bi bi-people"></i> GRUPOS DE ACESSO
+                                    </h6>
                                 </div>
-                                {% endfor %}
-                            </div>
 
-                            {% if form.grupos.errors %}
-                                <div class="text-danger small mt-1">{{ form.grupos.errors }}</div>
-                            {% endif %}
+                                <div class="row">
+                                    {% for checkbox in form.grupos %}
+                                    <div class="col-md-4 mb-3">
+                                        <label class="group-card">
+                                            {{ checkbox.tag }}
+                                            <div class="group-card-body">
+                                                {{ checkbox.choice_label }}
+                                            </div>
+                                        </label>
+                                    </div>
+                                    {% endfor %}
+                                </div>
+
+                                {% if form.grupos.errors %}
+                                    <div class="text-danger small mt-1">{{ form.grupos.errors }}</div>
+                                {% endif %}
                             {% endif %}
 
 
@@ -267,6 +275,8 @@
             </div>
         </div>
     </section>
+</body>
+</html>
 
 <style>
 .card-header text white{

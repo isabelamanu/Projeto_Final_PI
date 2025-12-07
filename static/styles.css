@@ -60,21 +60,6 @@ body {
     color: #ec4899;
 }
 
-.nav {
-    display: flex;
-    gap: 2rem;
-}
-
-.nav-link {
-    text-decoration: none;
-    color: #4b5563;
-    font-weight: 500;
-    transition: color 0.3s ease;
-}
-
-.nav-link:hover {
-    color: #ec4899;
-}
 
 /* Buttons */
 .btn-primary {
@@ -1013,6 +998,7 @@ body {
     border-color: #d63384 !important;
 }
 
+
 /* ======= Alinhamento dos Campos ======= */
 
 /* Garante espaçamento igual entre campos */
@@ -1070,8 +1056,8 @@ body {
 .nav {
     display: none;
     flex-direction: column;
-    gap: 0.5rem;
-    padding: 0.5rem;
+    gap: 1rem;
+    padding: 1rem;
     background: #fff;
     position: absolute;
     top: 50px;
@@ -1079,8 +1065,8 @@ body {
     width: 200px;
     border-radius: 12px;
     box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    z-index: 1000;
 }
-
 
 .nav.show {
     display: flex;
@@ -1142,6 +1128,15 @@ body {
     text-align: left;
 }
 
+.end_est {
+    grid-template-columns: 1fr !important;
+    text-align: center;
+}
+
+.info-perfil{
+    display: flex;
+    flex-direction: column;
+}
 
 }
 
@@ -1206,6 +1201,16 @@ body {
     flex-direction: column;
     align-items: flex-start;
     gap: 0.25rem;
+}
+
+.end_est {
+    grid-template-columns: 1fr !important;
+    text-align: center;
+}
+
+.info-perfil{
+    grid-template-columns: 1fr !important;
+    text-align: center;
 }
 
 }

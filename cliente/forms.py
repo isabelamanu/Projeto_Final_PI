@@ -5,6 +5,9 @@ from django.contrib.auth.models import Group
 
 
 class UsuarioAdaptadoCreationForm(UserCreationForm):
+    grupos = forms.ModelMultipleChoiceField(
+        queryset=Group.objects.all(), required=False, widget=forms.CheckboxSelectMultiple, label="Grupos"
+    )
     class Meta:
         model = UsuarioAdaptado
         fields = [
@@ -21,6 +24,7 @@ class UsuarioAdaptadoCreationForm(UserCreationForm):
             "password1",
             "password2",
             "foto_perfil",
+            "grupos",
         ]
         widgets = {
             "username": forms.TextInput(attrs={"class": "form-control", "placeholder": "Nome de usuário"}),
@@ -34,12 +38,27 @@ class UsuarioAdaptadoCreationForm(UserCreationForm):
             "endereco": forms.TextInput(attrs={"class": "form-control", "placeholder": "Endereço completo"}),
             "nome_bairro": forms.TextInput(attrs={"class": "form-control", "placeholder": "Bairro"}),
             "foto_perfil": forms.FileInput(attrs={"class": "form-control"}),
+            
         }
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.fields["password1"].widget.attrs.update({"class": "form-control", "placeholder": "Senha"})
         self.fields["password2"].widget.attrs.update({"class": "form-control", "placeholder": "Confirme a senha"})
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        if self.instance.id:
+            self.fields["grupos"].initial = self.instance.groups.all()
+
+    def save(self, commit=True):
+        user = super().save(commit=False)
+        if commit:
+            user.save()
+            # Atualizar grupos
+            if "grupos" in self.cleaned_data:
+                user.groups.set(self.cleaned_data["grupos"])
+        return user
 
 
 class LoginForm(AuthenticationForm):

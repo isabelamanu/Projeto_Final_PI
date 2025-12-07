@@ -3,14 +3,22 @@
 {% block title %} Fomulário de Entregador | AgendaDoce{% endblock %}
 
 {% block content %}
-
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lista de Encomendas | AgendaDoce</title>
+    <link rel="stylesheet" href="../static/styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
     <!-- Page Header -->
     <section class="page-header">
         <div class="container">
             <div class="page-header-content">
                 <div style="display: flex; align-items: center; gap: 1rem; margin-bottom: 1rem;">
                     <a href="{% url 'entregador_list' %}" class="btn-secondary" style="text-decoration: none;">← Voltar</a>
-                    <div class="status-badge status-pronto">Ativo</div>
                 </div>
                 <h2 class="page-title">Formulário de <span class="highlight">Entregador</span></h2>
                 <p class="page-description">
@@ -25,9 +33,9 @@
             <div class="form-container" style="margin-block: 30px;">
                 <!-- Coluna da Direita - Formulário de Edição -->
                 <div class="card shadow-sm" style="background-color: rgb(255, 252, 253)">
-                    <div class="card-header text-white" style="background-color: rgb(246, 84, 138)">
+                    <div class="card-header text-white" style="background-color: rgb(246, 84, 138) !important">
                         <h5 class="mb-0" >
-                            <i class="bi bi-pencil-square" ></i> Editar Informações
+                            <i class="bi bi-pencil-square" ></i> Inserir Informações
                         </h5>
                     </div>
                     <div class="card-body" style="margin-block: 10px;">
@@ -170,5 +178,7 @@
             </div>
         </div>
     </section>
+</body>
+</html>
 
 {% endblock %}

@@ -12,15 +12,7 @@ from .forms import EntregadorForm, PedidoForm, PedidoFiltroForm, EntregadorFiltr
 
 
 def index(request):
-    total_usuarios = user.objects.count()
-    total_entregadores = Entregador.objects.count()
-
-    context = {
-        "total_usuarios": total_usuarios,
-        "total_entregadores": total_entregadores,
-    }
-
-    return render(request, "index.html", context)
+    return render(request, "index.html")
 
 
 @login_required
@@ -275,7 +267,7 @@ def entregador_list(request):
 @login_required
 def entregador_create(request):
     if request.method == "POST":
-        form = EntregadorForm(request.POST)
+        form = EntregadorForm(request.POST, request.FILES)
         if form.is_valid():
             entregador = form.save()
             messages.success(request, f'Entregador "{entregador.nome_entregador}" criado com sucesso!')
@@ -291,7 +283,7 @@ def entregador_update(request, id):
     entregador = get_object_or_404(Entregador, id=id)
 
     if request.method == "POST":
-        form = EntregadorForm(request.POST, instance=entregador)
+        form = EntregadorForm(request.POST, request.FILES, instance=entregador)
         if form.is_valid():
             entregador = form.save()
             messages.success(request, f'Entregador "{entregador.nome_entregador}" atualizado com sucesso!')

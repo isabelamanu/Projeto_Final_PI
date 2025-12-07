@@ -3,187 +3,206 @@
 {% block title %}Formulário de Pedido | AgendaDoce{% endblock %}
 
 {% block content %}
-<!-- Page Header -->
-<section class="page-header">
-    <div class="container">
-        <div class="page-header-content">
-            <h2 class="page-title">
-                Novo <span class="highlight">Pedido</span>
-            </h2>
-        </div>
-    </div>
-</section>
-
-<!-- Formulário de Pedido -->
-<section class="pedido-form-section">
-    <div class="container">
-        <div class="form-container">
-            <form class="pedido-form" method="post" enctype="multipart/form-data">
-                {% csrf_token %}
-               
-                <!-- Informações Básicas -->
-                <div class="form-section">
-                    <h3 class="form-section-title">
-                        <span class="section-icon">📝</span>
-                        Informações Básicas
-                    </h3>
-                   
-                    <div class="form-row">
-                        <div class="form-group full-width">
-                            <label for="id_nome_pedido" class="form-label">Nome do Pedido *</label>
-                            {{ form.nome_pedido }}
-                            <small class="form-help">Digite um nome para identificar este pedido</small>
-                            
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Especificações do Bolo -->
-                <div class="form-section">
-                    <h3 class="form-section-title">
-                        <span class="section-icon">🎂</span>
-                        Especificações do Bolo
-                    </h3>
-                   
-                    <div class="form-row">
-                        <div class="form-group">
-                            <label for="id_tipo_massa" class="form-label">Tipo de Massa *</label>
-                            {{ form.tipo_massa }}
-                        </div>
-                       
-                        <div class="form-group">
-                            <label for="id_recheio" class="form-label">Recheio *</label>
-                            {{ form.recheio }}
-                        </div>
-                    </div>
-                   
-                    <div class="form-row">
-                        <div class="form-group">
-                            <label for="id_formato" class="form-label">Formato *</label>
-                            {{ form.formato }}
-                            <small class="form-help">Descreva o formato desejado para o bolo</small>
-                            
-                        </div>
-                       
-                        <div class="form-group">
-                            <label for="id_tamanho" class="form-label">Tamanho *</label>
-                            {{ form.tamanho }}
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Personalização -->
-                <div class="form-section">
-                    <h3 class="form-section-title">
-                        <span class="section-icon">🎨</span>
-                        Personalização
-                    </h3>
-                   
-                    <div class="form-row">
-                        <div class="form-group full-width">
-                            <label for="id_foto" class="form-label">Foto de Referência 📷</label>
-                            <p>Clique para enviar uma foto de referência</p>
-                            {% if pedido.foto %}
-                                <div class="mb-3">
-                                    <img src="{{ pedido.foto.url }}" alt="Foto atual" class="img-thumbnail" style="max-width: 200px; max-height: 200px; object-fit: cover;">
-                                    <p class="text-muted small mt-2">Foto atual. Envie uma nova para substituir.</p>
-                                </div>
-                            {% endif %}
-                            {{ form.foto }}
-                            <small>Formatos aceitos: JPG, PNG, GIF (máx. 5MB)</small>
-                        </div>
-                    </div>
-                   
-                    <div class="form-row">
-                        <div class="form-group full-width">
-                            <label for="id_observacoes" class="form-label">Observações Especiais</label>
-                            {{ form.observacoes }}
-                            <small class="form-help">Inclua qualquer detalhe que possa ajudar na confecção do seu bolo</small>
-                            <!-- placeholder="Descreva detalhes especiais, cores, decorações, alergias ou outras informações importantes..."></textarea> -->
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Entrega e Pagamento -->
-                <div class="form-section">
-                    <h3 class="form-section-title">
-                        <span class="section-icon">🚚</span>
-                        Entrega e Pagamento
-                    </h3>
-                   
-                    <div class="form-row">
-                        <div class="form-group">
-                            <label for="id_data_entrega" class="form-label">Data e Hora da Entrega *</label>
-                            {{ form.data_entrega }}
-                            <small class="form-help">Selecione quando você precisa receber o bolo</small>
-                        </div>
-                       
-                        <div class="form-group">
-                            <label for="id_tipo_pagamento" class="form-label">Forma de Pagamento *</label>
-                            {{ form.tipo_pagamento }}
-                        </div>
-                    </div>
-                   
-                    <div class="form-row">
-                        <div class="form-group full-width">
-                            <label for="id_endereco_pedido" class="form-label">Endereço de Entrega *</label>
-                            {{ form.endereco_pedido }}
-                            <!-- placeholder="Digite o endereço completo para entrega..." -->
-                            <small class="form-help">Inclua rua, número, complemento, bairro, cidade e CEP</small>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Resumo do Pedido -->
-                <div class="form-section">
-                    <div class="order-summary">
-                        <h3 class="summary-title">
-                            <span class="section-icon">📋</span>
-                            Resumo do Pedido
-                        </h3>
-                        <div class="summary-content">
-                            <div class="summary-item">
-                                <span class="summary-label">Status:</span>
-
-                                {% if user.is_administrador or user.superusuario %}
-                                <span class="summary-value">
-                                    <span class="status-aguardando">{{ form.status }}</span>
-                                </span>
-                                {% else %}
-                                <span class="summary-value">
-                                    <span class="status-badge status-aguardando">Aguardando Confirmação</span>
-                                </span>
-                                {% endif %}
-                            </div>
-                            <div class="summary-note">
-                                <p><strong>Importante:</strong> Após enviar o pedido, nossa equipe entrará em contato em até 2 horas para confirmar todos os detalhes.</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Botões de Ação -->
-                <div class="form-actions">
-                    {% if user.is_administrador %}
-                    <a href= "{% url 'pedido_list' %}" type="button" class="btn-secondary btn-large" style="text-decoration: none">
-                        <span class="btn-icon">↩️</span>
-                        Voltar
-                    </a>
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lista de Encomendas | AgendaDoce</title>
+    <link rel="stylesheet" href="../static/styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!-- Page Header -->
+    <section class="page-header">
+        <div class="container">
+            <div class="page-header-content">
+                <div style="display: flex; align-items: center; gap: 1rem; margin-bottom: 1rem;">
+                    {% if user.is_administrador or user.superusuario %}
+                    <a href="{% url 'pedido_list' %}" class="btn-secondary" style="text-decoration: none;">← Voltar</a>
                     {% else %}
-                    <a href= "{% url 'historico' %}" type="button" class="btn-secondary btn-large" style="text-decoration: none">
-                        <span class="btn-icon">↩️</span>
-                        Voltar
-                    </a>
+                    <a href="{% url 'historico' %}" class="btn-secondary" style="text-decoration: none;">← Voltar</a>
                     {% endif %}
-                    <button type="submit" class="btn-primary btn-large">
-                        <span class="btn-icon">✅</span>
-                        Enviar Pedido
-                    </button>
                 </div>
-            </form>
+                <h2 class="page-title">
+                    Formulário de <span class="highlight">Pedido</span>
+                </h2>
+            </div>
         </div>
-    </div>
-</section>
+    </section>
+
+    <!-- Formulário de Pedido -->
+    <section class="pedido-form-section">
+        <div class="container">
+            <div class="form-container">
+                <form class="pedido-form" method="post" enctype="multipart/form-data">
+                    {% csrf_token %}
+                
+                    <!-- Informações Básicas -->
+                    <div class="form-section">
+                        <h3 class="form-section-title">
+                            <span class="section-icon">📝</span>
+                            Informações Básicas
+                        </h3>
+                    
+                        <div class="form-row">
+                            <div class="form-group full-width">
+                                <label for="id_nome_pedido" class="form-label">Nome do Pedido *</label>
+                                {{ form.nome_pedido }}
+                                <small class="form-help">Digite um nome para identificar este pedido</small>
+                                
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Especificações do Bolo -->
+                    <div class="form-section">
+                        <h3 class="form-section-title">
+                            <span class="section-icon">🎂</span>
+                            Especificações do Bolo
+                        </h3>
+                    
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="id_tipo_massa" class="form-label">Tipo de Massa *</label>
+                                {{ form.tipo_massa }}
+                            </div>
+                        
+                            <div class="form-group">
+                                <label for="id_recheio" class="form-label">Recheio *</label>
+                                {{ form.recheio }}
+                            </div>
+                        </div>
+                    
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="id_formato" class="form-label">Formato *</label>
+                                {{ form.formato }}
+                                <small class="form-help">Descreva o formato desejado para o bolo</small>
+                                
+                            </div>
+                        
+                            <div class="form-group">
+                                <label for="id_tamanho" class="form-label">Tamanho *</label>
+                                {{ form.tamanho }}
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Personalização -->
+                    <div class="form-section">
+                        <h3 class="form-section-title">
+                            <span class="section-icon">🎨</span>
+                            Personalização
+                        </h3>
+                    
+                        <div class="form-row">
+                            <div class="form-group full-width">
+                                <label for="id_foto" class="form-label">Foto de Referência 📷</label>
+                                <p>Clique para enviar uma foto de referência</p>
+                                {% if pedido.foto %}
+                                    <div class="mb-3">
+                                        <img src="{{ pedido.foto.url }}" alt="Foto atual" class="img-thumbnail" style="max-width: 200px; max-height: 200px; object-fit: cover;">
+                                        <p class="text-muted small mt-2">Foto atual. Envie uma nova para substituir.</p>
+                                    </div>
+                                {% endif %}
+                                {{ form.foto }}
+                                <small>Formatos aceitos: JPG, PNG, GIF (máx. 5MB)</small>
+                            </div>
+                        </div>
+                    
+                        <div class="form-row">
+                            <div class="form-group full-width">
+                                <label for="id_observacoes" class="form-label">Observações Especiais</label>
+                                {{ form.observacoes }}
+                                <small class="form-help">Inclua qualquer detalhe que possa ajudar na confecção do seu bolo</small>
+                                <!-- placeholder="Descreva detalhes especiais, cores, decorações, alergias ou outras informações importantes..."></textarea> -->
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Entrega e Pagamento -->
+                    <div class="form-section">
+                        <h3 class="form-section-title">
+                            <span class="section-icon">🚚</span>
+                            Entrega e Pagamento
+                        </h3>
+                    
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="id_data_entrega" class="form-label">Data e Hora da Entrega *</label>
+                                {{ form.data_entrega }}
+                                <small class="form-help">Selecione quando você precisa receber o bolo</small>
+                            </div>
+                        
+                            <div class="form-group">
+                                <label for="id_tipo_pagamento" class="form-label">Forma de Pagamento *</label>
+                                {{ form.tipo_pagamento }}
+                            </div>
+                        </div>
+                    
+                        <div class="form-row">
+                            <div class="form-group full-width">
+                                <label for="id_endereco_pedido" class="form-label">Endereço de Entrega *</label>
+                                {{ form.endereco_pedido }}
+                                <!-- placeholder="Digite o endereço completo para entrega..." -->
+                                <small class="form-help">Inclua rua, número, complemento, bairro, cidade e CEP</small>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Resumo do Pedido -->
+                    <div class="form-section">
+                        <div class="order-summary">
+                            <h3 class="summary-title">
+                                <span class="section-icon">📋</span>
+                                Resumo do Pedido
+                            </h3>
+                            <div class="summary-content">
+                                <div class="summary-item">
+                                    <span class="summary-label">Status:</span>
+
+                                    {% if user.is_administrador or user.superusuario %}
+                                    <span class="summary-value">
+                                        <span class="status-aguardando">{{ form.status }}</span>
+                                    </span>
+                                    {% else %}
+                                    <span class="summary-value">
+                                        <span class="status-badge status-aguardando">Aguardando Confirmação</span>
+                                    </span>
+                                    {% endif %}
+                                </div>
+                                <div class="summary-note">
+                                    <p><strong>Importante:</strong> Após enviar o pedido, nossa equipe entrará em contato em até 2 horas para confirmar todos os detalhes.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Botões de Ação -->
+                    <div class="form-actions">
+                        {% if user.is_administrador %}
+                        <a href= "{% url 'pedido_list' %}" type="button" class="btn-secondary btn-large" style="text-decoration: none">
+                            <span class="btn-icon">↩️</span>
+                            Voltar
+                        </a>
+                        {% else %}
+                        <a href= "{% url 'historico' %}" type="button" class="btn-secondary btn-large" style="text-decoration: none">
+                            <span class="btn-icon">↩️</span>
+                            Voltar
+                        </a>
+                        {% endif %}
+                        <button type="submit" class="btn-primary btn-large">
+                            <span class="btn-icon">✅</span>
+                            Enviar Pedido
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </section>
+</body>
+</html>
 
 <style>
 /* Estilos específicos para o formulário de pedido */
