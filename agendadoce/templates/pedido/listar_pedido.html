@@ -144,7 +144,7 @@
                         </div>
                     </div>
                     <div class="stat-card">
-                        <div class="stat-icon">⏳</div>
+                        <div class="stat-icon">❌</div>
                         <div class="stat-content">
                             <p class="stat-number">{{ total_p_cancelados }}</p>
                             <p class="stat-label">Canceladas</p>
@@ -350,6 +350,10 @@
     #filtroForm .btn-outline-pink {
         width: 100%;
     }
+
+    .stat-card{
+        justify-content: center;
+    }
 }
 
 /* Celular (≤ 576px): 1 coluna */
@@ -376,6 +380,10 @@
     #filtroForm .d-flex.gap-2 {
         flex-direction: column;
         gap: 0.8rem;
+    }
+
+    .stat-card{
+        justify-content: center;
     }
 }
 

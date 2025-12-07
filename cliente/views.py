@@ -141,8 +141,10 @@ def cliente_list(request):
     # Buscar todos os usuários
     usuarios = UsuarioAdaptado.objects.all().order_by('id')
     total_usuarios = UsuarioAdaptado.objects.count()
-    total_pedidos = Pedido.objects.count()
+    pedidos = Pedido.objects.all()
+    total_pedidos = pedidos.count()
     pedido_por_cliente = f"{(int(total_pedidos) / int(total_usuarios)):.1f}"
+    saldo_total = pedidos.aggregate(Sum("valor"))["valor__sum"] or 0
 
     # ========== FILTROS ==========
     filtro_form = UsuarioFiltroForm(request.GET or None)
@@ -183,6 +185,7 @@ def cliente_list(request):
             "filtro_form": filtro_form,
             "total_usuarios": total_usuarios,
             "pedido_por_cliente": pedido_por_cliente,
+            "saldo_total": saldo_total,
         },
     )
 

@@ -121,16 +121,23 @@
             <div class="encomendas-stats">
                 <div class="stat-card">
                     <div class="stat-icon">👥</div>
-                    <div class="stat-content">
+                    <div class="stat-content" >
                         <p class="stat-number">{{ total_usuarios }}</p>
                         <p class="stat-label">Total de Usuários</p>
                     </div>
                 </div>
                 <div class="stat-card">
                     <div class="stat-icon">🎂</div>
-                    <div class="stat-content">
+                    <div class="stat-content" >
                         <p class="stat-number">{{ pedido_por_cliente }}</p>
                         <p class="stat-label">Média de pedidos por Cliente</p>                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                              
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon">💵</div>
+                    <div class="stat-content">
+                        <p class="stat-number">{{ saldo_total }}</p>
+                        <p class="stat-label">Saldo Total</p>                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                              
                     </div>
                 </div>
             </div>
@@ -318,6 +325,10 @@
     #filtroForm .btn-outline-pink {
         width: 100%;
     }
+
+    .stat-card{
+        justify-content: center;
+    }
 }
 
 /* Celular (≤ 576px): 1 coluna */
@@ -344,6 +355,10 @@
     #filtroForm .d-flex.gap-2 {
         flex-direction: column;
         gap: 0.8rem;
+    }
+
+    .stat-card{
+        justify-content: center;
     }
 }
 

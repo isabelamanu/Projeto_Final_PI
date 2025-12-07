@@ -1,6 +1,6 @@
 {% extends "base.html" %}
 
-{% block title %}Editar Pefil | AgendaDoce{% endblock %}
+{% block title %}Formulário de Usuário | AgendaDoce{% endblock %}
 
 {% block content %}
     <!-- Page Header -->
@@ -24,7 +24,7 @@
             <div class="form-container" style="margin-block: 30px;">
                 <!-- Coluna da Direita - Formulário de Edição -->
                 <div class="card shadow-sm" style="background-color: rgb(255, 252, 253)">
-                    <div class="card-header text-white" style="background-color: rgb(246, 84, 138)">
+                    <div class="card-header text-white">
                         <h5 class="mb-0" >
                             <i class="bi bi-pencil-square" ></i> Inserir Informações
                         </h5>
@@ -269,6 +269,12 @@
     </section>
 
 <style>
+.card-header text white{
+    background-color: rgb(246, 84, 138) !important;
+    border: none;
+    padding: 12px 20px;
+}
+
 .group-card {
     position: relative;
     display: block;
