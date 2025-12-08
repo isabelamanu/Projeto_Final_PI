@@ -3,91 +3,80 @@
 {% block title %}Login | AgendaDoce{% endblock %}
 
 {% block content %}
-<!DOCTYPE html>
-<html lang="pt-BR">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="../../static/styles.css">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-</head>
-<body>
-    <!-- Login/Cadastro Section -->
-    <section class="hero">
-        <div class="container">
-            <div class="hero-content">
-                <div class="hero-text">
-                    <h2 class="hero-title">
-                        Entre na sua
-                        <span class="highlight">Conta</span>
-                        ou Cadastre-se
-                    </h2>
-                    <p class="hero-description">
-                        Acesse sua conta para gerenciar seus pedidos e fazer novas encomendas dos nossos deliciosos bolos personalizados.
-                    </p>
-                </div>
-            
-                <div class="hero-image">
-                    <div class="auth-container">
-                        <!-- Tabs para alternar entre Login e Cadastro -->
-                        <div class="auth-tabs">
-                            <a class="auth-tab active" data-tab="login" href="{% url 'login' %}" style="text-decoration: none">Login</a>
-                            <a class="auth-tab" data-tab="register" href="{% url 'cliente_create' %}" style="text-decoration: none">Cadastro</a>
-                        </div>
-                    
-                        <!-- Formulário de Login -->
-                        <div id="login-form" class="auth-form active">
-                            <form method="post" class="form">
-                                {% csrf_token %}
+<!-- Login/Cadastro Section -->
+<section class="hero">
+    <div class="container">
+        <div class="hero-content">
+            <div class="hero-text">
+                <h2 class="hero-title">
+                    Entre na sua
+                    <span class="highlight">Conta</span>
+                    ou Cadastre-se
+                </h2>
+                <p class="hero-description">
+                    Acesse sua conta para gerenciar seus pedidos e fazer novas encomendas dos nossos deliciosos bolos personalizados.
+                </p>
+            </div>
+        
+            <div class="hero-image">
+                <div class="auth-container">
+                    <!-- Tabs para alternar entre Login e Cadastro -->
+                    <div class="auth-tabs">
+                        <a class="auth-tab active" data-tab="login" href="{% url 'login' %}" style="text-decoration: none">Login</a>
+                        <a class="auth-tab" data-tab="register" href="{% url 'cliente_create' %}" style="text-decoration: none">Cadastro</a>
+                    </div>
+                
+                    <!-- Formulário de Login -->
+                    <div id="login-form" class="auth-form active">
+                        <form method="post" class="form">
+                            {% csrf_token %}
 
-                                <div class="mb-3">
-                                    <label for="{{ form.username.id_for_label }}" class="form-label">
-                                        <i class="bi bi-person"></i> Usuário
-                                    </label>
-                                    {{ form.username }}
-                                    {% if form.username.errors %}
-                                        <div class="text-danger small mt-1">
-                                            {{ form.username.errors }}
-                                        </div>
-                                    {% endif %}
-                                </div>
-
-                                <div class="mb-3">
-                                    <label for="{{ form.password.id_for_label }}" class="form-label">
-                                        <i class="bi bi-lock"></i> Senha
-                                    </label>
-                                    {{ form.password }}
-                                    {% if form.password.errors %}
-                                        <div class="text-danger small mt-1">
-                                            {{ form.password.errors }}
-                                        </div>
-                                    {% endif %}
-                                </div>
-
-                                {% if form.non_field_errors %}
-                                    <div class="alert alert-danger">
-                                        {{ form.non_field_errors }}
+                            <div class="mb-3">
+                                <label for="{{ form.username.id_for_label }}" class="form-label">
+                                    <i class="bi bi-person"></i> Usuário
+                                </label>
+                                {{ form.username }}
+                                {% if form.username.errors %}
+                                    <div class="text-danger small mt-1">
+                                        {{ form.username.errors }}
                                     </div>
                                 {% endif %}
-                            
-                                <button type="submit" class="btn-primary btn-large btn-full">Entrar</button>
+                            </div>
 
-                                <div class="text-center">
-                                    <p class="mb-0">Não tem uma conta? 
-                                        <a href="{% url 'cliente_create' %}" class="link-cadastro">
-                                            Cadastre-se aqui
-                                        </a>
-                                    </p>
+                            <div class="mb-3">
+                                <label for="{{ form.password.id_for_label }}" class="form-label">
+                                    <i class="bi bi-lock"></i> Senha
+                                </label>
+                                {{ form.password }}
+                                {% if form.password.errors %}
+                                    <div class="text-danger small mt-1">
+                                        {{ form.password.errors }}
+                                    </div>
+                                {% endif %}
+                            </div>
+
+                            {% if form.non_field_errors %}
+                                <div class="alert alert-danger">
+                                    {{ form.non_field_errors }}
                                 </div>
-                            </form>
-                        </div>
+                            {% endif %}
+                        
+                            <button type="submit" class="btn-primary btn-large btn-full">Entrar</button>
+                            <a href="{% url 'index' %}" class="btn-secondary" style="text-decoration: none; text-align: center;">← Voltar</a>
+                            <div class="text-center">
+                                <p class="mb-0">Não tem uma conta? 
+                                    <a href="{% url 'cliente_create' %}" class="link-cadastro">
+                                        Cadastre-se aqui
+                                    </a>
+                                </p>
+                            </div>
+                        </form>
                     </div>
                 </div>
             </div>
         </div>
-    </section>
-</body>
-</html>
+    </div>
+</section>
 
 <style>
 :root {

@@ -21,8 +21,6 @@ class EntregadorForm(ModelForm):
 
 
 class EntregadorFiltroForm(forms.Form):
-    """Formulário para filtrar vagas"""
-
     descricao = forms.CharField(
         required=False,
         widget=forms.TextInput(attrs={"class": "form-control", "placeholder": "Buscar por nome..."}),
@@ -50,7 +48,6 @@ class EntregadorFiltroForm(forms.Form):
 
 
 class PedidoForm(ModelForm):
-
     class Meta:
         model = Pedido
         fields = [
@@ -84,8 +81,6 @@ class PedidoForm(ModelForm):
 
 
 class PedidoFiltroForm(forms.Form):
-    """Formulário para filtrar vagas"""
-
     descricao = forms.CharField(
         required=False,
         widget=forms.TextInput(attrs={"class": "form-control", "placeholder": "Buscar por nome de pedido..."}),

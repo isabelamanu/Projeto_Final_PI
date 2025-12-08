@@ -69,8 +69,6 @@ class LoginForm(AuthenticationForm):
 
 
 class PerfilForm(forms.ModelForm):
-    """Formulário para editar perfil do usuário"""
-
     class Meta:
         model = UsuarioAdaptado
         fields = [
@@ -109,8 +107,6 @@ class PerfilForm(forms.ModelForm):
 
 
 class UsuarioFiltroForm(forms.Form):
-    """Formulário para filtrar usuários"""
-
     username = forms.CharField(
         required=False,
         label="Nome de Usuário",
@@ -139,8 +135,6 @@ class UsuarioFiltroForm(forms.Form):
 
 
 class UsuarioEditForm(forms.ModelForm):
-    """Formulário para editar usuário (sem senha)"""
-
     grupos = forms.ModelMultipleChoiceField(
         queryset=Group.objects.all(), required=False, widget=forms.CheckboxSelectMultiple, label="Grupos"
     )

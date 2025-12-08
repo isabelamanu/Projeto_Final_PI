@@ -3,203 +3,188 @@
 {% block title %}Cadastro | AgendaDoce{% endblock %}
 
 {% block content %}
-<!DOCTYPE html>
-<html lang="pt-BR">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="../../static/styles.css">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-</head>
-<body>
-    <!-- Login/Cadastro Section -->
-    <section class="hero">
-        <div class="container">
-            <div class="hero-content">
-                <div class="hero-text">
-                    <h2 class="hero-title">
-                        Entre na sua
-                        <span class="highlight">Conta</span>
-                        ou Cadastre-se
-                    </h2>
-                    <p class="hero-description">
-                        Preencha os dados para criar sua conta e fazer novas encomendas dos nossos deliciosos bolos personalizados.
-                    </p>
-                </div>
-            
-                <div class="hero-image">
-                    <div class="auth-container">
-                        <!-- Tabs para alternar entre Login e Cadastro -->
-                        <div class="auth-tabs">
-                            <a class="auth-tab" data-tab="login" href="{% url 'login' %}" style="text-decoration: none; text-align: center;">Login</a>
-                            <a class="auth-tab active" data-tab="register" href="{% url 'cliente_create' %}" style="text-decoration: none; text-align: center;">Cadastro</a>
-                        </div>
+<!-- Login/Cadastro Section -->
+<section class="hero">
+    <div class="container">
+        <div class="hero-content">
+            <div class="hero-text">
+                <h2 class="hero-title">
+                    Entre na sua
+                    <span class="highlight">Conta</span>
+                    ou Cadastre-se
+                </h2>
+                <p class="hero-description">
+                    Preencha os dados para criar sua conta e fazer novas encomendas dos nossos deliciosos bolos personalizados.
+                </p>
+            </div>
+        
+            <div class="hero-image">
+                <div class="auth-container">
+                    <!-- Tabs para alternar entre Login e Cadastro -->
+                    <div class="auth-tabs">
+                        <a class="auth-tab" data-tab="login" href="{% url 'login' %}" style="text-decoration: none; text-align: center;">Login</a>
+                        <a class="auth-tab active" data-tab="register" href="{% url 'cliente_create' %}" style="text-decoration: none; text-align: center;">Cadastro</a>
+                    </div>
 
-                        {% if messages %}
-                            {% for message in messages %}
-                                <div class="alert alert-{{ message.tags }} alert-dismissible fade show" role="alert">
-                                    {{ message }}
-                                    <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
-                                </div>
-                            {% endfor %}
-                        {% endif %}
-
-                        <form class="form" method="post">
-                            {% csrf_token %}
-                    
-                            <div class="form-section">
-                                <h5><i class="bi bi-key"></i> Dados de Acesso</h5>
-                                <div class="row">
-                                    <div class="col-md-6 mb-3">
-                                        <label for="{{ form.username.id_for_label }}" class="form-label required-field">
-                                            Usuário
-                                        </label>
-                                        {{ form.username }}
-                                        {% if form.username.errors %}
-                                            <div class="text-danger small mt-1">{{ form.username.errors }}</div>
-                                        {% endif %}
-                                    </div>
-                                    <div class="col-md-6 mb-3">
-                                        <label for="{{ form.email.id_for_label }}" class="form-label required-field">
-                                            E-mail
-                                        </label>
-                                        {{ form.email }}
-                                        {% if form.email.errors %}
-                                            <div class="text-danger small mt-1">{{ form.email.errors }}</div>
-                                        {% endif %}
-                                    </div>
-                                </div>
-
-                                <div class="row">
-                                    <div class="col-md-6 mb-3">
-                                        <label for="{{ form.password1.id_for_label }}" class="form-label required-field">
-                                            Senha
-                                        </label>
-                                        {{ form.password1 }}
-                                        {% if form.password1.errors %}
-                                            <div class="text-danger small mt-1">{{ form.password1.errors }}</div>
-                                        {% endif %}
-                                    </div>
-                                    <div class="col-md-6 mb-3">
-                                        <label for="{{ form.password2.id_for_label }}" class="form-label required-field">
-                                            Confirmar Senha
-                                        </label>
-                                        {{ form.password2 }}
-                                        {% if form.password2.errors %}
-                                            <div class="text-danger small mt-1">{{ form.password2.errors }}</div>
-                                        {% endif %}
-                                    </div>
-                                </div>
+                    {% if messages %}
+                        {% for message in messages %}
+                            <div class="alert alert-{{ message.tags }} alert-dismissible fade show" role="alert">
+                                {{ message }}
+                                <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
                             </div>
+                        {% endfor %}
+                    {% endif %}
 
-                            <!-- Dados Pessoais -->
-                            <div class="form-section">
-                                <h5><i class="bi bi-person"></i> Dados Pessoais</h5>
-                                <div class="row">
-                                    <div class="col-md-6 mb-3">
-                                        <label for="{{ form.nome_mae.id_for_label }}" class="form-label">
-                                            Nome
-                                        </label>
-                                        {{ form.first_name }}
-                                        {% if form.first_name.errors %}
-                                            <div class="text-danger small mt-1">{{ form.first_name.errors }}</div>
-                                        {% endif %}
-                                    </div>
-                                    <div class="col-md-6 mb-3">
-                                        <label for="{{ form.nome_mae.id_for_label }}" class="form-label">
-                                            Sobrenome
-                                        </label>
-                                        {{ form.last_name }}
-                                        {% if form.last_name.errors %}
-                                            <div class="text-danger small mt-1">{{ form.last_name.errors }}</div>
-                                        {% endif %}
-                                    </div>
-                                    <div class="col-md-6 mb-3">
-                                        <label for="{{ form.cpf.id_for_label }}" class="form-label required-field">
-                                            CPF
-                                        </label>
-                                        {{ form.cpf }}
-                                        {% if form.cpf.errors %}
-                                            <div class="text-danger small mt-1">{{ form.cpf.errors }}</div>
-                                        {% endif %}
-                                        <small class="text-muted">Apenas números</small>
-                                    </div>
-                                    <div class="col-md-6 mb-3">
-                                        <label for="{{ form.nome_mae.id_for_label }}" class="form-label">
-                                            Nome da Mãe
-                                        </label>
-                                        {{ form.nome_mae }}
-                                        {% if form.nome_mae.errors %}
-                                            <div class="text-danger small mt-1">{{ form.nome_mae.errors }}</div>
-                                        {% endif %}
-                                    </div>
-                                    <div class="col-md-6 mb-3">
-                                        <label for="{{ form.telefone.id_for_label }}" class="form-label">
-                                            Telefone
-                                        </label>
-                                        {{ form.telefone }}
-                                        {% if form.telefone.errors %}
-                                            <div class="text-danger small mt-1">{{ form.telefone.errors }}</div>
-                                        {% endif %}
-                                    </div>
-                                </div>
-                            </div>
-
-                            <!-- Endereço -->
-                            <div class="form-section">
-                                <h5><i class="bi bi-geo-alt"></i> Endereço</h5>
-                                <div class="mb-3">
-                                    <label for="{{ form.endereco.id_for_label }}" class="form-label">
-                                        Endereço Completo
+                    <!-- Formulário de Cadastro -->
+                    <form class="form" method="post">
+                        {% csrf_token %}
+                        <div class="form-section">
+                            <h5><i class="bi bi-key"></i> Dados de Acesso</h5>
+                            <div class="row">
+                                <div class="col-md-6 mb-3">
+                                    <label for="{{ form.username.id_for_label }}" class="form-label required-field">
+                                        Usuário
                                     </label>
-                                    {{ form.endereco }}
-                                    {% if form.endereco.errors %}
-                                        <div class="text-danger small mt-1">{{ form.endereco.errors }}</div>
+                                    {{ form.username }}
+                                    {% if form.username.errors %}
+                                        <div class="text-danger small mt-1">{{ form.username.errors }}</div>
                                     {% endif %}
                                 </div>
-                                <div class="row">
-                                    <div class="col-md-6 mb-3">
-                                        <label for="{{ form.nome_bairro.id_for_label }}" class="form-label">
-                                            Bairro
-                                        </label>
-                                        {{ form.nome_bairro }}
-                                        {% if form.nome_bairro.errors %}
-                                            <div class="text-danger small mt-1">{{ form.nome_bairro.errors }}</div>
-                                        {% endif %}
-                                    </div>
-                                    <div class="col-md-6 mb-3">
-                                        <label for="{{ form.nome_cidade.id_for_label }}" class="form-label">
-                                            Cidade
-                                        </label>
-                                        {{ form.nome_cidade }}
-                                        {% if form.nome_cidade.errors %}
-                                            <div class="text-danger small mt-1">{{ form.nome_cidade.errors }}</div>
-                                        {% endif %}
-                                    </div>
+                                <div class="col-md-6 mb-3">
+                                    <label for="{{ form.email.id_for_label }}" class="form-label required-field">
+                                        E-mail
+                                    </label>
+                                    {{ form.email }}
+                                    {% if form.email.errors %}
+                                        <div class="text-danger small mt-1">{{ form.email.errors }}</div>
+                                    {% endif %}
                                 </div>
                             </div>
 
-                            {% if form.non_field_errors %}
-                                <div class="alert alert-danger">
-                                    {{ form.non_field_errors }}
+                            <div class="row">
+                                <div class="col-md-6 mb-3">
+                                    <label for="{{ form.password1.id_for_label }}" class="form-label required-field">
+                                        Senha
+                                    </label>
+                                    {{ form.password1 }}
+                                    {% if form.password1.errors %}
+                                        <div class="text-danger small mt-1">{{ form.password1.errors }}</div>
+                                    {% endif %}
                                 </div>
-                            {% endif %}
-
-
-                            <!-- Formulário de Cadastro -->
-                            <div id="register-form" class="auth-form">
-                                
-                            
-                                <button type="submit" class="btn-primary btn-large btn-full">Criar Conta</button>
+                                <div class="col-md-6 mb-3">
+                                    <label for="{{ form.password2.id_for_label }}" class="form-label required-field">
+                                        Confirmar Senha
+                                    </label>
+                                    {{ form.password2 }}
+                                    {% if form.password2.errors %}
+                                        <div class="text-danger small mt-1">{{ form.password2.errors }}</div>
+                                    {% endif %}
+                                </div>
                             </div>
-                        </form>    
-                    </div>
+                        </div>
+
+                        <!-- Dados Pessoais -->
+                        <div class="form-section">
+                            <h5><i class="bi bi-person"></i> Dados Pessoais</h5>
+                            <div class="row">
+                                <div class="col-md-6 mb-3">
+                                    <label for="{{ form.nome_mae.id_for_label }}" class="form-label">
+                                        Nome
+                                    </label>
+                                    {{ form.first_name }}
+                                    {% if form.first_name.errors %}
+                                        <div class="text-danger small mt-1">{{ form.first_name.errors }}</div>
+                                    {% endif %}
+                                </div>
+                                <div class="col-md-6 mb-3">
+                                    <label for="{{ form.nome_mae.id_for_label }}" class="form-label">
+                                        Sobrenome
+                                    </label>
+                                    {{ form.last_name }}
+                                    {% if form.last_name.errors %}
+                                        <div class="text-danger small mt-1">{{ form.last_name.errors }}</div>
+                                    {% endif %}
+                                </div>
+                                <div class="col-md-6 mb-3">
+                                    <label for="{{ form.cpf.id_for_label }}" class="form-label required-field">
+                                        CPF
+                                    </label>
+                                    {{ form.cpf }}
+                                    {% if form.cpf.errors %}
+                                        <div class="text-danger small mt-1">{{ form.cpf.errors }}</div>
+                                    {% endif %}
+                                    <small class="text-muted">Apenas números</small>
+                                </div>
+                                <div class="col-md-6 mb-3">
+                                    <label for="{{ form.nome_mae.id_for_label }}" class="form-label">
+                                        Nome da Mãe
+                                    </label>
+                                    {{ form.nome_mae }}
+                                    {% if form.nome_mae.errors %}
+                                        <div class="text-danger small mt-1">{{ form.nome_mae.errors }}</div>
+                                    {% endif %}
+                                </div>
+                                <div class="col-md-6 mb-3">
+                                    <label for="{{ form.telefone.id_for_label }}" class="form-label">
+                                        Telefone
+                                    </label>
+                                    {{ form.telefone }}
+                                    {% if form.telefone.errors %}
+                                        <div class="text-danger small mt-1">{{ form.telefone.errors }}</div>
+                                    {% endif %}
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Endereço -->
+                        <div class="form-section">
+                            <h5><i class="bi bi-geo-alt"></i> Endereço</h5>
+                            <div class="mb-3">
+                                <label for="{{ form.endereco.id_for_label }}" class="form-label">
+                                    Endereço Completo
+                                </label>
+                                {{ form.endereco }}
+                                {% if form.endereco.errors %}
+                                    <div class="text-danger small mt-1">{{ form.endereco.errors }}</div>
+                                {% endif %}
+                            </div>
+                            <div class="row">
+                                <div class="col-md-6 mb-3">
+                                    <label for="{{ form.nome_bairro.id_for_label }}" class="form-label">
+                                        Bairro
+                                    </label>
+                                    {{ form.nome_bairro }}
+                                    {% if form.nome_bairro.errors %}
+                                        <div class="text-danger small mt-1">{{ form.nome_bairro.errors }}</div>
+                                    {% endif %}
+                                </div>
+                                <div class="col-md-6 mb-3">
+                                    <label for="{{ form.nome_cidade.id_for_label }}" class="form-label">
+                                        Cidade
+                                    </label>
+                                    {{ form.nome_cidade }}
+                                    {% if form.nome_cidade.errors %}
+                                        <div class="text-danger small mt-1">{{ form.nome_cidade.errors }}</div>
+                                    {% endif %}
+                                </div>
+                            </div>
+                        </div>
+
+                        {% if form.non_field_errors %}
+                            <div class="alert alert-danger">
+                                {{ form.non_field_errors }}
+                            </div>
+                        {% endif %}
+
+                        <!-- Cadastrar -->
+                        <button type="submit" class="btn-primary btn-large btn-full">Criar Conta</button>
+                        <button onclick="history.back()" class="btn-secondary" style="text-decoration: none">← Voltar</button>
+                    </form>    
                 </div>
             </div>
         </div>
-    </section>
-</body>
-</html>
+    </div>
+</section>
 
 <style>
 :root {

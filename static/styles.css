@@ -16,7 +16,7 @@ body {
 .container {
     max-width: 1200px;
     margin: 0 auto;
-    padding: 0 20px;
+    padding: 0 10px;
 }
 
 /* Header */
@@ -35,6 +35,29 @@ body {
     justify-content: space-between;
     align-items: center;
     padding: 1rem 0;
+}
+.nav {
+    display: flex;
+    gap: 2rem;
+}
+
+.nav-link {
+    text-decoration: none;
+    color: #4b5563;
+    font-weight: 500;
+    transition: color 0.3s ease;
+}
+
+.nav-link:hover,
+.nav-link.active {
+    color: #ec4899;
+}
+
+.hamburger {
+    display: none;
+    font-size: 2rem;
+    cursor: pointer;
+    padding: 5px 10px;
 }
 
 .logo {
@@ -59,7 +82,6 @@ body {
     font-weight: 700;
     color: #ec4899;
 }
-
 
 /* Buttons */
 .btn-primary {
@@ -413,7 +435,21 @@ body {
     font-size: 0.875rem;
 }
 
+
 /* CTA Section */
+.cta {
+    padding: 1.5rem 0;
+    background: linear-gradient(135deg, #ec4899 0%, #be185d 100%);
+}
+
+.cta-description {
+    font-size: 1rem;
+    color: #fce7f3;
+    margin-bottom: 2rem;
+    max-width: 500px;
+    margin-left: auto;
+    margin-right: auto;
+}
 
 .cta-content {
     text-align: center;
@@ -426,24 +462,58 @@ body {
     margin-bottom: 1rem;
 }
 
-.cta-description {
-    font-size: 1rem;
-    color: #fce7f3;
-    margin-bottom: 2rem;
-    max-width: 600px;
-    margin-left: auto;
-    margin-right: auto;
-}
 
 /* Footer */
-.footer-brand .logo-text {
+.footer {
+    background: #1f2937;
     color: white;
+    padding: 2rem 0 1rem;
+}
+
+.footer-content {
+    display: grid;
+    grid-template-columns: 2fr 1fr 1fr;
+    gap: 0.5rem;
+    margin-bottom: 0.5rem;
 }
 
 .footer-description {
     color: #9ca3af;
-    margin: 1.5rem 0;
-    max-width: 300px;
+    margin: 0.5rem 0;
+    max-width: 200px;
+}
+
+.footer-title {
+    font-size: 1rem;
+    font-weight: 600;
+    margin-bottom: 1rem;
+}
+
+.contact-info,
+.hours-info {
+    display: flex;
+    flex-direction: column;
+}
+
+.contact-item {
+    display: flex;
+    align-items: center;
+}
+
+.contact-icon {
+    font-size: 1rem;
+    color: #ec4899;
+}
+
+.footer-bottom {
+    border-top: 1px solid #374151;
+    padding-top: 0.5rem;
+    text-align: center;
+    color: #9ca3af;
+}
+
+.footer-brand .logo-text {
+    color: white;
 }
 
 .social-links {
@@ -467,30 +537,6 @@ body {
     background: #ec4899;
 }
 
-.footer-title {
-    font-size: 1.1rem;
-    font-weight: 600;
-    margin-bottom: 1rem;
-}
-
-.contact-info,
-.hours-info {
-    display: flex;
-    flex-direction: column;
-    gap: 0.75rem;
-}
-
-.contact-item {
-    display: flex;
-    align-items: center;
-    gap: 0.75rem;
-}
-
-.contact-icon {
-    font-size: 1.1rem;
-    color: #ec4899;
-}
-
 .contact-text {
     color: #9ca3af;
 }
@@ -499,144 +545,6 @@ body {
     color: #9ca3af;
 }
 
-.footer-bottom {
-    border-top: 1px solid #374151;
-    padding-top: 2rem;
-    text-align: center;
-    color: #9ca3af;
-}
-/* Reset e Base */
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-}
-
-.nav-wrapper {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 1rem 0;
-}
-
-.logo {
-    display: flex;
-    align-items: center;
-    gap: 0.75rem;
-}
-
-.logo-icon {
-    width: 40px;
-    height: 40px;
-    background: #ec4899;
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 1.5rem;
-}
-
-.logo-text {
-    font-size: 1.5rem;
-    font-weight: 700;
-    color: #ec4899;
-}
-
-.nav {
-    display: flex;
-    gap: 2rem;
-}
-
-.nav-link {
-    text-decoration: none;
-    color: #4b5563;
-    font-weight: 500;
-    transition: color 0.3s ease;
-}
-
-.nav-link:hover,
-.nav-link.active {
-    color: #ec4899;
-}
-
-.hamburger {
-    display: none;
-    font-size: 2rem;
-    cursor: pointer;
-    padding: 5px 10px;
-}
-
-/* Buttons */
-.btn-primary {
-    background: #ec4899;
-    color: white;
-    border: none;
-    padding: 0.75rem 1.5rem;
-    border-radius: 0.5rem;
-    font-weight: 600;
-    cursor: pointer;
-    transition: all 0.3s ease;
-}
-
-.btn-primary:hover {
-    background: #be185d;
-    transform: translateY(-2px);
-}
-
-.btn-secondary {
-    background: transparent;
-    color: #ec4899;
-    border: 2px solid #ec4899;
-    padding: 0.75rem 1.5rem;
-    border-radius: 0.5rem;
-    font-weight: 600;
-    cursor: pointer;
-    transition: all 0.3s ease;
-}
-
-.btn-secondary:hover {
-    background: #ec4899;
-    color: white;
-}
-
-.btn-large {
-    padding: 1rem 2rem;
-    font-size: 1.1rem;
-}
-
-.btn-card {
-    background: #ec4899;
-    color: white;
-    border: none;
-    padding: 0.5rem 1rem;
-    border-radius: 0.5rem;
-    font-weight: 500;
-    cursor: pointer;
-    transition: all 0.3s ease;
-}
-
-.btn-card:hover {
-    background: #be185d;
-}
-
-.btn-cta {
-    background: white;
-    color: #ec4899;
-    border: none;
-    padding: 1rem 2.5rem;
-    border-radius: 0.75rem;
-    font-weight: 700;
-    font-size: 1.1rem;
-    cursor: pointer;
-    transition: all 0.3s ease;
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
-}
-
-.btn-cta:hover {
-    background: #f9fafb;
-    transform: translateY(-2px);
-    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
-}
 
 /* Page Header */
 .page-header {
@@ -869,114 +777,6 @@ body {
     font-size: 1.25rem;
 }
 
-/* CTA Section */
-.cta {
-    padding: 1.5rem 0;
-    background: linear-gradient(135deg, #ec4899 0%, #be185d 100%);
-}
-
-.cta-content {
-    text-align: center;
-    color: white;
-}
-
-.cta-title {
-    font-size: 2rem;
-    font-weight: 600;
-    margin-bottom: 1rem;
-}
-
-.cta-description {
-    font-size: 1rem;
-    color: #fce7f3;
-    margin-bottom: 2rem;
-    max-width: 500px;
-    margin-left: auto;
-    margin-right: auto;
-}
-
-/* Footer */
-.footer {
-    background: #1f2937;
-    color: white;
-    padding: 2rem 0 1rem;
-}
-
-.footer-content {
-    display: grid;
-    grid-template-columns: 2fr 1fr 1fr;
-    gap: 0.5rem;
-    margin-bottom: 0.5rem;
-}
-
-.footer-brand .logo-text {
-    color: white;
-}
-
-.footer-description {
-    color: #9ca3af;
-    margin: 0.5rem 0;
-    max-width: 200px;
-}
-
-.social-links {
-    display: flex;
-    gap: 1rem;
-}
-
-.social-link {
-    width: 40px;
-    height: 40px;
-    background: #374151;
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    text-decoration: none;
-    transition: background 0.3s ease;
-}
-
-.social-link:hover {
-    background: #ec4899;
-}
-
-.footer-title {
-    font-size: 1rem;
-    font-weight: 600;
-    margin-bottom: 1rem;
-}
-
-.contact-info,
-.hours-info {
-    display: flex;
-    flex-direction: column;
-}
-
-.contact-item {
-    display: flex;
-    align-items: center;
-}
-
-.contact-icon {
-    font-size: 1rem;
-    color: #ec4899;
-}
-
-.contact-text {
-    color: #9ca3af;
-}
-
-.hours-info p {
-    color: #9ca3af;
-}
-
-.footer-bottom {
-    border-top: 1px solid #374151;
-    padding-top: 0.5rem;
-    text-align: center;
-    color: #9ca3af;
-}
-
 .card-header {
     background-color: #fff5f8 !important;
     border-color: #e83e8c !important; /* rosa */
@@ -998,45 +798,35 @@ body {
     border-color: #d63384 !important;
 }
 
-
-/* ======= Alinhamento dos Campos ======= */
-
-/* Garante espaçamento igual entre campos */
 #filtroForm .row.g-3 > div {
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
 }
 
-/* Corrige desalinhamento dos selects e campos pequenos */
 #filtroForm select,
 #filtroForm input {
     height: 38px;
 }
 
-/* Alinha os rótulos e campos de cliente/entregador/status */
 #filtroForm .form-check {
     display: flex;
     flex-direction: column;
     align-items: flex-start;
 }
 
-/* Ajusta espaço entre label e campo */
 #filtroForm label.form-label {
     margin-bottom: 6px;
 }
 
-/* Botões alinhados e com espaço */
 #filtroForm .d-flex.gap-2 {
     gap: 12px;
 }
 
-/* Pequeno ajuste no card geral */
 .card {
     border-radius: 10px;
 }
 
-/* ======= Detalhes estéticos ======= */
 #filtroForm small {
     font-size: 0.85rem;
     color: #777 !important;
@@ -1046,13 +836,106 @@ body {
     border-left: 5px solid #e83e8c !important;
 }
 
+.end-est {
+    display: grid; 
+    grid-template-columns: 1fr 1fr; 
+    gap: 2rem; 
+    margin-bottom: 2rem;
+}
 
-/* ------------------------------------------ /
-/ RESPONSIVE DESIGN – TABLETS (ATÉ 768PX) /
-/ ------------------------------------------ */
+.info-perfil{
+    display: grid; 
+    grid-template-columns: 300px 1fr; 
+    gap: 2rem; 
+    padding: 1.5rem;
+}
+
+/* Filtros */
+.filtros-card {
+    border-radius: 12px;
+    overflow: hidden;
+    margin-bottom: 20px;
+}
+
+.filtros-card .card-header {
+    background-color: #e83e8c !important;
+    border: none;
+    padding: 12px 20px;
+}
+
+.filtros-card .card-header h5 {
+    color: #fff;
+    font-weight: 600;
+}
+
+.filtros-card .card-header i {
+    color: #fff;
+}
+
+#filtroForm label {
+    color: #d63384;
+}
+
+#filtroForm small {
+    display: block;
+    color: #888;
+    font-size: 0.85rem;
+    margin-top: 4px;
+}
+
+#filtroForm select,
+#filtroForm input {
+    height: 38px;
+    border-radius: 6px;
+    border: 1px solid #ddd;
+    transition: border-color 0.2s;
+}
+
+#filtroForm select:focus,
+#filtroForm input:focus {
+    border-color: #e83e8c;
+    box-shadow: 0 0 0 0.15rem rgba(232, 62, 140, 0.25);
+}
+
+.btn-pink {
+    background-color: #e83e8c;
+    color: white;
+    border: none;
+    transition: 0.3s;
+}
+
+.btn-pink:hover {
+    background-color: #d63384;
+}
+
+.btn-outline-pink {
+    border: 1.5px solid #e83e8c;
+    color: #e83e8c;
+    background-color: white;
+    transition: 0.3s;
+}
+
+.btn-outline-pink:hover {
+    background-color: #e83e8c;
+    color: white;
+}
+
+#filtroForm .row.g-3 > div {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+}
+
+.alert-info {
+    border-left: 5px solid #e83e8c;
+    background-color: #fff5f9;
+    color: #333;
+}
+
+/* Responsividade (>= 768PX) */
 @media (max-width: 768px) {
 
-/* Navbar vira hamburguer */
+/* Navbar hamburguer */
 .nav {
     display: none;
     flex-direction: column;
@@ -1076,17 +959,14 @@ body {
     display: block;
 }
 
-/* Logo centralizada */
 .logo-text {
     font-size: 1.4rem;
 }
 
-/* Espaçamento geral */
 .container {
     padding: 0 20px;
 }
 
-/* Page titles */
 .page-title,
 .section-title,
 .hero-title,
@@ -1095,29 +975,21 @@ body {
     text-align: center;
 }
 
-/* Grids viram 1 coluna */
 .encomendas-stats,
 .encomendas-grid,
 .cards-grid,
 .stats-grid,
 .testimonials-grid,
+.hero-content,
 .footer-content {
     grid-template-columns: 1fr !important;
     text-align: center;
 }
 
-/* Texto centralizado em seções */
-.hero-content {
-    grid-template-columns: 1fr;
-    text-align: center;
-}
-
-/* Botões centralizados */
 .hero-buttons {
     justify-content: center;
 }
 
-/* Detalhes de cards */
 .detail-item {
     flex-direction: column;
     align-items: flex-start;
@@ -1128,7 +1000,7 @@ body {
     text-align: left;
 }
 
-.end_est {
+.end-est {
     grid-template-columns: 1fr !important;
     text-align: center;
 }
@@ -1136,32 +1008,27 @@ body {
 .info-perfil{
     display: flex;
     flex-direction: column;
+    grid-template-columns: 1fr !important;
+    text-align: center;
 }
 
 }
 
-/* ------------------------------------------ /
-/ RESPONSIVE DESIGN – CELULARES (ATÉ 480PX) /
-/ ------------------------------------------ */
+/* Celulares (>= 480PX) */
 @media (max-width: 480px) {
-
-/* Padding geral menor */
 .container {
     padding: 0 15px;
 }
 
-/* Títulos menores */
 .page-title,
 .hero-title {
     font-size: 1.8rem;
 }
 
-/* Hero */
 .hero {
     padding: 2.5rem 0;
 }
 
-/* Colocar botões em coluna */
 .hero-buttons,
 .btn-large {
     width: 100%;
@@ -1170,7 +1037,6 @@ body {
     align-items: center;
 }
 
-/* Tabs menores */
 .filter-tab {
     padding: 0.4rem 0.8rem;
     font-size: 0.85rem;
@@ -1178,9 +1044,10 @@ body {
 
 .encomenda-card {
     margin-bottom: 1rem;
+    grid-template-columns: 1fr !important;
+    text-align: center;
 }
 
-/* Footer em coluna */
 .footer-content {
     grid-template-columns: 1fr;
     text-align: center;
@@ -1196,21 +1063,70 @@ body {
     text-align: left;
 }
 
-/* Detalhes de cards */
 .detail-item {
     flex-direction: column;
     align-items: flex-start;
     gap: 0.25rem;
 }
 
-.end_est {
+.end-est, .info-perfil {
     grid-template-columns: 1fr !important;
     text-align: center;
 }
-
-.info-perfil{
-    grid-template-columns: 1fr !important;
-    text-align: center;
 }
 
+/* Responsividade Filtro */
+
+/* Tablet médio (≤ 992px): 2 colunas */
+@media (max-width: 992px) {
+    #filtroForm .row.g-3 {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 1.2rem;
+    }
+
+    #filtroForm .btn-pink,
+    #filtroForm .btn-outline-pink {
+        width: 100%;
+    }
+
+    .stat-card{
+        justify-content: center;
+    }
+}
+
+/* Celular (≤ 576px): 1 coluna */
+@media (max-width: 576px) {
+    #filtroForm .row.g-3 {
+        grid-template-columns: 1fr;
+        gap: 1rem;
+    }
+
+    .filtros-card .card-header h5 {
+        font-size: 1.1rem;
+        text-align: center;
+    }
+
+    .filtros-card .card-body {
+        padding: 1rem;
+    }
+
+    #filtroForm .btn-pink,
+    #filtroForm .btn-outline-pink {
+        width: 100%;
+    }
+
+    #filtroForm .d-flex.gap-2 {
+        flex-direction: column;
+        gap: 0.8rem;
+    }
+
+    .stat-card{
+        justify-content: center;
+    }
+}
+
+button,
+a.btn {
+    transition: all 0.25s ease-in-out;
 }

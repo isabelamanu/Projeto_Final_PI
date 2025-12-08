@@ -18,34 +18,36 @@
                     <a href="{% url 'index' %}" class="logo-icon" style="text-decoration: none">🎂</a>
                     <h1 href="{% url 'index' %}" class="logo-text">AgendaDoce</h1>
                 </div>
-                
-                <div class="hamburger" onclick="toggleMenu()">☰</div>
 
-                {% if user.is_administrador %}
-                    <nav class="nav">
-                        <a href="{% url 'index' %}" class="nav-link" style="text-decoration: none; color: #4b5563; font-weight: 500; transition: color 0.3s ease;">Início</a>
-                        <a href="{% url 'pedido_list' %}" class="nav-link" style="text-decoration: none; color: #4b5563; font-weight: 500; transition: color 0.3s ease;">Encomendas</a>
-                        <a href="{% url 'cliente_list' %}" class="nav-link" style="text-decoration: none; color: #4b5563; font-weight: 500; transition: color 0.3s ease;">Usuários</a>
-                        <a href="{% url 'entregador_list' %}" class="nav-link" style="text-decoration: none; color: #4b5563; font-weight: 500; transition: color 0.3s ease;">Entregadores</a>
-                        <a href="#sobre" class="nav-link" style="text-decoration: none; color: #4b5563; font-weight: 500; transition: color 0.3s ease;">Sobre</a>
-                    </nav>
-                {% else %}
-                    <nav class="nav">
-                        <a href="{% url 'index' %}" class="nav-link" style="text-decoration: none; color: #4b5563; font-weight: 500; transition: color 0.3s ease;">Início</a>   
-                        <a href="{% url 'historico' %}" class="nav-link" style="text-decoration: none; color: #4b5563; font-weight: 500; transition: color 0.3s ease;">Encomendas</a>  
-                        <a href="{% url 'perfil' %}" class="nav-link" style="text-decoration: none; color: #4b5563; font-weight: 500; transition: color 0.3s ease;">Meu Perfil</a>  
-                        <a href="#sobre" class="nav-link" style="text-decoration: none; color: #4b5563; font-weight: 500; transition: color 0.3s ease;">Sobre</a>     
-                    </nav>
-                {% endif %}
-                
                 {% if request.user.is_authenticated %}
-                <a href="{% url 'logout' %}" class="btn-primary" style="text-align: center; text-decoration: none; margin-top: 0.5rem;">
-                Sair
-                </a>
+                    <div class="hamburger" onclick="toggleMenu()">☰</div>
+
+                    {% if user.is_administrador %}
+                        <nav class="nav">
+                            <a href="{% url 'index' %}" class="nav-link" style="text-decoration: none; color: #4b5563; font-weight: 500; transition: color 0.3s ease;">Início</a>
+                            <a href="{% url 'pedido_list' %}" class="nav-link" style="text-decoration: none; color: #4b5563; font-weight: 500; transition: color 0.3s ease;">Encomendas</a>
+                            <a href="{% url 'cliente_list' %}" class="nav-link" style="text-decoration: none; color: #4b5563; font-weight: 500; transition: color 0.3s ease;">Usuários</a>
+                            <a href="{% url 'entregador_list' %}" class="nav-link" style="text-decoration: none; color: #4b5563; font-weight: 500; transition: color 0.3s ease;">Entregadores</a>
+                            <a href="#sobre" class="nav-link" style="text-decoration: none; color: #4b5563; font-weight: 500; transition: color 0.3s ease;">Sobre</a>
+                        </nav>
+                    {% else %}
+                        <nav class="nav">
+                            <a href="{% url 'index' %}" class="nav-link" style="text-decoration: none; color: #4b5563; font-weight: 500; transition: color 0.3s ease;">Início</a>   
+                            <a href="{% url 'historico' %}" class="nav-link" style="text-decoration: none; color: #4b5563; font-weight: 500; transition: color 0.3s ease;">Encomendas</a>  
+                            <a href="{% url 'perfil' %}" class="nav-link" style="text-decoration: none; color: #4b5563; font-weight: 500; transition: color 0.3s ease;">Meu Perfil</a>  
+                            <a href="#sobre" class="nav-link" style="text-decoration: none; color: #4b5563; font-weight: 500; transition: color 0.3s ease;">Sobre</a>     
+                        </nav>
+                    {% endif %}
+                {% endif %}
+
+                {% if request.user.is_authenticated %}
+                    <a href="{% url 'logout' %}" class="btn-primary" style="text-align: center; text-decoration: none; margin-top: 0.5rem;">
+                    Sair
+                    </a>
                 {% else %}
-                <a href="{% url 'login' %}" class="btn-primary" style="text-align: center; text-decoration: none; margin-top: 0.5rem;">
-                Entrar
-                </a>
+                    <a href="{% url 'login' %}" class="btn-primary" style="text-align: center; text-decoration: none; margin-top: 0.5rem;">
+                    Entrar
+                    </a>
                 {% endif %}
             </div>
         </div>
@@ -53,7 +55,8 @@
 
     {% if messages %}
         {% for message in messages %}
-            <div class="alert alert-{{ message.tags }} alert-dismissible fade show" role="alert" style="color: #e83e8c; text-align: center; border-color: #e83e8c; background-color: rgba(255, 182, 222, 0.444); padding-top: 50px">
+            <p></p>
+            <div class="alert alert-{{ message.tags }} alert-dismissible fade show" role="alert" style="color: #e83e8c; text-align: center; border-color: #e83e8c; background-color: rgba(255, 182, 222, 0.444);">
                 {{ message }}
                 <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
             </div>

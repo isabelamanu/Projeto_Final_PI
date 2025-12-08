@@ -9,13 +9,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Perfil do Cliente - AgendaDoce</title>
- 
-    <link rel="stylesheet" href="../../static/styles.css">
+    <link rel="stylesheet" href="../static/styles.css">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 </head>
 <body>
-
     <!-- Page Header -->
     <section class="page-header">
         <div class="container">
@@ -36,413 +33,407 @@
     </section>
 
     {% if user.is_administrador %}
-    <!-- Detalhes do Perfil -->
-    <section class="encomendas">
-        <div class="container">
+        <!-- Detalhes do Perfil -->
+        <section class="encomendas">
+            <div class="container">
 
-            <!-- Card Principal com Foto e Informações -->
-            <div class="encomenda-card" style="margin-bottom: 2rem;">
-                <div class="encomenda-header">
-                    <div class="encomenda-id">#CLI00{{ cliente.id }}</div>
-                    <div class="mb-3">
-                        {% if cliente.is_superuser %}
-                            <span class="badge bg-warning text-dark">
-                                <i class="bi bi-star-fill"></i> Superusuário
-                            </span>
-                        {% else %}
-                            {% for group in cliente.groups.all %}
-                                <span class="badge bg-success">
-                                    <i class="bi bi-people-fill"></i> {{ group.name }}
+                <!-- Card Principal com Foto e Informações -->
+                <div class="encomenda-card" style="margin-bottom: 2rem;">
+                    <div class="encomenda-header">
+                        <div class="encomenda-id">#CLI00{{ cliente.id }}</div>
+                        <div class="mb-3">
+                            {% if cliente.is_superuser %}
+                                <span class="badge bg-warning text-dark">
+                                    <i class="bi bi-star-fill"></i> Superusuário
                                 </span>
-                            {% empty %}
-                                <span class="badge bg-secondary">Sem grupo</span>
-                            {% endfor %}
-                        {% endif %}
+                            {% else %}
+                                {% for group in cliente.groups.all %}
+                                    <span class="badge bg-success">
+                                        <i class="bi bi-people-fill"></i> {{ group.name }}
+                                    </span>
+                                {% empty %}
+                                    <span class="badge bg-secondary">Sem grupo</span>
+                                {% endfor %}
+                            {% endif %}
+                        </div>
+                    </div>
+                    <div class="info-perfil">
+
+                        <!-- Foto de Perfil -->
+                        <div style="display: flex; flex-direction: column; align-items: center; gap: 1rem;">
+                            {% if cliente.foto_perfil %}
+                                <img src="{{ cliente.foto_perfil.url }}" alt="Foto de perfil" class="rounded-circle img-thumbnail mb-3" style="width: 200px; height: 200px; background: #fce7f3; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 4rem; font-weight: 700; color: #ec4899; box-shadow: 0 4px 15px rgba(236, 72, 153, 0.2);">
+                            {% else %}
+                                <div class="rounded-circle bg-light d-inline-flex align-items-center justify-content-center mb-3" style="width: 200px; height: 200px; background: #fce7f3; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 4rem; font-weight: 700; color: #ec4899; box-shadow: 0 4px 15px rgba(236, 72, 153, 0.2);">
+                                    <i class="bi bi-person-circle text-muted" style="font-size: 5rem;"></i>
+                                </div>
+                            {% endif %}
+                            <div style="text-align: center;">
+                                <h4 class="encomenda-title" style="margin-bottom: 0.5rem;">{{ cliente.get_full_name|default:cliente.username }}</h4>
+                                <h3 class="encomenda-title" style="margin-bottom: 0.5rem;">{{ cliente.username }}</h3>
+                                <p style="color: #6b7280; font-size: 0.875rem;">Cliente desde: {{ cliente.date_joined|date:"d/m/Y" }}</p>
+                            </div>
+                            <a href="{% url 'cliente_update' id=cliente.id %}" class="btn-primary" style="width: 100%; text-align: center; text-decoration: none; margin-top: 0.5rem;">
+                                Editar Perfil
+                            </a>
+                        </div>
+
+                        <!-- Informações Principais -->
+                        <div class="encomenda-content" style="padding: 0;">
+                            <h3 class="encomenda-title">Informações Pessoais</h3>
+                            <div class="encomenda-details">
+                                <div class="detail-item">
+                                    <span class="detail-label">Nome Completo:</span>
+                                    <span class="detail-value">{{ cliente.get_full_name|default:cliente.username }}</span>
+                                </div>
+                                <div class="detail-item">
+                                    <span class="detail-label">CPF:</span>
+                                    <span class="detail-value">{{ cliente.cpf|default:"Não informado" }}</span>
+                                </div>
+                                <div class="detail-item">
+                                    <span class="detail-label">Email:</span>
+                                    <span class="detail-value">{{ cliente.email|default:"Não informado" }}</span>
+                                </div>
+                                <div class="detail-item">
+                                    <span class="detail-label">Nome da Mãe:</span>
+                                    <span class="detail-value">{{ cliente.nome_mae|default:"Não informado" }}</span>
+                                </div>
+                                <div class="detail-item">
+                                    <span class="detail-label">Telefone:</span>
+                                    <span class="detail-value">{{ cliente.telefone|default:"Não informado" }}</span>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
-                <div class="infor-perfil" style="display: grid; grid-template-columns: 300px 1fr; gap: 2rem; padding: 1.5rem;">
 
-                    <!-- Foto de Perfil -->
-                    <div style="display: flex; flex-direction: column; align-items: center; gap: 1rem;">
-                        {% if cliente.foto_perfil %}
-                            <img src="{{ cliente.foto_perfil.url }}" alt="Foto de perfil" class="rounded-circle img-thumbnail mb-3" style="width: 200px; height: 200px; background: #fce7f3; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 4rem; font-weight: 700; color: #ec4899; box-shadow: 0 4px 15px rgba(236, 72, 153, 0.2);">
-                        {% else %}
-                            <div class="rounded-circle bg-light d-inline-flex align-items-center justify-content-center mb-3" style="width: 200px; height: 200px; background: #fce7f3; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 4rem; font-weight: 700; color: #ec4899; box-shadow: 0 4px 15px rgba(236, 72, 153, 0.2);">
-                                <i class="bi bi-person-circle text-muted" style="font-size: 5rem;"></i>
+                <!-- Endereço e Estatísticas -->
+                <div class="end-est">
+                    <!-- Endereço -->
+                    <div class="encomenda-card">
+                        <div style="padding: 1.5rem;">
+                            <h4 style="font-size: 1.25rem; font-weight: 600; color: #1f2937; margin-bottom: 1rem;">
+                                📍 Endereço
+                            </h4>
+                            <div class="encomenda-details">
+                                <div class="detail-item">
+                                    <span class="detail-label">Rua:</span>
+                                    <span class="detail-value">{{ cliente.endereco|default:"Não informado" }}</span>
+                                </div>
+                                <div class="detail-item">
+                                    <span class="detail-label">Bairro:</span>
+                                    <span class="detail-value">{{ cliente.nome_bairro|default:"Não informado" }}</span>
+                                </div>
+                                <div class="detail-item">
+                                    <span class="detail-label">Cidade:</span>
+                                    <span class="detail-value">{{ cliente.nome_cidade|default:"Não informado" }}</span>
+                                </div>
                             </div>
-                        {% endif %}
-                        <div style="text-align: center;">
-                            <h4 class="encomenda-title" style="margin-bottom: 0.5rem;">{{ cliente.get_full_name|default:cliente.username }}</h4>
-                            <h3 class="encomenda-title" style="margin-bottom: 0.5rem;">{{ cliente.username }}</h3>
-                            <p style="color: #6b7280; font-size: 0.875rem;">Cliente desde: {{ cliente.date_joined|date:"d/m/Y" }}</p>
                         </div>
-                        <a href="{% url 'cliente_update' id=cliente.id %}" class="btn-primary" style="width: 100%; text-align: center; text-decoration: none; margin-top: 0.5rem;">
-                            Editar Perfil
-                        </a>
                     </div>
-                    <!-- Informações Principais -->
-                    <div class="encomenda-content" style="padding: 0;">
-                        <h3 class="encomenda-title">Informações Pessoais</h3>
-                        <div class="encomenda-details">
-                            <div class="detail-item">
-                                <span class="detail-label">Nome Completo:</span>
-                                <span class="detail-value">{{ cliente.get_full_name|default:cliente.username }}</span>
+
+                    <!-- Estatísticas -->
+                    <div class="encomenda-card">
+                        <div style="padding: 1.5rem;">
+                            <h4 style="font-size: 1.25rem; font-weight: 600; color: #1f2937; margin-bottom: 1rem;">
+                                📊 Estatísticas
+                            </h4>
+                            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;">
+                                <div style="background: #fef3c7; padding: 1rem; border-radius: 0.75rem; text-align: center;">
+                                    <p style="font-size: 1.75rem; font-weight: 700; color: #1f2937; margin-bottom: 0.25rem;">{{ total_pedidos_cliente }}</p>
+                                    <p style="font-size: 0.875rem; color: #6b7280;">Pedidos</p>
+                                </div>
+                                <div style="background: #fce7f3; padding: 1rem; border-radius: 0.75rem; text-align: center;">
+                                    <p style="font-size: 1.75rem; font-weight: 700; color: #1f2937; margin-bottom: 0.25rem;">R$ {{ total_gasto_cliente }}</p>
+                                    <p style="font-size: 0.875rem; color: #6b7280;">Total Gasto</p>
+                                </div>
                             </div>
-                            <div class="detail-item">
-                                <span class="detail-label">CPF:</span>
-                                <span class="detail-value">{{ cliente.cpf|default:"Não informado" }}</span>
+                            <div style="background: #d1fae5; padding: 1rem; border-radius: 0.75rem; text-align: center; margin-top: 1rem;">
+                                <p style="font-size: 1rem; font-weight: 600; color: #1f2937; margin-bottom: 0.25rem;">Último acesso</p>
+                                <p style="font-size: 0.875rem; color: #6b7280;">{{ cliente.last_login|date:"d/m/Y H:i"|default:"Nunca" }}</p>
                             </div>
-                            <div class="detail-item">
-                                <span class="detail-label">Email:</span>
-                                <span class="detail-value">{{ cliente.email|default:"Não informado" }}</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Histórico de Pedidos -->
+                <div style="margin-bottom: 2rem;">
+                    <h3 style="font-size: 1.75rem; font-weight: 600; color: #1f2937; margin-bottom: 1.5rem;">
+                        🎂 Histórico de Pedidos
+                    </h3>
+
+                    <div class="encomendas-grid">
+                        <!-- Pedidos -->
+                        {% for pedido in pedidos %}
+                            <div class="encomenda-card">
+                                <div class="encomenda-header">
+                                    {% if user.is_administrador or user.is_superuser %}
+                                        <div class="encomenda-id">#ENC00{{ pedido.id }}</div>
+                                    {% endif %}
+                                    {% if pedido.status == "Entregue" %}
+                                        <span class="status-badge status-pronto">Entregue</span>
+                                    {% elif pedido.status == "Aguardando Confirmação" %}
+                                        <span class="status-badge status-producao">Aguardando Confirmação</span>
+                                    {% elif pedido.status == "Em producao" %}
+                                        <span class="status-badge status-entregue">Em Produção</span>
+                                    {% elif pedido.status == "Cancelado" %}
+                                        <span class="status-badge status-pronto" style="background-color: rgba(228, 136, 136, 0.933); color: rgb(255, 0, 0);">Cancelado</span>
+                                    {% endif %}
+                                </div>
+                                
+                                <div class="encomenda-image">
+                                    {% if pedido.foto %}
+                                    <img src="{{ pedido.foto.url }}" alt="{{ pedido.nome_pedido }}">
+                                    {% endif %}
+                                </div>
+                                <div class="encomenda-content">
+                                    <h3 class="encomenda-title">{{ pedido.nome_pedido }}</h3>
+                                    <div class="encomenda-details">
+                                        <div class="detail-item">
+                                            <span class="detail-label">Nome do Cliente:</span>
+                                            <span class="detail-value">{{ pedido.cliente }}</span>
+                                        </div>
+                                        <div class="detail-item">
+                                            <span class="detail-label">Data de Entrega:</span>
+                                            <span class="detail-value">{{ pedido.data_entrega }}</span>
+                                        </div>
+                                        <div class="detail-item">
+                                            <span class="detail-label">Entregador:</span>
+                                            <span class="detail-value">{{ pedido.entregador }}</span>
+                                        </div>
+                                        <div class="detail-item">
+                                            <span class="detail-label">Observações:</span>
+                                            <span class="detail-value">{{ pedido.observacoes }}</span>
+                                        </div>
+                                    </div>
+                                    <div class="encomenda-footer">
+                                        <div class="price">R$ {{ pedido.valor }}</div>
+                                        <a href="{% url 'pedido_detail' id=pedido.id %}" class="btn-secondary" style="text-decoration: none">Ver Detalhes</a>
+                                    </div>
+                                </div>
                             </div>
-                            <div class="detail-item">
-                                <span class="detail-label">Nome da Mãe:</span>
-                                <span class="detail-value">{{ cliente.nome_mae|default:"Não informado" }}</span>
+                        {% empty %}
+                            <div class="row">
+                                <div class="col-12">
+                                    <div class="alert alert-info text-center" role="alert" style="border-color: #e83e8c; background-color: lightpink;">
+                                        <i class="bi bi-info-circle" style="font-size: 2rem;" style="border-color: #e83e8c;"></i>
+                                        <h4 class="mt-3" style="color: #e83e8c;">Nenhum Pedido Cadastrado</h4>
+                                        <p style="color: #e83e8c;">Esse usuário ainda não fez seu primeiro pedido</p>
+                                    </div>
+                                </div>
                             </div>
-                            <div class="detail-item">
-                                <span class="detail-label">Telefone:</span>
-                                <span class="detail-value">{{ cliente.telefone|default:"Não informado" }}</span>
-                            </div>
+                        {% endfor %}
+                    </div>
+                    
+                    <!-- Paginação -->
+                    <div class="row mt-5">
+                        <div class="col-12">
+                            {% include 'includes/pedido_pagination.html' %}
                         </div>
                     </div>
                 </div>
             </div>
-
-            <!-- Endereço e Estatísticas -->
-            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; margin-bottom: 2rem;">
-
-                <!-- Endereço -->
-                <div class="encomenda-card">
-                    <div style="padding: 1.5rem;">
-                        <h4 style="font-size: 1.25rem; font-weight: 600; color: #1f2937; margin-bottom: 1rem;">
-                            📍 Endereço
-                        </h4>
-                        <div class="encomenda-details">
-                            <div class="detail-item">
-                                <span class="detail-label">Rua:</span>
-                                <span class="detail-value">{{ cliente.endereco|default:"Não informado" }}</span>
-                            </div>
-                            <div class="detail-item">
-                                <span class="detail-label">Bairro:</span>
-                                <span class="detail-value">{{ cliente.nome_bairro|default:"Não informado" }}</span>
-                            </div>
-                            <div class="detail-item">
-                                <span class="detail-label">Cidade:</span>
-                                <span class="detail-value">{{ cliente.nome_cidade|default:"Não informado" }}</span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Estatísticas -->
-                <div class="encomenda-card">
-                    <div style="padding: 1.5rem;">
-                        <h4 style="font-size: 1.25rem; font-weight: 600; color: #1f2937; margin-bottom: 1rem;">
-                            📊 Estatísticas
-                        </h4>
-                        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;">
-                            <div style="background: #fef3c7; padding: 1rem; border-radius: 0.75rem; text-align: center;">
-                                <p style="font-size: 1.75rem; font-weight: 700; color: #1f2937; margin-bottom: 0.25rem;">{{ total_pedidos_cliente }}</p>
-                                <p style="font-size: 0.875rem; color: #6b7280;">Pedidos</p>
-                            </div>
-                            <div style="background: #fce7f3; padding: 1rem; border-radius: 0.75rem; text-align: center;">
-                                <p style="font-size: 1.75rem; font-weight: 700; color: #1f2937; margin-bottom: 0.25rem;">R$ {{ total_gasto_cliente }}</p>
-                                <p style="font-size: 0.875rem; color: #6b7280;">Total Gasto</p>
-                            </div>
-                        </div>
-                        <div style="background: #d1fae5; padding: 1rem; border-radius: 0.75rem; text-align: center; margin-top: 1rem;">
-                            <p style="font-size: 1rem; font-weight: 600; color: #1f2937; margin-bottom: 0.25rem;">Último acesso</p>
-                            <p style="font-size: 0.875rem; color: #6b7280;">{{ cliente.last_login|date:"d/m/Y H:i"|default:"Nunca" }}</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Histórico de Pedidos -->
-            <div style="margin-bottom: 2rem;">
-                <h3 style="font-size: 1.75rem; font-weight: 600; color: #1f2937; margin-bottom: 1.5rem;">
-                    🎂 Histórico de Pedidos
-                </h3>
-
-                <!-- Grid de Pedidos -->
-                <div class="encomendas-grid">
-
-                    <!-- Pedidos -->
-                    {% for pedido in pedidos %}
-                        <div class="encomenda-card">
-                            <div class="encomenda-header">
-                                {% if user.is_administrador or user.is_superuser %}
-                                    <div class="encomenda-id">#ENC00{{ pedido.id }}</div>
-                                {% endif %}
-                                {% if pedido.status == "Entregue" %}
-                                    <span class="status-badge status-pronto">Entregue</span>
-                                {% elif pedido.status == "Aguardando Confirmação" %}
-                                    <span class="status-badge status-producao">Aguardando Confirmação</span>
-                                {% elif pedido.status == "Em producao" %}
-                                    <span class="status-badge status-entregue">Em Produção</span>
-                                {% elif pedido.status == "Cancelado" %}
-                                    <span class="status-badge status-pronto" style="background-color: rgba(228, 136, 136, 0.933); color: rgb(255, 0, 0);">Cancelado</span>
-                                {% endif %}
-                            </div>
-                            
-                            <div class="encomenda-image">
-                                {% if pedido.foto %}
-                                <img src="{{ pedido.foto.url }}" alt="{{ pedido.nome_pedido }}">
-                                {% endif %}
-                            </div>
-                            <div class="encomenda-content">
-                                <h3 class="encomenda-title">{{ pedido.nome_pedido }}</h3>
-                                <div class="encomenda-details">
-                                    <div class="detail-item">
-                                        <span class="detail-label">Nome do Cliente:</span>
-                                        <span class="detail-value">{{ pedido.cliente }}</span>
-                                    </div>
-                                    <div class="detail-item">
-                                        <span class="detail-label">Data de Entrega:</span>
-                                        <span class="detail-value">{{ pedido.data_entrega }}</span>
-                                    </div>
-                                    <div class="detail-item">
-                                        <span class="detail-label">Entregador:</span>
-                                        <span class="detail-value">{{ pedido.entregador }}</span>
-                                    </div>
-                                    <div class="detail-item">
-                                        <span class="detail-label">Observações:</span>
-                                        <span class="detail-value">{{ pedido.observacoes }}</span>
-                                    </div>
-                                </div>
-                                <div class="encomenda-footer">
-                                    <div class="price">R$ {{ pedido.valor }}</div>
-                                    <a href="{% url 'pedido_detail' id=pedido.id %}" class="btn-secondary" style="text-decoration: none">Ver Detalhes</a>
-                                </div>
-                            </div>
-                        </div>
-                    {% empty %}
-                        <div class="row">
-                            <div class="col-12">
-                                <div class="alert alert-info text-center" role="alert" style="border-color: #e83e8c; background-color: lightpink;">
-                                    <i class="bi bi-info-circle" style="font-size: 2rem;" style="border-color: #e83e8c;"></i>
-                                    <h4 class="mt-3" style="color: #e83e8c;">Nenhum Pedido Cadastrado</h4>
-                                    <p style="color: #e83e8c;">Esse usuário ainda não fez seu primeiro pedido</p>
-                                </div>
-                            </div>
-                        </div>
-                    {% endfor %}
-                </div>
-                <!-- Paginação -->
-                <div class="row mt-5">
-                    <div class="col-12">
-                        {% include 'includes/pedido_pagination.html' %}
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
+        </section>
     {% else %}
-    <section class="encomendas">
-        <div class="container">
-
-            <!-- Card Principal com Foto e Informações -->
-            <div class="encomenda-card" style="margin-bottom: 2rem;">
-                <div class="encomenda-header">
-                    <div class="encomenda-id">#CLI00{{ user.id }}</div>
-                </div>
-                <div style="display: grid; grid-template-columns: 300px 1fr; gap: 2rem; padding: 1.5rem;">
-
-                    <!-- Foto de Perfil -->
-                    <div style="display: flex; flex-direction: column; align-items: center; gap: 1rem;">
-                        {% if user.foto_perfil %}
-                            <img src="{{ user.foto_perfil.url }}" alt="Foto de perfil" class="rounded-circle img-thumbnail mb-3" style="width: 200px; height: 200px; background: #fce7f3; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 4rem; font-weight: 700; color: #ec4899; box-shadow: 0 4px 15px rgba(236, 72, 153, 0.2);">
-                        {% else %}
-                            <div class="rounded-circle bg-light d-inline-flex align-items-center justify-content-center mb-3" style="width: 200px; height: 200px; background: #fce7f3; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 4rem; font-weight: 700; color: #ec4899; box-shadow: 0 4px 15px rgba(236, 72, 153, 0.2);">
-                                <i class="bi bi-person-circle text-muted" style="font-size: 5rem;"></i>
-                            </div>
-                        {% endif %}
-                        <div style="text-align: center;">
-                            <h4 class="encomenda-title" style="margin-bottom: 0.5rem;">{{ user.get_full_name|default:user.username }}</h4>
-                            <h3 class="encomenda-title" style="margin-bottom: 0.5rem;">{{ user.username }}</h3>
-                            <p style="color: #6b7280; font-size: 0.875rem;">Cliente desde: {{ user.date_joined|date:"d/m/Y" }}</p>
-                        </div>
-                        <a href="{% url 'update_usuario_admin' id=usuario.id %}" class="btn-primary" style="width: 100%; text-align: center; text-decoration: none; margin-top: 0.5rem;">
-                            Editar Perfil
-                        </a>
+        <section class="encomendas">
+            <div class="container">
+                <!-- Card Principal com Foto e Informações -->
+                <div class="encomenda-card" style="margin-bottom: 2rem;">
+                    <div class="encomenda-header">
+                        <div class="encomenda-id">#CLI00{{ user.id }}</div>
                     </div>
-                    <!-- Informações Principais -->
-                    <div class="encomenda-content" style="padding: 0;">
-                        <h3 class="encomenda-title">Informações Pessoais</h3>
-                        <div class="encomenda-details">
-                            <div class="detail-item">
-                                <span class="detail-label">Nome Completo:</span>
-                                <span class="detail-value">{{ user.get_full_name|default:user.username }}</span>
-                            </div>
-                            <div class="detail-item">
-                                <span class="detail-label">CPF:</span>
-                                <span class="detail-value">{{ user.cpf|default:"Não informado" }}</span>
-                            </div>
-                            <div class="detail-item">
-                                <span class="detail-label">Email:</span>
-                                <span class="detail-value">{{ user.email|default:"Não informado" }}</span>
-                            </div>
-                            <div class="detail-item">
-                                <span class="detail-label">Nome da Mãe:</span>
-                                <span class="detail-value">{{ user.nome_mae|default:"Não informado" }}</span>
-                            </div>
-                            <div class="detail-item">
-                                <span class="detail-label">Telefone:</span>
-                                <span class="detail-value">{{ user.telefone|default:"Não informado" }}</span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
+                    <div style="display: grid; grid-template-columns: 300px 1fr; gap: 2rem; padding: 1.5rem;">
 
-            <!-- Endereço e Estatísticas -->
-            <div class="end_est" style="display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; margin-bottom: 2rem;">
-
-                <!-- Endereço -->
-                <div class="encomenda-card">
-                    <div style="padding: 1.5rem;">
-                        <h4 style="font-size: 1.25rem; font-weight: 600; color: #1f2937; margin-bottom: 1rem;">
-                            📍 Endereço
-                        </h4>
-                        <div class="encomenda-details">
-                            <div class="detail-item">
-                                <span class="detail-label">Rua:</span>
-                                <span class="detail-value">{{ user.endereco|default:"Não informado" }}</span>
-                            </div>
-                            <div class="detail-item">
-                                <span class="detail-label">Bairro:</span>
-                                <span class="detail-value">{{ user.nome_bairro|default:"Não informado" }}</span>
-                            </div>
-                            <div class="detail-item">
-                                <span class="detail-label">Cidade:</span>
-                                <span class="detail-value">{{ user.nome_cidade|default:"Não informado" }}</span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Estatísticas -->
-                <div class="encomenda-card">
-                    <div style="padding: 1.5rem;">
-                        <h4 style="font-size: 1.25rem; font-weight: 600; color: #1f2937; margin-bottom: 1rem;">
-                            📊 Estatísticas
-                        </h4>
-                        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;">
-                            <div style="background: #fef3c7; padding: 1rem; border-radius: 0.75rem; text-align: center;">
-                                <p style="font-size: 1.75rem; font-weight: 700; color: #1f2937; margin-bottom: 0.25rem;">{{ total_pedidos_usu }}</p>
-                                <p style="font-size: 0.875rem; color: #6b7280;">Pedidos</p>
-                            </div>
-                            <div style="background: #fce7f3; padding: 1rem; border-radius: 0.75rem; text-align: center;">
-                                <p style="font-size: 1.75rem; font-weight: 700; color: #1f2937; margin-bottom: 0.25rem;">{{ total_gasto_cliente }}</p>
-                                <p style="font-size: 0.875rem; color: #6b7280;">Total Investido</p>
-                            </div>
-                        </div>
-                        <div style="background: #d1fae5; padding: 1rem; border-radius: 0.75rem; text-align: center; margin-top: 1rem;">
-                            <p style="font-size: 1rem; font-weight: 600; color: #1f2937; margin-bottom: 0.25rem;">Último acesso</p>
-                            <p style="font-size: 0.875rem; color: #6b7280;">{{ user.last_login|date:"d/m/Y H:i"|default:"Nunca" }}</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Histórico de Pedidos -->
-            <div style="margin-bottom: 2rem;">
-                <h3 style="font-size: 1.75rem; font-weight: 600; color: #1f2937; margin-bottom: 1.5rem;">
-                    🎂 Histórico de Pedidos
-                </h3>
-
-                <!-- Grid de Pedidos -->
-                <div class="encomendas-grid">
-
-                    <!-- Pedidos -->
-                    {% for pedido in pedidos %}
-                        <div class="encomenda-card">
-                            <div class="encomenda-header">
-                                {% if pedido.status == "Entregue" %}
-                                    <span class="status-badge status-pronto">Entregue</span>
-                                {% elif pedido.status == "Aguardando Confirmação" %}
-                                    <span class="status-badge status-producao">Aguardando Confirmação</span>
-                                {% elif pedido.status == "Em producao" %}
-                                    <span class="status-badge status-entregue">Em Produção</span>
-                                {% elif pedido.status == "Cancelado" %}
-                                    <span class="status-badge status-pronto" style="background-color: rgba(228, 136, 136, 0.933); color: rgb(255, 0, 0);">Cancelado</span>
-                                {% endif %}
-                            </div>
-                            
-                            <div class="encomenda-image">
-                                {% if pedido.foto %}
-                                <img src="{{ pedido.foto.url }}" alt="{{ pedido.nome_pedido }}">
-                                {% endif %}
-                            </div>
-                            <div class="encomenda-content">
-                                <h3 class="encomenda-title">{{ pedido.nome_pedido }}</h3>
-                                <div class="encomenda-details">
-                                    <div class="detail-item">
-                                        <span class="detail-label">Nome do Cliente:</span>
-                                        <span class="detail-value">{{ pedido.cliente }}</span>
-                                    </div>
-                                    <div class="detail-item">
-                                        <span class="detail-label">Data de Entrega:</span>
-                                        <span class="detail-value">{{ pedido.data_entrega }}</span>
-                                    </div>
-                                    <div class="detail-item">
-                                        <span class="detail-label">Entregador:</span>
-                                        <span class="detail-value">{{ pedido.entregador }}</span>
-                                    </div>
-                                    <div class="detail-item">
-                                        <span class="detail-label">Observações:</span>
-                                        <span class="detail-value">{{ pedido.observacoes }}</span>
-                                    </div>
+                        <!-- Foto de Perfil -->
+                        <div style="display: flex; flex-direction: column; align-items: center; gap: 1rem;">
+                            {% if user.foto_perfil %}
+                                <img src="{{ user.foto_perfil.url }}" alt="Foto de perfil" class="rounded-circle img-thumbnail mb-3" style="width: 200px; height: 200px; background: #fce7f3; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 4rem; font-weight: 700; color: #ec4899; box-shadow: 0 4px 15px rgba(236, 72, 153, 0.2);">
+                            {% else %}
+                                <div class="rounded-circle bg-light d-inline-flex align-items-center justify-content-center mb-3" style="width: 200px; height: 200px; background: #fce7f3; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 4rem; font-weight: 700; color: #ec4899; box-shadow: 0 4px 15px rgba(236, 72, 153, 0.2);">
+                                    <i class="bi bi-person-circle text-muted" style="font-size: 5rem;"></i>
                                 </div>
-                                <div class="encomenda-footer">
-                                    <div class="price">R$ {{ pedido.valor }}</div>
-                                    <a href="{% url 'pedido_detail' id=pedido.id %}" class="btn-secondary" style="text-decoration: none">Ver Detalhes</a>
+                            {% endif %}
+                            <div style="text-align: center;">
+                                <h4 class="encomenda-title" style="margin-bottom: 0.5rem;">{{ user.get_full_name|default:user.username }}</h4>
+                                <h3 class="encomenda-title" style="margin-bottom: 0.5rem;">{{ user.username }}</h3>
+                                <p style="color: #6b7280; font-size: 0.875rem;">Cliente desde: {{ user.date_joined|date:"d/m/Y" }}</p>
+                            </div>
+                            <a href="{% url 'update_usuario_admin' id=usuario.id %}" class="btn-primary" style="width: 100%; text-align: center; text-decoration: none; margin-top: 0.5rem;">
+                                Editar Perfil
+                            </a>
+                        </div>
+
+                        <!-- Informações Principais -->
+                        <div class="encomenda-content" style="padding: 0;">
+                            <h3 class="encomenda-title">Informações Pessoais</h3>
+                            <div class="encomenda-details">
+                                <div class="detail-item">
+                                    <span class="detail-label">Nome Completo:</span>
+                                    <span class="detail-value">{{ user.get_full_name|default:user.username }}</span>
+                                </div>
+                                <div class="detail-item">
+                                    <span class="detail-label">CPF:</span>
+                                    <span class="detail-value">{{ user.cpf|default:"Não informado" }}</span>
+                                </div>
+                                <div class="detail-item">
+                                    <span class="detail-label">Email:</span>
+                                    <span class="detail-value">{{ user.email|default:"Não informado" }}</span>
+                                </div>
+                                <div class="detail-item">
+                                    <span class="detail-label">Nome da Mãe:</span>
+                                    <span class="detail-value">{{ user.nome_mae|default:"Não informado" }}</span>
+                                </div>
+                                <div class="detail-item">
+                                    <span class="detail-label">Telefone:</span>
+                                    <span class="detail-value">{{ user.telefone|default:"Não informado" }}</span>
                                 </div>
                             </div>
                         </div>
-                    {% empty %}
-                        <div class="row">
-                            <div class="col-12">
-                                <div class="alert alert-info text-center" role="alert" style="border-color: #e83e8c; background-color: lightpink;">
-                                    <i class="bi bi-info-circle" style="font-size: 2rem;" style="border-color: #e83e8c;"></i>
-                                    <h4 class="mt-3" style="color: #e83e8c;">Nenhum Pedido Cadastrado</h4>
-                                    <p style="color: #e83e8c;">Comece cadastrando um novo pedido!</p>
-                                    <a href="{% url 'pedido_create' %}" class="btn btn-success mt-2" style="background-color: #e83e8c; border-color: #e83e8c;">
-                                        <i class="bi bi-plus-circle"></i> Cadastrar Pedido
-                                    </a>
+                    </div>
+                </div>
+
+                <!-- Endereço e Estatísticas -->
+                <div class="end_est" style="display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; margin-bottom: 2rem;">
+
+                    <!-- Endereço -->
+                    <div class="encomenda-card">
+                        <div style="padding: 1.5rem;">
+                            <h4 style="font-size: 1.25rem; font-weight: 600; color: #1f2937; margin-bottom: 1rem;">
+                                📍 Endereço
+                            </h4>
+                            <div class="encomenda-details">
+                                <div class="detail-item">
+                                    <span class="detail-label">Rua:</span>
+                                    <span class="detail-value">{{ user.endereco|default:"Não informado" }}</span>
+                                </div>
+                                <div class="detail-item">
+                                    <span class="detail-label">Bairro:</span>
+                                    <span class="detail-value">{{ user.nome_bairro|default:"Não informado" }}</span>
+                                </div>
+                                <div class="detail-item">
+                                    <span class="detail-label">Cidade:</span>
+                                    <span class="detail-value">{{ user.nome_cidade|default:"Não informado" }}</span>
                                 </div>
                             </div>
                         </div>
-                    {% endfor %}
+                    </div>
+
+                    <!-- Estatísticas -->
+                    <div class="encomenda-card">
+                        <div style="padding: 1.5rem;">
+                            <h4 style="font-size: 1.25rem; font-weight: 600; color: #1f2937; margin-bottom: 1rem;">
+                                📊 Estatísticas
+                            </h4>
+                            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;">
+                                <div style="background: #fef3c7; padding: 1rem; border-radius: 0.75rem; text-align: center;">
+                                    <p style="font-size: 1.75rem; font-weight: 700; color: #1f2937; margin-bottom: 0.25rem;">{{ total_pedidos_usu }}</p>
+                                    <p style="font-size: 0.875rem; color: #6b7280;">Pedidos</p>
+                                </div>
+                                <div style="background: #fce7f3; padding: 1rem; border-radius: 0.75rem; text-align: center;">
+                                    <p style="font-size: 1.75rem; font-weight: 700; color: #1f2937; margin-bottom: 0.25rem;">{{ total_gasto_cliente }}</p>
+                                    <p style="font-size: 0.875rem; color: #6b7280;">Total Investido</p>
+                                </div>
+                            </div>
+                            <div style="background: #d1fae5; padding: 1rem; border-radius: 0.75rem; text-align: center; margin-top: 1rem;">
+                                <p style="font-size: 1rem; font-weight: 600; color: #1f2937; margin-bottom: 0.25rem;">Último acesso</p>
+                                <p style="font-size: 0.875rem; color: #6b7280;">{{ user.last_login|date:"d/m/Y H:i"|default:"Nunca" }}</p>
+                            </div>
+                        </div>
+                    </div>
                 </div>
-                <div class="row mt-5">
-                    <div class="col-12">
-                        {% include 'includes/pedido_pagination.html' %}
+
+                <!-- Histórico de Pedidos -->
+                <div style="margin-bottom: 2rem;">
+                    <h3 style="font-size: 1.75rem; font-weight: 600; color: #1f2937; margin-bottom: 1.5rem;">
+                        🎂 Histórico de Pedidos
+                    </h3>
+
+                    <div class="encomendas-grid">
+                        <!-- Pedidos -->
+                        {% for pedido in pedidos %}
+                            <div class="encomenda-card">
+                                <div class="encomenda-header">
+                                    {% if pedido.status == "Entregue" %}
+                                        <span class="status-badge status-pronto">Entregue</span>
+                                    {% elif pedido.status == "Aguardando Confirmação" %}
+                                        <span class="status-badge status-producao">Aguardando Confirmação</span>
+                                    {% elif pedido.status == "Em producao" %}
+                                        <span class="status-badge status-entregue">Em Produção</span>
+                                    {% elif pedido.status == "Cancelado" %}
+                                        <span class="status-badge status-pronto" style="background-color: rgba(228, 136, 136, 0.933); color: rgb(255, 0, 0);">Cancelado</span>
+                                    {% endif %}
+                                </div>
+                                
+                                <div class="encomenda-image">
+                                    {% if pedido.foto %}
+                                    <img src="{{ pedido.foto.url }}" alt="{{ pedido.nome_pedido }}">
+                                    {% endif %}
+                                </div>
+                                <div class="encomenda-content">
+                                    <h3 class="encomenda-title">{{ pedido.nome_pedido }}</h3>
+                                    <div class="encomenda-details">
+                                        <div class="detail-item">
+                                            <span class="detail-label">Nome do Cliente:</span>
+                                            <span class="detail-value">{{ pedido.cliente }}</span>
+                                        </div>
+                                        <div class="detail-item">
+                                            <span class="detail-label">Data de Entrega:</span>
+                                            <span class="detail-value">{{ pedido.data_entrega }}</span>
+                                        </div>
+                                        <div class="detail-item">
+                                            <span class="detail-label">Entregador:</span>
+                                            <span class="detail-value">{{ pedido.entregador }}</span>
+                                        </div>
+                                        <div class="detail-item">
+                                            <span class="detail-label">Observações:</span>
+                                            <span class="detail-value">{{ pedido.observacoes }}</span>
+                                        </div>
+                                    </div>
+                                    <div class="encomenda-footer">
+                                        <div class="price">R$ {{ pedido.valor }}</div>
+                                        <a href="{% url 'pedido_detail' id=pedido.id %}" class="btn-secondary" style="text-decoration: none">Ver Detalhes</a>
+                                    </div>
+                                </div>
+                            </div>
+                        {% empty %}
+                            <div class="row">
+                                <div class="col-12">
+                                    <div class="alert alert-info text-center" role="alert" style="border-color: #e83e8c; background-color: lightpink;">
+                                        <i class="bi bi-info-circle" style="font-size: 2rem;" style="border-color: #e83e8c;"></i>
+                                        <h4 class="mt-3" style="color: #e83e8c;">Nenhum Pedido Cadastrado</h4>
+                                        <p style="color: #e83e8c;">Comece cadastrando um novo pedido!</p>
+                                        <a href="{% url 'pedido_create' %}" class="btn btn-success mt-2" style="background-color: #e83e8c; border-color: #e83e8c;">
+                                            <i class="bi bi-plus-circle"></i> Cadastrar Pedido
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        {% endfor %}
+                    </div>
+                    <div class="row mt-5">
+                        <div class="col-12">
+                            {% include 'includes/pedido_pagination.html' %}
+                        </div>
                     </div>
                 </div>
             </div>
+        </section>
 
-        </div>
-    </section>
-
-    <!-- CTA Section -->
-    <section class="cta">
-        <div class="container">
-            <div class="cta-content">
-                <h3 class="cta-title">
-                    Quer Fazer uma Nova Encomenda?
-                </h3>
-                <p class="cta-description">
-                    Entre em contato conosco e faça seu próximo pedido personalizado. Garantimos qualidade, sabor e um atendimento excepcional.
-                </p>
-                <a class="btn-cta" href="{% url 'pedido_create' %}" style="text-decoration: none">Nova Encomenda</a>
+        <!-- CTA Section -->
+        <section class="cta">
+            <div class="container">
+                <div class="cta-content">
+                    <h3 class="cta-title">
+                        Quer Fazer uma Nova Encomenda?
+                    </h3>
+                    <p class="cta-description">
+                        Entre em contato conosco e faça seu próximo pedido personalizado. Garantimos qualidade, sabor e um atendimento excepcional.
+                    </p>
+                    <a class="btn-cta" href="{% url 'pedido_create' %}" style="text-decoration: none">Nova Encomenda</a>
+                </div>
             </div>
-        </div>
-    </section>
+        </section>
     {% endif %}
 </body>
 </html>
-
-
 {% endblock %}

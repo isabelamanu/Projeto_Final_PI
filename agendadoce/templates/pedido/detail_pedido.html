@@ -9,7 +9,6 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Detalhes da Encomenda #ENC001 - AgendaDoce</title>
     <link rel="stylesheet" href="../static/styles.css">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 </head>
@@ -132,7 +131,7 @@
                 </div>
             </div>
 
-            <!-- Ações -->
+            <!-- Cancelamento de Pedido -->
             <form action="{% url 'cancelar_pedido' id=pedido.id %}" method="POST"style="display: flex; gap: 1rem; justify-content: center; margin-top: 2rem; flex-wrap: wrap;">
                 {% csrf_token %}
                 <button type="submit" class="btn-secondary btn-large" style="text-decoration: none">Cancelar Pedido</button>

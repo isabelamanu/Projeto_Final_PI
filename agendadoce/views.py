@@ -14,7 +14,6 @@ from .forms import EntregadorForm, PedidoForm, PedidoFiltroForm, EntregadorFiltr
 def index(request):
     return render(request, "index.html")
 
-
 @login_required
 def pedido_list(request):
     total_pedidos = Pedido.objects.count()
@@ -22,53 +21,38 @@ def pedido_list(request):
     total_p_entregues = Pedido.objects.filter(status="Entregue").count()
     pedidos = Pedido.objects.all()
 
-    # ========== ADICIONE ESTE BLOCO ==========
-    # Criar instância do formulário
     filtro_form = PedidoFiltroForm(request.GET or None)
 
-    # Aplicar filtros se válido
     if filtro_form.is_valid():
-        # Filtro por descrição
         descricao = filtro_form.cleaned_data.get("descricao")
         if descricao:
             pedidos = pedidos.filter(nome_pedido__icontains=descricao)
 
-        # Filtro por data início
         data_inicio = filtro_form.cleaned_data.get("data_inicio")
         if data_inicio:
             pedidos = pedidos.filter(data_entrega__date__gte=data_inicio)
 
-        # Filtro por data fim
         data_fim = filtro_form.cleaned_data.get("data_fim")
         if data_fim:
             pedidos = pedidos.filter(data_entrega__date__lte=data_fim)
 
-        # Filtro por cliente
         cliente = filtro_form.cleaned_data.get("cliente")
         if cliente:
             pedidos = pedidos.filter(cliente=cliente)
 
-        # Filtro por entregador
         entregador = filtro_form.cleaned_data.get("entregador")
         if entregador:
             pedidos = pedidos.filter(entregador=entregador)
 
-        # Filtro por status
         status = filtro_form.cleaned_data.get("status")
         if status:
             pedidos = pedidos.filter(status=status)
-    # ========== FIM DO BLOCO ==========
 
-    # 2. Criar o paginador (9 vagas por página)
+    # Paginação
     paginator = Paginator(pedidos, 9)
+    page_number = request.GET.get("page") # Nº pág
+    page_obj = paginator.get_page(page_number) # dados pág
 
-    # 3. Pegar o número da página da URL (?page=2)
-    page_number = request.GET.get("page")
-
-    # 4. Obter os dados daquela página específica
-    page_obj = paginator.get_page(page_number)
-
-    # 5. Enviar para o template
     return render(
         request,
         "pedido/listar_pedido.html",
@@ -82,21 +66,18 @@ def pedido_list(request):
         },
     )
 
-
 def atribuir_entregador_automatico():
-    # Conta quantos pedidos cada entregador tem em andamento
     entregador = (
         Entregador.objects.filter(disponibilidade=True)
         .annotate(num_pedidos=Count("pedidos"))
-        .order_by("num_pedidos")  # pega o que tem menos entregas
+        .order_by("num_pedidos")
         .first()
     )
     if entregador:
-        entregador.num_entregas += 1  # soma +1
+        entregador.num_entregas += 1
         entregador.save()
 
     return entregador
-
 
 @login_required
 def pedido_create(request):
@@ -108,16 +89,13 @@ def pedido_create(request):
                 del form.fields["status"]
 
         if form.is_valid():
-            pedido = form.save(commit=False)  # não salva ainda
+            pedido = form.save(commit=False) 
 
             # atribui o usuário logado
             if request.user.is_authenticated:
                 pedido.cliente = request.user
-            else:
-                messages.error(request, "É necessário estar logado para fazer um pedido.")
-                return redirect("login")  # ou qualquer rota de login
 
-            pedido.entregador = atribuir_entregador_automatico()  # atribui automaticamente
+            pedido.entregador = atribuir_entregador_automatico()  # atribui entregador
             if not pedido.entregador:
                 messages.error(request, "Nenhum entregador disponível no momento.")
                 return redirect("pedido_list")
@@ -143,7 +121,6 @@ def pedido_create(request):
         form = PedidoForm()
 
     return render(request, "pedido/form_pedido.html", {"form": form})
-
 
 @login_required
 def pedido_update(request, id):
@@ -172,7 +149,7 @@ def pedido_update(request, id):
 
     return render(request, "pedido/form_pedido.html", {"form": form})
 
-
+@login_required
 def pedido_delete(request, id):
     pedido = get_object_or_404(Pedido, id=id)
 
@@ -184,6 +161,7 @@ def pedido_delete(request, id):
 
     return render(request, "pedido/delete_pedido.html", {"pedido": pedido})
 
+@login_required
 def cancelar_pedido(request, id):
     pedido = get_object_or_404(Pedido, id=id)
 
@@ -195,8 +173,6 @@ def cancelar_pedido(request, id):
         return redirect('historico')
     else:
         return redirect('pedido_detail', id=id)
-    
-
 
 @login_required
 def pedido_detail(request, id):
@@ -208,49 +184,37 @@ def pedido_detail(request, id):
 
 @login_required
 def entregador_list(request):
-    # Iniciar com todas as vagas
     entregadores = Entregador.objects.all()
     total_entregadores = Entregador.objects.count()
     total_disponiveis = Entregador.objects.filter(disponibilidade=True).count()
 
-    # ========== ADICIONE ESTE BLOCO ==========
-    # Criar instância do formulário
+    # Filtro
     filtro_form = EntregadorFiltroForm(request.GET or None)
 
-    # Aplicar filtros se válido
     if filtro_form.is_valid():
-        # Filtro por descrição
         descricao = filtro_form.cleaned_data.get("descricao")
         if descricao:
             entregadores = entregadores.filter(nome_entregador__icontains=descricao)
 
-        # Filtro por data início
         data_inicio = filtro_form.cleaned_data.get("data_inicio")
         if data_inicio:
             entregadores = entregadores.filter(data_contratatacao__date__gte=data_inicio)
 
-        # Filtro por data fim
         data_fim = filtro_form.cleaned_data.get("data_fim")
         if data_fim:
             entregadores = entregadores.filter(data_contratacao__date__lte=data_fim)
 
-        # Filtro por status
         disponibilidade = filtro_form.cleaned_data.get("disponibilidade")
         if disponibilidade == "true":
             entregadores = entregadores.filter(disponibilidade=True)
         elif disponibilidade == "false":
             entregadores = entregadores.filter(disponibilidade=False)
-    # ========== FIM DO BLOCO ==========
 
+    # Paginação
     paginator = Paginator(entregadores, 9)
-
-    # 3. Pegar o número da página da URL (?page=2)
     page_number = request.GET.get("page")
-
-    # 4. Obter os dados daquela página específica
     page_obj = paginator.get_page(page_number)
 
-    # MODIFIQUE o return
     return render(
         request,
         "entregador/listar_entregador.html",
@@ -262,7 +226,6 @@ def entregador_list(request):
             "total_disponiveis": total_disponiveis,
         },
     )
-
 
 @login_required
 def entregador_create(request):
@@ -276,7 +239,6 @@ def entregador_create(request):
         form = EntregadorForm()
 
     return render(request, "entregador/form_entregador.html", {"form": form})
-
 
 @login_required
 def entregador_update(request, id):
@@ -293,7 +255,7 @@ def entregador_update(request, id):
 
     return render(request, "entregador/form_entregador.html", {"form": form})
 
-
+@login_required
 def entregador_delete(request, id):
     entregador = get_object_or_404(Entregador, id=id)
 
@@ -304,7 +266,6 @@ def entregador_delete(request, id):
         return redirect("entregador_list")
 
     return render(request, "entregador/delete_entregador.html", {"entregador": entregador})
-
 
 @login_required
 def entregador_detail(request, id):

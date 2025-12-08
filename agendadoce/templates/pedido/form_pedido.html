@@ -8,7 +8,6 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Lista de Encomendas | AgendaDoce</title>
     <link rel="stylesheet" href="../static/styles.css">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 </head>
@@ -145,7 +144,6 @@
                             <div class="form-group full-width">
                                 <label for="id_endereco_pedido" class="form-label">Endereço de Entrega *</label>
                                 {{ form.endereco_pedido }}
-                                <!-- placeholder="Digite o endereço completo para entrega..." -->
                                 <small class="form-help">Inclua rua, número, complemento, bairro, cidade e CEP</small>
                             </div>
                         </div>
@@ -179,7 +177,7 @@
                         </div>
                     </div>
 
-                    <!-- Botões de Ação -->
+                    <!-- Botões -->
                     <div class="form-actions">
                         {% if user.is_administrador %}
                         <a href= "{% url 'pedido_list' %}" type="button" class="btn-secondary btn-large" style="text-decoration: none">
@@ -205,7 +203,6 @@
 </html>
 
 <style>
-/* Estilos específicos para o formulário de pedido */
 .pedido-form-section {
     padding: 4rem 0;
     background: #f9fafb;

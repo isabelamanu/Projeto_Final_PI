@@ -8,11 +8,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="../../static/styles.css">
+    <link rel="stylesheet" href="../static/styles.css">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 </head>
 <body>
-
     <div class="container-fluid" style="margin-top: 50px; margin-bottom: 50 px;">
         <div class="row justify-content-center">
             <div class="col-lg-6">
@@ -23,8 +22,8 @@
                             Confirmar Exclusão
                         </h4>
                     </div>
+
                     <div class="card-body p-4">
-                        
                         <div class="alert alert-warning">
                             <i class="bi bi-exclamation-triangle-fill"></i>
                             <strong>Atenção!</strong> Esta ação não pode ser desfeita.
@@ -90,7 +89,6 @@
                         <!-- Formulário de Confirmação -->
                         <form method="post">
                             {% csrf_token %}
-                            
                             <div class="d-flex gap-2 justify-content-end">
                                 <a href="{% url 'cliente_list' %}" class="btn btn-secondary">
                                     <i class="bi bi-x-circle"></i> Cancelar

@@ -17,9 +17,7 @@ def cliente_create(request):
         form = UsuarioAdaptadoCreationForm(request.POST)
         if form.is_valid():
             user = form.save()
-
-            # Adicionar usuário ao grupo USUARIO_SIMPLES por padrão
-            grupo_simples, created = Group.objects.get_or_create(name="USUARIO_SIMPLES")
+            grupo_simples, created = Group.objects.get_or_create(name="USUARIO_SIMPLES") #atribui por padrão
             user.groups.add(grupo_simples)
 
             messages.success(request, "Cadastro realizado com sucesso! Faça login para continuar.")
@@ -28,7 +26,6 @@ def cliente_create(request):
         form = UsuarioAdaptadoCreationForm()
 
     return render(request, "clientes/create_cliente.html", {"form": form})
-
 
 def login_view(request):
     if request.method == "POST":
@@ -42,7 +39,6 @@ def login_view(request):
                 login(request, user)
                 messages.success(request, f"Bem-vindo, {user.username}!")
 
-                # Redireciona para a página solicitada
                 if not request.user.is_administrador() and not request.user.is_superuser:
                     next_page = request.GET.get("next", "historico")
                 else:
@@ -55,12 +51,11 @@ def login_view(request):
 
     return render(request, "clientes/login.html", {"form": form})
 
-
+@login_required
 def logout_view(request):
     logout(request)
     messages.info(request, "Você saiu do sistema.")
     return redirect("index")
-
 
 @login_required
 def perfil_view(request):
@@ -80,12 +75,10 @@ def perfil_view(request):
     total_pedidos_usu = pedidos.count()
 
     usuario = request.user
+
+    # Paginação de historico no perfil
     paginator = Paginator(pedidos, 3)
-
-    # 3. Pegar o número da página da URL (?page=2)
     page_number = request.GET.get("page")
-
-    # 4. Obter os dados daquela página específica
     page_obj = paginator.get_page(page_number)
 
     return render(
@@ -101,7 +94,7 @@ def perfil_view(request):
         },
     )
 
-
+@login_required
 def cliente_detail(request, id):
     cliente = get_object_or_404(UsuarioAdaptado, id=id)
     pedidos = Pedido.objects.filter(cliente=id)
@@ -111,16 +104,11 @@ def cliente_detail(request, id):
     # Soma todos os valores
     total_gasto_cliente = pedidos_usuario.aggregate(Sum("valor"))["valor__sum"] or 0
     total_pedidos_cliente = pedidos_usuario.count()
-    # 2. Criar o paginador (3 vagas por página)
+
     paginator = Paginator(pedidos, 3)
-
-    # 3. Pegar o número da página da URL (?page=2)
     page_number = request.GET.get("page")
-
-    # 4. Obter os dados daquela página específica
     page_obj = paginator.get_page(page_number)
 
-    # 5. Enviar para o template
     return render(
         request,
         "clientes/detail_cliente.html",
@@ -133,12 +121,8 @@ def cliente_detail(request, id):
         },
     )
 
-
 @login_required
 def cliente_list(request):
-    """View para listar usuários com filtros e paginação"""
-
-    # Buscar todos os usuários
     usuarios = UsuarioAdaptado.objects.all().order_by('id')
     total_usuarios = UsuarioAdaptado.objects.count()
     pedidos = Pedido.objects.all()
@@ -146,31 +130,24 @@ def cliente_list(request):
     pedido_por_cliente = f"{(int(total_pedidos) / int(total_usuarios)):.1f}"
     saldo_total = pedidos.aggregate(Sum("valor"))["valor__sum"] or 0
 
-    # ========== FILTROS ==========
     filtro_form = UsuarioFiltroForm(request.GET or None)
 
     if filtro_form.is_valid():
-        # Filtro por username
         username = filtro_form.cleaned_data.get("username")
         if username:
             usuarios = usuarios.filter(username__icontains=username)
 
-        # Filtro por email
         email = filtro_form.cleaned_data.get("email")
         if email:
             usuarios = usuarios.filter(email__icontains=email)
 
-        # Filtro por cidade
         cidade = filtro_form.cleaned_data.get("cidade")
         if cidade:
             usuarios = usuarios.filter(nome_cidade__icontains=cidade)
 
-        # Filtro por grupo
         grupo = filtro_form.cleaned_data.get("grupo")
         if grupo:
             usuarios = usuarios.filter(groups=grupo)
-
-    # ========== PAGINAÇÃO ==========
 
     paginator = Paginator(usuarios, 9)
     page_number = request.GET.get("page")
@@ -189,11 +166,8 @@ def cliente_list(request):
         },
     )
 
-
 @login_required
 def create_usuario_admin(request):
-    """View para criar usuário (apenas para gerentes)"""
-
     if not request.user.is_administrador() and not request.user.is_superuser:
         messages.error(request, "Você não tem permissão para acessar esta página.")
         return redirect("historico")
@@ -204,8 +178,6 @@ def create_usuario_admin(request):
         if form.is_valid():
             user = form.save()
             user.save()
-
-            # Adicionar ao grupo USUARIO_SIMPLES por padrão
             grupo_simples, created = Group.objects.get_or_create(name="USUARIO_SIMPLES")
             user.groups.add(grupo_simples)
 
@@ -216,11 +188,8 @@ def create_usuario_admin(request):
 
     return render(request, "clientes/update_cliente.html", {"form": form, "cliente": None, "titulo": "Criar Novo Usuário"})
 
-
 @login_required
 def update_usuario_admin(request, id):
-    """View para editar usuário (apenas para gerentes)"""
-
     usuario = get_object_or_404(UsuarioAdaptado, id=id)
 
     if request.method == "POST":
@@ -241,7 +210,6 @@ def update_usuario_admin(request, id):
         {"form": form, "titulo": f"Editar Usuário: {usuario.username}", "usuario": usuario},
     )
 
-
 @login_required
 def cliente_update(request, id):
     cliente = get_object_or_404(UsuarioAdaptado, id=id)
@@ -257,18 +225,14 @@ def cliente_update(request, id):
 
     return render(request, "clientes/update_cliente.html", {"form": form})
 
-
+@login_required
 def cliente_delete(request, id):
-    """View para deletar usuário (apenas para gerentes)"""
-
     usuario = get_object_or_404(UsuarioAdaptado, id=id)
 
-    # Impedir que o usuário delete a si mesmo
     if usuario == request.user:
         messages.error(request, "Você não pode deletar seu próprio usuário!")
         return redirect("cliente_list")
 
-    # Impedir que delete superusuários
     if usuario.is_superuser:
         messages.error(request, "Não é possível deletar um superusuário!")
         return redirect("cliente_list")
@@ -281,7 +245,6 @@ def cliente_delete(request, id):
 
     return render(request, "clientes/delete_usuario.html", {"usuario": usuario})
 
-
 @login_required
 def historico_cliente(request):
     total_p_cliente = Pedido.objects.filter(cliente=request.user).count()
@@ -290,46 +253,33 @@ def historico_cliente(request):
     else:
         pedidos = Pedido.objects.filter(cliente=request.user)
     
-
     filtro_form = PedidoFiltroForm(request.GET or None)
 
-    # Aplicar filtros se válido
     if filtro_form.is_valid():
-        # Filtro por descrição
         descricao = filtro_form.cleaned_data.get("descricao")
         if descricao:
             pedidos = pedidos.filter(nome_pedido__icontains=descricao)
 
-        # Filtro por data início
         data_inicio = filtro_form.cleaned_data.get("data_inicio")
         if data_inicio:
             pedidos = pedidos.filter(data_entrega__date__gte=data_inicio)
 
-        # Filtro por data fim
         data_fim = filtro_form.cleaned_data.get("data_fim")
         if data_fim:
             pedidos = pedidos.filter(data_entrega__date__lte=data_fim)
 
-        # Filtro por entregador
         entregador = filtro_form.cleaned_data.get("entregador")
         if entregador:
             pedidos = pedidos.filter(entregador=entregador)
 
-        # Filtro por status
         status = filtro_form.cleaned_data.get("status")
         if status:
             pedidos = pedidos.filter(status=status)
 
-    # 2. Criar o paginador (9 vagas por página)
     paginator = Paginator(pedidos, 9)
-
-    # 3. Pegar o número da página da URL (?page=2)
     page_number = request.GET.get("page")
-
-    # 4. Obter os dados daquela página específica
     page_obj = paginator.get_page(page_number)
 
-    # 5. Enviar para o template
     return render(
         request,
         "clientes/historico_cliente.html",
