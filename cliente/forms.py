@@ -38,7 +38,6 @@ class UsuarioAdaptadoCreationForm(UserCreationForm):
             "endereco": forms.TextInput(attrs={"class": "form-control", "placeholder": "Endereço completo"}),
             "nome_bairro": forms.TextInput(attrs={"class": "form-control", "placeholder": "Bairro"}),
             "foto_perfil": forms.FileInput(attrs={"class": "form-control"}),
-            
         }
 
     def __init__(self, *args, **kwargs):

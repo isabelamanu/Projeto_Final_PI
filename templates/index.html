@@ -46,7 +46,6 @@
                         <img src="https://images.pexels.com/photos/140831/pexels-photo-140831.jpeg" 
                             alt="Bolo de aniversário decorado" class="hero-img">
                     </div>
-                    
                 </div>
             </div>
         </div>
@@ -89,7 +88,7 @@
                 {% if request.user.is_authenticated %}
                 <a class="btn-cta" href="{% url 'pedido_create' %}" style="text-decoration: none">Fazer Pedido Agora</a>
                 {% else %}
-                <a class="bt<n-cta" href="{% url 'login' %}" style="text-decoration: none">Fazer Login</a>
+                <a class="btn-cta" href="{% url 'login' %}" style="text-decoration: none">Fazer Login</a>
                 {% endif %}
             </div>
         </div>
