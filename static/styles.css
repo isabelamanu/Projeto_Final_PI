@@ -929,6 +929,7 @@ body {
 
 .btn-pink:hover {
     background-color: #d63384;
+    color: white;
 }
 
 .btn-outline-pink {

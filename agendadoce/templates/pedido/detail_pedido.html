@@ -18,7 +18,11 @@
         <div class="container">
             <div class="page-header-content">
                 <div style="display: flex; align-items: center; gap: 1rem; margin-bottom: 1rem;">
-                    <button onclick="history.back()" class="btn-secondary" style="text-decoration: none">← Voltar</button>
+                    {% if user.is_administrador or user.superusuario %}
+                    <a href="{% url 'pedido_list' %}" class="btn-secondary" style="text-decoration: none;">← Voltar</a>
+                    {% else %}
+                    <a href="{% url 'historico' %}" class="btn-secondary" style="text-decoration: none;">← Voltar</a>
+                    {% endif %}
                 </div>
                 <h2 class="page-title">Encomenda <span class="highlight">#ENC00{{ pedido.id }}</span></h2>
                 <p class="page-description">

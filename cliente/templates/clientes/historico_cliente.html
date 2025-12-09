@@ -166,7 +166,6 @@
                                 <div class="price">
                                     <a class="btn-card" href="{% url 'pedido_detail' id=pedido.id %}" style="padding: 0.5rem 1rem; font-size: 0.875rem; text-decoration: none">Ver Detalhes</a>
                                     <a href="{% url 'pedido_update' id=pedido.id %}" class="btn-secondary" style="padding: 0.5rem 1rem; font-size: 0.875rem; text-decoration: none">Editar</a>
-                                    <a href="{% url 'pedido_delete' id=pedido.id %}" style="background: #ef4444; color: white; border: none; padding: 0.5rem 1rem; border-radius: 0.5rem; font-size: 0.875rem; cursor: pointer; text-decoration: none">Excluir</a>
                                 </div>
                             </div>
                         </div>
@@ -212,4 +211,30 @@
     </section>
 </body>
 </html>
+
+<style>
+.btn-pink {
+    background-color: #e83e8c;
+    color: white;
+    border: none;
+    transition: 0.3s;
+}
+
+.btn-pink:hover {
+    background-color: #d63384;
+    color:white;
+}
+
+.btn-outline-pink {
+    border: 1.5px solid #e83e8c !important;
+    color: #e83e8c !important;
+    background-color: white !important;
+    transition: 0.3s !important;
+}
+
+.btn-outline-pink:hover {
+    background-color: #e83e8c !important;
+    color: white !important;
+}
+</style>
 {% endblock %}
